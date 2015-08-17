@@ -17,4 +17,4 @@ The task should now be available on your TFS / VSO.
 The following tasks are available:
 
 ### Version Assemblies
-This task versions assemblies according to the build number. [More...](Tasks/VersionAssemblies/README.md)
+This task versions assemblies according to the build number. [More...](./Tasks/VersionAssemblies/README.md)

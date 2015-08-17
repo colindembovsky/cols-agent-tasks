@@ -4,7 +4,7 @@
   "friendlyName": "Version Assemblies",
   "description": "Updates the version number of the assemblies to match the build number",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
-  "helpMarkDown": "Replace with markdown to show in help",
+  "helpMarkDown": "Refer to colinsalmcorner.com",
   "category": "Build",
   "visibility": [
     "Build"
@@ -16,7 +16,7 @@
     "Patch": "0"
   },
   "minimumAgentVersion": "1.83.0",
-  "instanceNameFormat": "VersionAssemblies $(message)",
+  "instanceNameFormat": "Version Assemblies using $(filePattern)",
   "groups": [
     {
       "name": "advanced",

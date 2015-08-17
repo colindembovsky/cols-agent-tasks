@@ -60,6 +60,7 @@ dlldata.c
 *.pidb
 *.svclog
 *.scc
+*.js.map
 
 # Chutzpah Test files
 _Chutzpah*
@@ -192,6 +193,3 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 /Package
-
-# node modules path
-node_modules/

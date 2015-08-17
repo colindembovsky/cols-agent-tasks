@@ -7,18 +7,18 @@ tl.debug("Starting Version Assemblies step");
 var sourcePath = tl.getPathInput("sourcePath", true, true);
 var filePattern = tl.getInput("filePattern", true);
 var buildRegex = tl.getInput("buildRegex", true);
-var replaceRegex = tl.getInput("replaceRegex", true);
+var replaceRegex = tl.getInput("replaceRegex", false);
 
 // get the build number from the env vars
 var buildNumber = process.env["Build.BuildNumber"];
 
 tl.debug(`sourcePath :${sourcePath}`);
 tl.debug(`filePattern : ${filePattern}`);
-tl.debug(`buildRegex : ${ + buildRegex}`);
-tl.debug(`replaceRegex : ${ + replaceRegex}`);
+tl.debug(`buildRegex : ${buildRegex}`);
+tl.debug(`replaceRegex : ${replaceRegex}`);
 tl.debug(`buildNumber : ${buildNumber}`);
 
-if (replaceRegex.length === 0){
+if (replaceRegex === undefined || replaceRegex.length === 0){
 	replaceRegex = buildRegex;
 }
 tl.debug(`Using ${replaceRegex} as the replacement regex`);
@@ -32,15 +32,17 @@ if (buildRegexObj.test(buildNumber)) {
     var allFiles = tl.find(sourcePath);
 
     // Now matching the pattern against all files
-    var filesToReplace = tl.match(allFiles, filePattern, {matchBase: true});
+    var filesToReplace = tl.match(allFiles, filePattern, { matchBase: true });
 	
-	if (!filesToReplace || filesToReplace.length === 0) {
+	if (filesToReplace === undefined || filesToReplace.length === 0) {
 		tl.warning("No files found");
 	} else {
 		for(var i = 0; i < filesToReplace.length; i++){
 			var file = filesToReplace[i];
 			console.info(`  -> Changing version in ${file}`);
-			sh.sed("-i", replaceRegex, versionNum, file);
+			
+			// replace all occurrences by adding g to the pattern
+			sh.sed("-i", new RegExp(replaceRegex, "g"), versionNum, file);
 		}
 		console.info(`Replaced version in ${filesToReplace.length} files`);
 	}

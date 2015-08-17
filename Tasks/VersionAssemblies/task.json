@@ -5,10 +5,9 @@
   "description": "Updates the version number of the assemblies to match the build number",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "Replace with markdown to show in help",
-  "category": "Utility",
+  "category": "Build",
   "visibility": [
-    "Build",
-    "Release"
+    "Build"
   ],
   "demands": [],
   "version": {
@@ -18,31 +17,51 @@
   },
   "minimumAgentVersion": "1.83.0",
   "instanceNameFormat": "VersionAssemblies $(message)",
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
   "inputs": [
     {
-      "name": "cwd",
+      "name": "sourcePath",
       "type": "filePath",
-      "label": "Working Directory",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "Current working directory when VersionAssemblies is run."
+      "label": "Source Path",
+      "defaultValue": "$(Build.SourcesDirectory)",
+      "required": true,
+      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files)." 
     },
     {
-      "name": "msg",
+      "name": "filePattern",
       "type": "string",
-      "label": "Message",
-      "defaultValue": "Hello World",
+      "label": "File Pattern",
+      "defaultValue": "AssemblyInfo.*",
       "required": true,
-      "helpMarkDown": "Message to echo out"
+      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file."
+    },
+    {
+      "name": "buildRegex",
+      "type": "string",
+      "label": "Build Regex Pattern",
+      "defaultValue": "\\d+\\.\\d+\\.\\d+\\.\\d+",
+      "required": true,
+      "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings)."
+    },
+    {
+      "name": "replaceRegex",
+      "type": "string",
+      "label": "Regex Replace Pattern",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Regular Expression to replace with in files. Leave blank to use the Build Regex Pattern.",
+      "groupName": "advanced"
     }
   ],
   "execution": {
-    "Node": {
-      "target": "sample.js",
-      "argumentFormat": ""
-    },
     "PowerShell": {
-      "target": "$(currentDirectory)\\sample.ps1",
+      "target": "$(currentDirectory)\\VersionAssemblies.ps1",
       "argumentFormat": "",
       "workingDirectory": "$(currentDirectory)"
     }

@@ -1,0 +1,26 @@
+{
+  "name": "ColinsALMCorner.BuildTasks",
+  "version": "0.1.0",
+  "description": "Custom build tasks for TFS or VSO",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colindembovsky/cols-agent-tasks"
+  },
+  "keywords": [
+    "VSO",
+    "build",
+    "tasks"
+  ],
+  "author": "Colin Dembovsky (ColinsALMCorner.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colindembovsky/cols-agent-tasks/issues"
+  },
+  "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
+  "devDependencies": {
+    "vso-task-lib": "^0.4.0"
+  }
+}

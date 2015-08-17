@@ -1,29 +1,55 @@
-param (
-    [string]$cwd,
-    [string]$msg
+[CmdletBinding(DefaultParameterSetName = 'None')]
+param(
+	[string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $sourcePath,
+    [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $filePattern,
+    [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $buildRegex,
+    [string]$replaceRegex,
+    [string]$buildNumber = $env:BUILD_BUILDNUMBER
 )
 
-Write-Verbose 'Entering sample.ps1'
-Write-Verbose "cwd = $cwd"
-Write-Verbose "msg = $msg"
+Write-Verbose "Starting Version Assemblies step"
 
-# Import the Task.Common dll that has all the cmdlets we need for Build
-import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
+Write-Verbose -Verbose "sourcePath = $sourcePath"
+Write-Verbose -Verbose "filePattern = $filePattern"
+Write-Verbose -Verbose "buildRegex = $buildRegex"
+Write-Verbose -Verbose "replaceRegex = $replaceRegex"
+Write-Verbose -Verbose "buildNumber = $buildNumber"
 
-if(!$cwd)
-{
-    throw (Get-LocalizedString -Key "Working directory parameter is not set")
+if ($replaceRegex -eq ""){
+    $replaceRegex = $buildRegex
 }
+Write-Verbose "Using $replaceRegex as the replacement regex"
 
-if(!(Test-Path $cwd -PathType Container))
-{
-    throw ("$cwd does not exist");
+if ($buildNumber -match $filePattern -ne $true) {
+    Write-Error "Could not extract a version from [$buildNumber] using pattern [$filePattern]"
+    exit 1
+} else {
+    try {
+        $extractedBuildNumber = $Matches[0]
+        Write-Host "Using version $extractedBuildNumber in folder $sourcePath"
+  
+        $files = gci -Path $sourcePath -Filter $filePattern -Recurse
+ 
+        if ($files){
+            $files | % {
+                $fileToChange = $_.FullName  
+                Write-Verbose "  -> Changing version in $($fileToChange)"
+                 
+                # remove the read-only bit on the file
+                sp $fileToChange IsReadOnly $false
+  
+                # run the regex replace
+                (gc $fileToChange) | % { $_ -replace $pattern, $extractedBuildNumber } | sc $fileToChange
+            }
+        } else {
+            Write-Warning "No files found"
+        }
+  
+        Write-Verbose "Replaced version in $($files.length) files"
+    } catch {
+        Throw-Error $_
+    }
 }
-
-Write-Verbose "Setting working directory to $cwd"
-Set-Location $cwd
-
-Write-Host $msg
 
 
 

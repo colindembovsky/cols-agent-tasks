@@ -7,7 +7,7 @@ param(
     [string]$buildNumber = $env:BUILD_BUILDNUMBER
 )
 
-Write-Verbose "Starting Version Assemblies step"
+Write-Verbose -Verbose "Starting Version Assemblies step"
 
 Write-Verbose -Verbose "sourcePath = $sourcePath"
 Write-Verbose -Verbose "filePattern = $filePattern"
@@ -18,10 +18,10 @@ Write-Verbose -Verbose "buildNumber = $buildNumber"
 if ($replaceRegex -eq ""){
     $replaceRegex = $buildRegex
 }
-Write-Verbose "Using $replaceRegex as the replacement regex"
+Write-Verbose -Verbose "Using $replaceRegex as the replacement regex"
 
-if ($buildNumber -match $filePattern -ne $true) {
-    Throw-Error "Could not extract a version from [$buildNumber] using pattern [$filePattern]"
+if ($buildNumber -match $buildRegex -ne $true) {
+    Write-Warning "Could not extract a version from [$buildNumber] using pattern [$buildRegex]"
 } else {
     try {
         $extractedBuildNumber = $Matches[0]
@@ -32,22 +32,22 @@ if ($buildNumber -match $filePattern -ne $true) {
         if ($files){
             $files | % {
                 $fileToChange = $_.FullName  
-                Write-Verbose "  -> Changing version in $($fileToChange)"
+                Write-Host "  -> Changing version in $($fileToChange)"
                  
                 # remove the read-only bit on the file
                 sp $fileToChange IsReadOnly $false
   
                 # run the regex replace
-                (gc $fileToChange) | % { $_ -replace $pattern, $extractedBuildNumber } | sc $fileToChange
+                (gc $fileToChange) | % { $_ -replace $replaceRegex, $extractedBuildNumber } | sc $fileToChange
             }
         } else {
             Write-Warning "No files found"
         }
   
-        Write-Verbose "Replaced version in $($files.length) files"
+        Write-Host "Replaced version in $($files.length) files"
     } catch {
-        Throw-Error $_
+        Write-Warning $_
     }
 }
 
-Write-Verbose "Leaving Version Assemblies step"
+Write-Verbose -Verbose "Leaving Version Assemblies step"

@@ -1,7 +1,7 @@
 {
   "id": "5b4d14d0-3868-11e4-a31d-3f0a2d8202f4",
   "name": "VersionAssemblies",
-  "friendlyName": "Version assemblies",
+  "friendlyName": "Version Assemblies",
   "description": "Updates the version number of the assemblies to match the build number",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "Replace with markdown to show in help",

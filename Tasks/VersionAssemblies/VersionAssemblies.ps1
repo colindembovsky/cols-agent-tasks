@@ -22,7 +22,6 @@ Write-Verbose "Using $replaceRegex as the replacement regex"
 
 if ($buildNumber -match $filePattern -ne $true) {
     Throw-Error "Could not extract a version from [$buildNumber] using pattern [$filePattern]"
-    
 } else {
     try {
         $extractedBuildNumber = $Matches[0]

@@ -21,8 +21,8 @@ if ($replaceRegex -eq ""){
 Write-Verbose "Using $replaceRegex as the replacement regex"
 
 if ($buildNumber -match $filePattern -ne $true) {
-    Write-Error "Could not extract a version from [$buildNumber] using pattern [$filePattern]"
-    exit 1
+    Throw-Error "Could not extract a version from [$buildNumber] using pattern [$filePattern]"
+    
 } else {
     try {
         $extractedBuildNumber = $Matches[0]
@@ -51,6 +51,4 @@ if ($buildNumber -match $filePattern -ne $true) {
     }
 }
 
-
-
-
+Write-Verbose "Leaving Version Assemblies step"

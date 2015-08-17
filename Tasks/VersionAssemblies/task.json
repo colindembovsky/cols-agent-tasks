@@ -60,6 +60,10 @@
     }
   ],
   "execution": {
+    "Node": {
+      "target": "versionAssemblies.js",
+      "argumentFormat": ""
+    },  
     "PowerShell": {
       "target": "$(currentDirectory)\\VersionAssemblies.ps1",
       "argumentFormat": "",

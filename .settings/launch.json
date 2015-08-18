@@ -22,7 +22,7 @@
 			"runtimeArgs": ["--nolazy"],
 			// Environment variables passed to the program.
 			"env": { 
-				"Build.BuildNumber": "1.0.0.5",
+				"BUILD_BUILDNUMBER": "1.0.0.5",
 				"INPUT_SOURCEPATH": "C:\\data\\ws\\col\\ColinsALMCornerCheckinPolicies",
 				"INPUT_FILEPATTERN": "AssemblyInfo.*",
 				"INPUT_BUILDREGEX": "\\d+\\.\\d+\\.\\d+\\.\\d+",

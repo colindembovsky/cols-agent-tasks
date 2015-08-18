@@ -10,7 +10,7 @@ var buildRegex = tl.getInput("buildRegex", true);
 var replaceRegex = tl.getInput("replaceRegex", false);
 
 // get the build number from the env vars
-var buildNumber = process.env["Build.BuildNumber"];
+var buildNumber = tl.getVariable("Build.BuildNumber");
 
 tl.debug(`sourcePath :${sourcePath}`);
 tl.debug(`filePattern : ${filePattern}`);

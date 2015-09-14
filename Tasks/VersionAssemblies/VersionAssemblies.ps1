@@ -44,7 +44,7 @@ if ($buildNumber -match $buildRegex -ne $true) {
             Write-Warning "No files found"
         }
   
-        Write-Host "Replaced version in $($files.length) files"
+        Write-Host "Replaced version in $($files.count) files"
     } catch {
         Write-Warning $_
     }

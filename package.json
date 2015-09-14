@@ -1,6 +1,6 @@
 {
   "name": "ColinsALMCorner.BuildTasks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Custom build tasks for TFS or VSO",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -14,7 +14,7 @@
 #>
 
 [cmdletbinding(SupportsShouldProcess = $true)]
-param($publishProperties, $packOutput, $pubxmlFile)
+param($publishProperties, $packOutput, $pubxmlFile, $srcDir)
 
 <#
     Core publish functions
@@ -49,26 +49,13 @@ function Publish-AspNetDocker {
 
 		# Trim the trailing '\' to avoid quoting issue
 		$packOutput = $packOutput.TrimEnd('\')
-
+        
 		# Find the correct Dockerfile
-		$dockerfileRelPath = $publishProperties["DockerfileRelativePath"]
-		if (!$pubxmlFile) {
-			$dockerfilePath = (Resolve-Path (Join-Path $packOutput $dockerfileRelPath)).Path
-		} else {
-			# Search for current publish profile and publish script in the package output directory
-			$profileName = (Split-Path $PSCommandPath -Leaf).Replace('-publish.ps1', '')
-			$profile = Get-ChildItem -Path $packOutput -Filter "$profileName.pubxml" -Recurse | Where { Test-Path (Join-Path $_.Directory.FullName "$profileName-publish.ps1") } | Select -First 1
-			if (!$profile) {
-				throw 'cannot find current publish profile {0}.pubxml in the package output location {1}' -f $profileName, $packOutput
-			}
-			$dockerfileBasePath = $profile.DirectoryName
+		$dockerfile = $publishProperties["Dockerfile"]
+		$dockerfilePath = (Get-ChildItem -Path $packOutput -Filter $dockerfile -Recurse | Select -First 1).FullName
 
-			# Find the correct Dockerfile
-			$dockerfilePath = (Resolve-Path (Join-Path $dockerfileBasePath $dockerfileRelPath)).Path
-
-			# Work around a Docker build command bug docker issue #13898
-			$dockerfilePath = '{0}{1}' -f $packOutput, $dockerfilePath.Substring($packOutput.Length)
-		}
+		# Work around a Docker build command bug docker issue #13898
+        $dockerfilePath = (gi $dockerfilePath).PSDrive.Name.ToUpper() + $dockerfilePath.SubString(1) 
 
         # Publish the application to a Docker container
         Publish-DockerContainerApp $publishProperties $packOutput $dockerfilePath
@@ -117,6 +104,7 @@ function Publish-DockerContainerApp {
         'LaunchSiteAfterPublish: {0}' -f $launchSiteAfterPublish | Write-Verbose
         'SiteUrlToLaunchAfterPublish: {0}' -f $siteUrlToLaunchAfterPublish | Write-Verbose
         'CreateWindowsContainer: {0}' -f $createWindowsContainer | Write-Verbose
+        'Dockerfile: {0}' -f $dockerfilePath | Write-Verbose
         '==========================' | Write-Verbose
 
         if ($removeConflictingContainers -and $hostPort) {

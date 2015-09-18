@@ -23,4 +23,4 @@ The task has the following settings:
 12. **Remove Conflicting Containers**: removes containers currently running on the same port when set to "true"
 
 ## Detailed Overview
-For a more detailed overview of this task (and how to use it for ASP.NET 5 applications) read [this post]().
+For a more detailed overview of this task (and how to use it for ASP.NET 5 applications) read [this post](http://colinsalmcorner.com/post/continuous-deployment-with-docker-and-build-vnext).

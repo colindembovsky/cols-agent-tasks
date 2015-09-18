@@ -4,7 +4,7 @@
   "friendlyName": "Docker Publish",
   "description": "Invokes the VS Tools for Docker script with optional overrides",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
-  "helpMarkDown": "Executes a docker build (and optionally run). [VS Tools for Docker](https://visualstudiogallery.msdn.microsoft.com/0f5b2caa-ea00-41c8-b8a2-058c7da0b3e4)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/blob/master/Tasks/DockerPublish/README.md)",
   "category": "Build",
   "visibility": [
     "Build",
@@ -16,7 +16,6 @@
     "Minor": "1",
     "Patch": "35"
   },
-  "minimumAgentVersion": "1.83.0",
   "instanceNameFormat": "Docker Publish",
   "groups": [
     {

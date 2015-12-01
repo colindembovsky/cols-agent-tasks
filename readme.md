@@ -23,4 +23,9 @@ This task versions assemblies according to the build number. [More...](./Tasks/V
 This task performs `docker build` and (optionally) `docker run` to deploy your app to a docker host. [More...](./Tasks/DockerPublish)
 
 ## Opening
-The easiest way to open the source is to clone the repo and open in [VSCode](https://code.visualstudio.com/). If you change the .ts files, then run build (ctrl-shift-b) to compile the .js files.
+The easiest way to open the source is to clone the repo and open in [VSCode](https://code.visualstudio.com/). 
+If you change the .ts files, then run build (ctrl-shift-b) to compile the .js files.
+
+## Uploading
+You have to run `npm install` in the root folder as well as in each Task folder, since each task has to bundle its dependencies. Once you've
+run `npm install` you can run [tfx](https://www.npmjs.com/package/tfx-cli) to upload the Task to your server.

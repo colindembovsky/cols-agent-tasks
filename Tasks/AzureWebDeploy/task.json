@@ -1,0 +1,116 @@
+{
+  "id": "5C9EA8BE-E6FB-4AE7-905E-67BFD6741967",
+  "name": "AzureWebDeploy",
+  "friendlyName": "Azure Web Deploy",
+  "description": "Invokes web deploy to Azure website, substituting any Environment variables into the SetParameters.xml file",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [
+    "azureps"
+  ],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "20"
+  },
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Invoke WebDeploy for $(WebSiteName)",
+  "inputs": [
+    {
+      "name": "ConnectedServiceName",
+      "type": "connectedService:Azure:Certificate,UsernamePassword",
+      "label": "Azure Subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Azure subscription to target for deployment."
+    },
+    {
+      "name": "WebSiteName",
+      "type": "string",
+      "label": "Web App Name",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "For Azure, the name of the Web App. For IIS, the site/virtual directory (e.g. Default Web Site/MySite)."
+    },
+    {
+      "name": "WebSiteLocation",
+      "type": "pickList",
+      "label": "Web App Location",
+      "defaultValue": "South Central US",
+      "required": true,
+      "helpMarkDown": "Select a region for deployment.",
+      "options": {
+        "Australia East": "Australia East",
+        "Australia Southeast": "Australia Southeast",
+        "Brazil South": "Brazil South",
+        "Central US": "Central US",
+        "East Asia": "East Asia",
+        "East US": "East US",
+        "East US2": "East US2",
+        "Japan East": "Japan East",
+        "Japan West": "Japan West",
+        "North Central US": "North Central US",
+        "North Europe": "North Europe",
+        "South Central US": "South Central US",
+        "Southeast Asia": "Southeast Asia",
+        "West Europe": "West Europe",
+        "West US": "West US"
+      },
+      "properties": {
+        "EditableOptions": "True"
+      }
+    },
+    {
+      "name": "Slot",
+      "type": "string",
+      "label": "Slot",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Slot"
+    },
+    {
+      "name": "PackagePath",
+      "type": "filePath",
+      "label": "Web Deploy Package Path",
+      "defaultValue": "",
+      "helpMarkDown": "Path to the folder containing the WebDeploy zip file, cmd and SetParameters.xml file.",
+      "required": true
+    },
+    {
+      "name": "TokenRegex",
+      "type": "string",
+      "label": "Token Regex",
+      "defaultValue": "__(\\w+)__",
+      "helpMarkDown": "Regex to use for token replacement. Must include a group match.",
+      "required": true,
+      "groupName": "advanced"
+    }
+  ],
+  "sourceDefinitions": [
+    {
+        "target": "WebSiteName",
+        "endpoint": "https://management.core.windows.net/$(authKey.SubscriptionId)/services/webspaces/$(WebSiteLocation)Webspace/sites",
+        "selector": "xpath://Site/Name",
+        "authKey": "$(ConnectedServiceName)"
+    }
+  ],
+  "execution": {
+    "AzurePowerShell": {
+      "target": "$(currentDirectory)\\Invoke-AzureWebDeploy.ps1",
+      "argumentFormat": "",
+      "workingDirectory": "$(currentDirectory)"
+    }
+  }
+}

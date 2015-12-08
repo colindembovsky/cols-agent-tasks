@@ -1,12 +1,18 @@
-# Colin's ALM Corner Build Tasks - Web Deploy
+# Colin's ALM Corner Build Tasks - Azure Web Deploy
 
 ## Overview
-This task invokes Web Deploy to either Azure or IIS.
+This task invokes Web Deploy to Azure. Use this Task over the [Azure Web App Deployment](http://go.microsoft.com/fwlink/?LinkID=613750)
+when you want to use tokens in the SetParameters.xml file.
 
 ## Settings
 The task requires the following settings:
 
-1. **Source Path**: path to the sources that contain the version number files (such as AssemblyInfo.cs).
-2. **File Pattern**: file pattern to search for within the `Source Path`. Defaults to "AssemblyInfo.*"
-3. **Build Regex Pattern**: Regex pattern to apply to the build number in order to extract a version number. Defaults to `\d+\.\d+\.\d+\.\d+`.
-4. **(Optional) Regex Replace Pattern**: Use this if the regex to search for in the target files is different from the Build Regex Pattern.  
+1. **Endpoint**: An Azure Service Endpoint. This should be to the subscription that contains your Web App.
+2. **Web App Name**: Name of the Web App in Azure.
+3. **Web App Location**: The Azure location that the Web App is in.
+4. **Slot (Optional)**: The name of the slot that you are publishing the Web App to. Leave empty for no slot.
+5. **Package Path**: The path to the folder containing the webdeploy zip file, cmd file and SetParameters.xml file.
+
+## Token Replacement
+You should use the [Replace Tokens](..\ReplaceTokens\README.md) task in order to perform token replacement prior to this task. For more information,
+see this [blog post](http://colinsalmcorner.com/post/webdeploy-configs-and-web-release-management).

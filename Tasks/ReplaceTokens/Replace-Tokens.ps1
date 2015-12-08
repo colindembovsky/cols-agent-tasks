@@ -13,7 +13,10 @@ param (
     $Slot,
     
     [String] [Parameter(Mandatory = $true)]
-    $PackagePath
+    $PackagePath,
+    
+    [String] [Parameter(Mandatory = $true)]
+    $TokenRegex
 )
 
 # Import the Task.Common dll that has all the cmdlets we need for Build
@@ -28,6 +31,41 @@ function Get-SingleFile($files, $pattern) {
         }
         return $files
     }
+}
+
+function Replace-Tokens {
+    param (
+        [Parameter(Mandatory = $true)]
+        [String]$setParametersFile,
+        
+        [Parameter(Mandatory = $true)]
+        [String]$tokenRegex
+    )
+    
+    Write-Host "Replacing tokens with environment values"
+    
+    ### substitute the env vars into SetParameters file
+    $vars = gci -path env:*
+    
+    # read in the setParameters file
+    $contents = gc -Path $setParametersFile
+    
+    # perform a regex replacement
+    $newContents = "";
+    $contents | % {
+        $line = $_
+        if ($_ -match $tokenRegex) {
+            $setting = gci -path env:* | ? { $_.Name -eq $Matches[1]  }
+            if ($setting) {
+                Write-Host ("Replacing key {0} with value from environment" -f $setting.Name)
+                $line = $_ -replace $tokenRegex, $setting.Value
+            }
+        }
+        $newContents += $line + [Environment]::NewLine
+    }
+    
+    Write-Host "Overwriting SetParameters file with new values"
+    sc $setParametersFile -Value $newContents
 }
 
 Write-Verbose "Entering script Invoke-AzureWebDeployment.ps1"

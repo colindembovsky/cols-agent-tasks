@@ -1,0 +1,52 @@
+{
+  "id": "9240B5C1-A1B2-4799-9325-E071C63236FB",
+  "name": "ReplaceTokens",
+  "friendlyName": "Replace Tokens",
+  "description": "Replaces tokens in a file using RegEx. Values come from any variable defined in the current Environment.",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/ReplaceTokens)",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "1"
+  },
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Replace tokens in $(filePath)",
+  "inputs": [
+    {
+      "name": "filePath",
+      "type": "filePath",
+      "label": "Target file",
+      "defaultValue": "",
+      "helpMarkDown": "Path to the file containing tokens.",
+      "required": true
+    },
+    {
+      "name": "tokenRegex",
+      "type": "string",
+      "label": "Token Regex",
+      "defaultValue": "__(\\w+)__",
+      "helpMarkDown": "Regex to use for token replacement. Must include a group match.",
+      "required": true,
+      "groupName": "advanced"
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "replaceTokens.js",
+      "argumentFormat": ""
+    }
+  }
+}

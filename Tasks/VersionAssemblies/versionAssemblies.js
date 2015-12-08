@@ -1,4 +1,4 @@
-var tl = require('vso-task-lib');
+var tl = require('vso-task-lib/vsotask');
 var sh = require('shelljs');
 tl.debug("Starting Version Assemblies step");
 // get the task vars

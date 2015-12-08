@@ -4,7 +4,7 @@
   "friendlyName": "Docker Publish",
   "description": "Invokes the VS Tools for Docker script with optional overrides",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
-  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/blob/master/Tasks/DockerPublish/README.md)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DockerPublish)",
   "category": "Build",
   "visibility": [
     "Build",

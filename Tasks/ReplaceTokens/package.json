@@ -1,7 +1,7 @@
 {
-  "name": "ColinsALMCorner.BuildTasks",
-  "version": "0.1.1",
-  "description": "Custom build tasks for TFS or VSO",
+  "name": "ColinsALMCorner.BuildTasks.ReplaceTokens",
+  "version": "0.0.1",
+  "description": "Replaces tokens in a file",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,12 +22,6 @@
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "devDependencies": {
     "minimatch": "^2.0.10",
-    "shelljs": "^0.5.3",
-    "vso-task-lib": "^0.5.1"
-  },
-  "main": "index.js",
-  "dependencies": {
-    "process": "^0.11.1",
-    "q": "^1.4.1"
+    "shelljs": "^0.5.3"
   }
 }

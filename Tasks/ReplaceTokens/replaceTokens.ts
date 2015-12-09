@@ -1,4 +1,4 @@
-import * as tl from 'vso-task-lib/vsotask';
+import * as tl from 'vso-task-lib';
 import * as sh from 'shelljs';
 import * as fs from 'fs';
 

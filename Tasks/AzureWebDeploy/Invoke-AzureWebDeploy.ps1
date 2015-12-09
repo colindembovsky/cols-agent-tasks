@@ -58,14 +58,20 @@ Write-Host "setParamsFile= $setParamsFile"
 # get the azure website username/password and site name
 Write-Host "siteObj= Get-AzureWebsite -Name $WebSiteName [-Slot $Slot]"
 if ($Slot) {
-    $azureMachine = "https://{0}-{1}.scm.azurewebsites.net:443/msdeploy.axd" -f $WebSiteName, $Slot
     $siteObj = Get-AzureWebsite -Name $WebSiteName -Slot $Slot
+    $azureMachine = "https://{0}-{1}.scm.azurewebsites.net:443/msdeploy.axd" -f $WebSiteName, $Slot
     $iisSiteName = "{0}__{1}" -f $WebSiteName, $Slot
 } else {
+    $siteObj = Get-AzureWebsite -Name $WebSiteName -Slot "production"
     $azureMachine = "https://{0}.scm.azurewebsites.net:443/msdeploy.axd" -f $WebSiteName
-    $siteObj = Get-AzureWebsite -Name $WebSiteName
     $iisSiteName = $WebSiteName
 }
+
+if (-not $siteObj) {
+    Write-Error "Cannot find web app with name $WebSiteName"
+    exit 1
+}
+
 Write-Host "azureMachine= $azureMachine"
 Write-Host "iisSiteName= $iisSiteName"
 
@@ -77,9 +83,11 @@ $siteParam.value = $iisSiteName
 $paramXml.Save($setParamsFile)
 
 ### build the Azure command args
-$cmdArgs = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic" -f $azureMachine, $siteObj.PublishingUsername, $siteObj.PublishingPassword
+$cmdFormat = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic"
+$cmdArgs = $cmdFormat -f $azureMachine, $siteObj.PublishingUsername, $siteObj.PublishingPassword
+$printArgs = $cmdFormat -f $azureMachine, $siteObj.PublishingUsername, "*****"
 
-Write-Host "cmd /c $cmdFile $cmdArgs"
+Write-Host "cmd /c $cmdFile $printArgs"
 cmd /c "$cmdFile $cmdArgs"
 
 Write-Verbose -Verbose "Leaving script Invoke-WebDeployment.ps1"

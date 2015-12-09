@@ -4,8 +4,6 @@ tl.debug("Starting Replace Tokens step");
 // get the task vars
 var filePath = tl.getPathInput("filePath", true, true);
 var tokenRegex = tl.getInput("tokenRegex", true);
-tl.debug("filePath :" + filePath);
-tl.debug("tokenRegex : " + tokenRegex);
 var files = tl.find(filePath);
 if (files.length === 1) {
     var file = files[0];
@@ -28,16 +26,16 @@ if (files.length === 1) {
             }
             else {
                 data = data.replace(match[0], varValue);
-                tl.debug("... replaced token " + varName + " with environment value");
+                tl.debug("... replaced token " + varName);
             }
         }
         console.info("Writing new values to file");
         fs.writeFileSync(file, data);
+        tl.debug("Leaving Replace Tokens step");
     });
 }
 else {
     tl.error("Could not find file " + filePath);
     tl.exit(1);
 }
-tl.debug("Leaving Replace Tokens step");
 //# sourceMappingURL=replaceTokens.js.map

@@ -79,11 +79,11 @@
     },
     {
       "name": "buildOnly",
-      "type": "string",
+      "type": "boolean",
       "label": "Build only",
-      "defaultValue": "",
+      "defaultValue": false,
       "required": false,
-      "helpMarkDown": "If set to true, just run 'Docker build'. Otherwise, start a container from the image. Leave blank to take pubxml value.",
+      "helpMarkDown": "If checked, just run 'Docker build'. Otherwise, start a container from the image. Leave blank to take pubxml value.",
       "groupName": "build"
     },
     {

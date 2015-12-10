@@ -1,0 +1,120 @@
+{
+    "manifestVersion": 1,
+    "id": "colinsalmcorner-buildtasks",
+    "name": "Colin's ALM Corner Build & Release Tools",
+    "version": "1.0.0",
+    "publisher": "colinsalmcorner",
+    "public": false,
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "description": "Build extensions from Colin's ALM Corner to make life easier!",
+    "categories": [
+        "Build and release"
+    ],
+    "tags": [
+        "version",
+        "build",
+        "webdeploy",
+        "tokens",
+        "docker"  
+    ],
+    "screenshots": [
+        {
+            "path": "images/ss_AzureWebDeploy.png"
+        },
+        {
+            "path": "images/ss_dockerPublish.png"
+        },
+        {
+            "path": "images/ss_replaceTokens.png"
+        },
+        {
+            "path": "images/ss_versionAssemblies.png"
+        }    
+    ],
+    "content": {
+        "details": {
+            "path": "extension-overview.md"
+        },
+        "license": {
+            "path": "license.txt"
+        }
+    },
+    "links": {
+        "home": {
+            "uri": "http://colinsalmcorner.com"
+        },
+        "repository": {
+            "uri": "https://github.com/colindembovsky/cols-agent-tasks"
+        },
+        "issues": {
+            "uri": "https://github.com/colindembovsky/cols-agent-tasks/issues"
+        }
+    },
+    "branding": {
+        "color": "rgb(36, 43, 50)",
+        "theme": "dark"
+    },
+    "icons": {
+        "default": "images/extension-icon.png"        
+    },
+    "files": [
+        {
+            "path": "Tasks/AzureWebDeploy"
+        },
+        {
+            "path": "Tasks/DockerPublish"
+        },
+        {
+            "path": "Tasks/ReplaceTokens"
+        },
+        {
+            "path": "Tasks/VersionAssemblies"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "azure-webdeploy-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/AzureWebDeploy"
+            }
+        },
+        {
+            "id": "docker-publish-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/DockerPublish"
+            }
+        },
+        {
+            "id": "replace-tokens-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/ReplaceTokens"
+            }
+        },
+        {
+            "id": "version-assemblies-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/VersionAssemblies"
+            }
+        }
+    ]
+}

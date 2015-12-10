@@ -1,5 +1,7 @@
 # Colin's ALM Corner Build Tasks - Replace Tokens
 
+![Replace Tokens Task](../../images/ss_replaceTokens.png)
+
 ## Overview
 This task invokes replaces tokens in a file with values from the matching varialbes set in the Environment.
 

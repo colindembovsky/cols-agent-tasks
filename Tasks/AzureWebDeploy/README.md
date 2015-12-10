@@ -1,5 +1,7 @@
 # Colin's ALM Corner Build Tasks - Azure Web Deploy
 
+![Azure Web Deploy Task](../../images/ss_AzureWebDeploy.png)
+
 ## Overview
 This task invokes Web Deploy to Azure. Use this Task over the [Azure Web App Deployment](http://go.microsoft.com/fwlink/?LinkID=613750)
 when you want to use tokens in the SetParameters.xml file.

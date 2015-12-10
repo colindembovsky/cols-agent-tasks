@@ -1,5 +1,7 @@
 # Colin's ALM Corner Build Tasks - Version Assemblies
 
+![Version Assemblies Task](../../images/ss_versionAssemblies.png)
+
 ## Overview
 This task versions assemblies so that the assembly version matches the version portion of the build number.
 

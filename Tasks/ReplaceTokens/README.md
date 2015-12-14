@@ -34,7 +34,7 @@ replaced with. That's it!
 
 ## Different Token Identifiers
 If your tokens have a different identifier, then you can change the Token Regex. For example, if your tokens
-are of the form `[[Token]]`, then you can change the Regex to `[[(\w+)]]` and the task will work.
+are of the form `--Token--`, then you can change the Regex to `--(\w+)--` and the task will work.
 
 ## Gotchas
 1. Existing environment variables.

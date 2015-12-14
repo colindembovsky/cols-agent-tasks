@@ -9,7 +9,7 @@ This task invokes replaces tokens in a file with values from the matching varial
 The task requires the following settings:
 
 1. **Target File**: path to the file that contains the tokens.
-2. **Token Regex**: a RegEx to find the tokens. Must include a group selector. This defaults to `__(\w+)__`. This
+1. **Token Regex**: a RegEx to find the tokens. Must include a group selector. This defaults to `__(\w+)__`. This
 will match tokens that have double-underscore `__` prefix and postfix (e.g. `__MyVar__`).
 
 ## Environment Variables
@@ -37,6 +37,13 @@ If your tokens have a different identifier, then you can change the Token Regex.
 are of the form `[[Token]]`, then you can change the Regex to `[[(\w+)]]` and the task will work.
 
 ## Gotchas
-Be aware that there may be some existing environment variables on the build/release agent. For example
+1. Existing environment variables.
+
+    Be aware that there may be some existing environment variables on the build/release agent. For example
 `Username` is set to the identity that the agent is running under. In order to avoid conflicts, you should
 ensure that any tokens have a unique name. `WebUsername` is a better token than `Username` for this reason.
+
+1. Secrets
+
+    Secrets are not set as environment variables. You have to defined them explicitly to scripts and tasks.
+That means that if you wish to set secret values, you will need to do so outside of this task.

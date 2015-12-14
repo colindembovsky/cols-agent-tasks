@@ -27,7 +27,7 @@ if (files.length === 1) {
 			// find the variable value in the environment
 			var varName = match[1];
 			var varValue = tl.getVariable(varName);
-			if (varValue === null) {
+			if (typeof varValue === 'undefined') {
 				tl.warning(`... token ${varName} does not have an environment value`);
 			} else {
 				data = data.replace(match[0], varValue);

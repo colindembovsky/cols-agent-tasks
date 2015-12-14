@@ -42,6 +42,7 @@ are of the form `--Token--`, then you can change the Regex to `--(\w+)--` and th
     Be aware that there may be some existing environment variables on the build/release agent. For example
 `Username` is set to the identity that the agent is running under. In order to avoid conflicts, you should
 ensure that any tokens have a unique name. `WebUsername` is a better token than `Username` for this reason.
+You can see all the environment variables in the logs for a deployment.
 
 1. Secrets
 

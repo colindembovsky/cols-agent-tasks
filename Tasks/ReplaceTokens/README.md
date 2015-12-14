@@ -45,5 +45,5 @@ ensure that any tokens have a unique name. `WebUsername` is a better token than 
 
 1. Secrets
 
-    Secrets are not set as environment variables. You have to defined them explicitly to scripts and tasks.
+    Secrets are not set as environment variables. You have to pass them explicitly to scripts and tasks.
 That means that if you wish to set secret values, you will need to do so outside of this task.

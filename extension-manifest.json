@@ -2,9 +2,9 @@
     "manifestVersion": 1,
     "id": "colinsalmcorner-buildtasks",
     "name": "Colin's ALM Corner Build & Release Tools",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "colinsalmcorner",
-    "public": false,
+    "public": true,
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"

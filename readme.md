@@ -38,3 +38,13 @@ The following tasks are available:
 ## Changing the Code
 The easiest way to open the source is to clone the repo and open in [VSCode](https://code.visualstudio.com/). 
 If you change the .ts files, then run build (ctrl-shift-b) to compile the .js files.
+
+## Creating the Extension Package
+Help Pages can be found [here](https://www.visualstudio.com/en-us/integrate/extensions/overview).
+
+To compile the extension, update the version number in the `extension-manifest.json` file and run:
+```
+tfx extension create --manifest-globs .\extension-manifest.json
+```
+
+Upload to the marketplace by singing in to your [publisher profile](http://aka.ms/vsmarketplace-manage).

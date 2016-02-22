@@ -11,7 +11,7 @@ You need to upload these tasks to your TFS / VSTS server.
 3. Run `npm install` in the root folder.
 4. Run `npm install` in each Task folder.
 4. Run `tfx login` to login to your server.
-5. Run `tfx build tasks upload <path to task folder>` to upload a task, where <path to task folder> is the path 
+5. Run `tfx build tasks upload --task-path <path to task folder>` to upload a task, where <path to task folder> is the path 
 to the Task folder of the task you want to upload
 
 The task should now be available on your TFS / VSO.

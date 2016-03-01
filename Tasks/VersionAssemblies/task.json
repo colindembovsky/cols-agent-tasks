@@ -57,18 +57,30 @@
       "required": false,
       "helpMarkDown": "Regular Expression to replace with in files. Leave blank to use the Build Regex Pattern.",
       "groupName": "advanced"
+    },
+    {
+      "name": "replacePrefix",
+      "type": "string",
+      "label": "Prefix for Replacements",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "String to prefix the regex replacement with.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "buildRegexIndex",
+      "type": "string",
+      "label": "Build Regex Index",
+      "defaultValue": "0",
+      "required": false,
+      "helpMarkDown": "Index of group in build regular expression that you want to use as the version number. Leave as 0 if you have no groups.",
+      "groupName": "advanced"
     }
   ],
   "execution": {
     "Node": {
       "target": "versionAssemblies.js",
       "argumentFormat": ""
-    },  
-    "PowerShell": {
-      "target": "$(currentDirectory)\\VersionAssemblies.ps1",
-      "argumentFormat": "",
-      "workingDirectory": "$(currentDirectory)",
-      "platforms": [ "windows" ]
     }
   }
 }

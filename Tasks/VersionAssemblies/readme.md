@@ -30,7 +30,7 @@ If you're just versioning assemblies, then the defaults should work just fine. H
 If you want to version an Android app, then you need to change the version code in the AndroidManifest.xml file. The file looks something like
 this:
 
-```
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="myHealth.Client.Droid" android:versionCode="1" android:versionName="1.0" android:installLocation="auto">
 	<uses-sdk android:minSdkVersion="15" />
@@ -40,6 +40,7 @@ this:
 ```
 
 In order to replace the version code correctly, you should use the following settings:
+
 1. **Build Regex Pattern**: `(?:\d+\.\d+\.\d+\.)(\d+)` - this extracts the last digit from the build number.
 1. **Source Group Index**: `1` - selects the correct matching group (the last digit) instead of the entire match
 1. **Regex Replace Pattern**: `versionCode="\d+` - searches for the `versionCode` setting in the file

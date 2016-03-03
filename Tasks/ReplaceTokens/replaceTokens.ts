@@ -26,6 +26,7 @@ if (files.length === 1) {
 		while((match = reg.exec(data)) !== null) {
 			// find the variable value in the environment
 			var varName = match[1];
+            
 			var varValue = tl.getVariable(varName);
 			if (typeof varValue === 'undefined') {
 				tl.warning(`... token ${varName} does not have an environment value`);
@@ -35,7 +36,9 @@ if (files.length === 1) {
 			}
 		}
 		console.info("Writing new values to file");
-		fs.writeFileSync(file, data);
+        // make the file writable
+        sh.chmod(666, file);
+        fs.writeFileSync(file, data);
 		
 		tl.debug("Leaving Replace Tokens step");
 	});

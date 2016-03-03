@@ -1,4 +1,5 @@
 var tl = require('vso-task-lib');
+var sh = require('shelljs');
 var fs = require('fs');
 tl.debug("Starting Replace Tokens step");
 // get the task vars
@@ -30,6 +31,8 @@ if (files.length === 1) {
             }
         }
         console.info("Writing new values to file");
+        // make the file writable
+        sh.chmod(666, file);
         fs.writeFileSync(file, data);
         tl.debug("Leaving Replace Tokens step");
     });

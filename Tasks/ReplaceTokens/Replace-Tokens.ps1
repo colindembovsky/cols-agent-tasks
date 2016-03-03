@@ -55,6 +55,7 @@ function Replace-Tokens {
     $contents | % {
         $line = $_
         if ($_ -match $tokenRegex) {
+            $setting = 
             $setting = gci -path env:* | ? { $_.Name -eq $Matches[1]  }
             if ($setting) {
                 Write-Host ("Replacing key {0} with value from environment" -f $setting.Name)

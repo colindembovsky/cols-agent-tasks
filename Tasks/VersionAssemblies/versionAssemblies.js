@@ -1,5 +1,6 @@
 var tl = require('vso-task-lib/vsotask');
 var sh = require('shelljs');
+var fs = require('fs');
 tl.debug("Starting Version Assemblies step");
 // get the task vars
 var sourcePath = tl.getPathInput("sourcePath", true, true);
@@ -8,6 +9,7 @@ var buildRegex = tl.getInput("buildRegex", true);
 var buildRegexIndex = tl.getInput("buildRegexIndex", false);
 var replaceRegex = tl.getInput("replaceRegex", false);
 var replacePrefix = tl.getInput("replacePrefix", false);
+var failIfNoMatchFound = tl.getInput("failIfNoMatchFound", false);
 // get the build number from the env vars
 var buildNumber = tl.getVariable("Build.BuildNumber");
 tl.debug("sourcePath :" + sourcePath);
@@ -16,6 +18,7 @@ tl.debug("buildRegex : " + buildRegex);
 tl.debug("buildRegexIndex : " + buildRegexIndex);
 tl.debug("replaceRegex : " + replaceRegex);
 tl.debug("replacePrefix : " + replacePrefix);
+tl.debug("failIfNoMatchFound : " + failIfNoMatchFound);
 tl.debug("buildNumber : " + buildNumber);
 if (replaceRegex === undefined || replaceRegex.length === 0) {
     replaceRegex = buildRegex;
@@ -40,10 +43,30 @@ if (buildRegexObj.test(buildNumber)) {
         for (var i = 0; i < filesToReplace.length; i++) {
             var file = filesToReplace[i];
             console.info("  -> Changing version in " + file);
+            fs.readFile(file, 'utf8', function (err, data) {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                var checkMatches = new RegExp(replaceRegex).exec(data);
+                if (!checkMatches || checkMatches.length === 0) {
+                    if (failIfNoMatchFound || failIfNoMatchFound === 'true') {
+                        tl.error("No matches for regex [" + replaceRegex + "] found in file " + file);
+                    }
+                    else {
+                        tl.warning("No matches for regex [" + replaceRegex + "] found in file " + file);
+                    }
+                }
+                else {
+                    console.info(checkMatches.length + " matches for regex [" + replaceRegex + "] found in file " + file);
+                }
+            });
+            // make the file writable
+            sh.chmod(666, file);
             // replace all occurrences by adding g to the pattern
             sh.sed("-i", new RegExp(replaceRegex, "g"), replacePrefix + versionNum, file);
         }
-        console.info("Replaced version in " + filesToReplace.length + " files");
+        console.info("Processed " + filesToReplace.length + " files (check warnings for files with no matches)");
     }
 }
 else {

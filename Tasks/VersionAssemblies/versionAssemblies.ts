@@ -2,6 +2,42 @@ import * as tl from 'vso-task-lib/vsotask';
 import * as sh from 'shelljs';
 import * as fs from 'fs';
 
+// ------------------------- helper function ----------------------
+function processFiles(files: string[]) {
+    if (files.length === 0) {
+        return;
+    }
+    var file = files.pop();
+    
+    console.info(`  -> Changing version in ${file}`);
+    fs.readFile(file, 'utf8', (err, data) => {
+        if (err) {
+            tl.error(err.message);
+            return;
+        }
+        var checkMatches = new RegExp(replaceRegex).exec(data);
+        if (!checkMatches || checkMatches.length === 0) {
+            if (failIfNoMatchFound) {
+                tl.error(`No matches for regex [${replaceRegex}] found in file ${file}`);
+            } else {
+                tl.warning(`No matches for regex [${replaceRegex}] found in file ${file}`);
+            }
+        } else {
+            console.info(`${checkMatches.length} matches for regex [${replaceRegex}] found in file ${file}`);
+            
+            // make the file writable
+            sh.chmod(666, file);
+            // replace all occurrences by adding g to the pattern
+            sh.sed("-i", new RegExp(replaceRegex, "g"), replacePrefix + versionNum, file);
+        }
+        
+        // recurse till there are no files left to process        
+        processFiles(files);
+    });
+}
+
+// ------------------------- helper function ----------------------
+
 tl.debug("Starting Version Assemblies step");
 
 // get the task vars
@@ -11,7 +47,12 @@ var buildRegex = tl.getInput("buildRegex", true);
 var buildRegexIndex = tl.getInput("buildRegexIndex", false);
 var replaceRegex = tl.getInput("replaceRegex", false);
 var replacePrefix = tl.getInput("replacePrefix", false);
-//var failIfNoMatchFound = tl.getInput("failIfNoMatchFound", false);
+var failIfNoMatchFound = false;
+// TODO
+// var failIfNoMatchFoundStr = tl.getInput("failIfNoMatchFound", false);
+// if (failIfNoMatchFoundStr === 'true') {
+//     failIfNoMatchFound = true;
+// }
 
 // get the build number from the env vars
 var buildNumber = tl.getVariable("Build.BuildNumber");
@@ -22,7 +63,7 @@ tl.debug(`buildRegex : ${buildRegex}`);
 tl.debug(`buildRegexIndex : ${buildRegexIndex}`);
 tl.debug(`replaceRegex : ${replaceRegex}`);
 tl.debug(`replacePrefix : ${replacePrefix}`);
-//tl.debug(`failIfNoMatchFound : ${failIfNoMatchFound}`);
+tl.debug(`failIfNoMatchFound : ${failIfNoMatchFound}`);
 tl.debug(`buildNumber : ${buildNumber}`);
 
 if (replaceRegex === undefined || replaceRegex.length === 0){
@@ -49,35 +90,8 @@ if (buildRegexObj.test(buildNumber)) {
 	if (filesToReplace === undefined || filesToReplace.length === 0) {
 		tl.warning("No files found");
 	} else {
-		for(var i = 0; i < filesToReplace.length; i++){
-			var file = filesToReplace[i];
-			console.info(`  -> Changing version in ${file}`);
-			
-            fs.readFile(file, 'utf8', (err, data) => {
-               if (err) {
-                   tl.error(err.message);
-                   return;
-               }
-               var checkMatches = new RegExp(replaceRegex).exec(data);
-               if (!checkMatches || checkMatches.length === 0) {
-                    // TODO: this async process doesn't fail the build - have to figure out how to do that properly
-                //    if (failIfNoMatchFound || failIfNoMatchFound === 'true') {
-                //        tl.error(`No matches for regex [${replaceRegex}] found in file ${file}`);
-                //    } else {
-                //        tl.warning(`No matches for regex [${replaceRegex}] found in file ${file}`);
-                //    }
-                   tl.warning(`No matches for regex [${replaceRegex}] found in file ${file}`);
-               } else {
-                   console.info(`${checkMatches.length} matches for regex [${replaceRegex}] found in file ${file}`);
-                   
-                   // make the file writable
-                   sh.chmod(666, file);
-                   // replace all occurrences by adding g to the pattern
-                   sh.sed("-i", new RegExp(replaceRegex, "g"), replacePrefix + versionNum, file);
-               }
-            });
-		}
-		console.info(`Processed ${filesToReplace.length} files (check warnings for files with no matches)`);
+		processFiles(filesToReplace);
+		console.info(`Processed ${filesToReplace.length} files`);
 	}
 } else {
 	tl.warning(`Could not extract a version from [${buildNumber}] using pattern [${buildRegex}]`);
@@ -85,13 +99,12 @@ if (buildRegexObj.test(buildNumber)) {
 
 tl.debug("Leaving Version Assemblies step");
 
-// TODO: Put this in to the task.jso when I've figured out the async thing
-// ,
-//     {
-//       "name": "failIfNoMatchFound",
-//       "type": "boolean",
-//       "label": "Fail if no match found",
-//       "defaultValue": "false",
-//       "required": false,
-//       "helpMarkDown": "Fail the task if the target file has no matches for the replacement regex."
+//TODO: figure out async call
+// {
+//         "name": "failIfNoMatchFound",
+//         "type": "boolean",
+//         "label": "Fail If No Match Found",
+//         "defaultValue": "false",
+//         "required": false,
+//         "helpMarkDown": "Fail the build if no match is found for the replace regex in the target file(s)."
 //     },

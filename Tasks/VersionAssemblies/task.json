@@ -13,7 +13,7 @@
   "version": {
     "Major": "0",
     "Minor": "1",
-    "Patch": "8"
+    "Patch": "13"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Version Assemblies using $(filePattern)",
@@ -48,6 +48,14 @@
       "defaultValue": "\\d+\\.\\d+\\.\\d+\\.\\d+",
       "required": true,
       "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings)."
+    },
+    {
+        "name": "failIfNoMatchFound",
+        "type": "boolean",
+        "label": "Fail If No Match Found",
+        "defaultValue": "false",
+        "required": false,
+        "helpMarkDown": "Fail the build if no match is found for the replace regex in the target file(s)."
     },
     {
       "name": "replaceRegex",

@@ -45,18 +45,14 @@ if (buildRegexObj.test(buildNumber)) {
 	var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
 	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] in folder [${sourcePath}]`);
 	
-    // get a list of all files under this root
-    var allFiles = tl.find(sourcePath);
-
-    // Now matching the pattern against all files
-    var filesToReplace = tl.match(allFiles, filePattern, { matchBase: true });
+    var filesToReplace = tl.glob(`${sourcePath}\\${filePattern}`);
 	
 	if (filesToReplace === undefined || filesToReplace.length === 0) {
 		tl.warning("No files found");
 	} else {
 		for (var i = 0; i < filesToReplace.length; i++) {
             var file = filesToReplace[i];
-            console.info(`  -> Changing version in ${file}`);
+            console.info(`Changing version in ${file}`);
             
             var contents = fs.readFileSync(file, 'utf8').toString();
             var checkMatches = new RegExp(replaceRegex).exec(contents);

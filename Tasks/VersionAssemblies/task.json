@@ -13,7 +13,7 @@
   "version": {
     "Major": "0",
     "Minor": "1",
-    "Patch": "13"
+    "Patch": "14"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Version Assemblies using $(filePattern)",
@@ -39,7 +39,7 @@
       "label": "File Pattern",
       "defaultValue": "AssemblyInfo.*",
       "required": true,
-      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file."
+      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch"
     },
     {
       "name": "buildRegex",

@@ -13,7 +13,7 @@
   "version": {
     "Major": "0",
     "Minor": "0",
-    "Patch": "4"
+    "Patch": "5"
   },
   "groups": [
     {
@@ -26,11 +26,19 @@
   "instanceNameFormat": "Replace tokens in $(filePath)",
   "inputs": [
     {
-      "name": "filePath",
+      "name": "sourcePath",
       "type": "filePath",
-      "label": "Target file",
+      "label": "Source Path",
       "defaultValue": "",
-      "helpMarkDown": "Path to the file containing tokens.",
+      "helpMarkDown": "Path to the file(s) containing tokens.",
+      "required": true
+    },
+    {
+      "name": "filePattern",
+      "type": "string",
+      "label": "Target File Pattern",
+      "defaultValue": "*.config",
+      "helpMarkDown": "File pattern to find in source path. Supports minimatch.",
       "required": true
     },
     {

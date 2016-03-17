@@ -6,6 +6,22 @@ tl.debug("Starting Replace Tokens step");
 var sourcePath = tl.getPathInput("sourcePath", true, true);
 var filePattern = tl.getInput("filePattern", true);
 var tokenRegex = tl.getInput("tokenRegex", true);
+var secretTokenInput = tl.getInput("secretTokens", false);
+// store the tokens and values if there is any secret token input 
+var secretTokens = {};
+if (typeof secretTokenInput !== "undefined") {
+    var inputArray = secretTokenInput.split(";");
+    for (var _i = 0; _i < inputArray.length; _i++) {
+        var token = inputArray[_i];
+        if (token.indexOf(":") > -1) {
+            var valArray = token.split(":");
+            if (valArray.length == 2) {
+                secretTokens[valArray[0].trim().toLowerCase()] = valArray[1].trim();
+                console.log("Secret token input found \"" + valArray[0].trim() + "\"");
+            }
+        }
+    }
+}
 tl.debug("sourcePath :" + sourcePath);
 tl.debug("filePattern : " + filePattern);
 tl.debug("tokenRegex : " + tokenRegex);
@@ -26,15 +42,22 @@ for (var i = 0; i < files.length; i++) {
     // loop through each match
     var match;
     while ((match = reg.exec(contents)) !== null) {
-        // find the variable value in the environment
         var vName = match[1];
-        var vValue = tl.getVariable(vName);
-        if (typeof vValue === 'undefined') {
-            tl.warning("Token " + vName + " does not have an environment value");
+        if (typeof secretTokens[vName.toLowerCase()] !== "undefined") {
+            // try find the variable in secret tokens input first
+            contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
+            tl.debug("Replaced token \"" + vName + "\" with a secret value");
         }
         else {
-            contents = contents.replace(match[0], vValue);
-            tl.debug("Replaced token " + vName);
+            // find the variable value in the environment
+            var vValue = tl.getVariable(vName);
+            if (typeof vValue === 'undefined') {
+                tl.warning("Token \"" + vName + "\" does not have an environment value");
+            }
+            else {
+                contents = contents.replace(match[0], vValue);
+                tl.debug("Replaced token \"" + vName + "\"");
+            }
         }
     }
     console.info("Writing new values to file");

@@ -11,23 +11,25 @@ var tokenRegex = tl.getInput("tokenRegex", true);
 var secretTokenInput = tl.getInput("secretTokens", false);
 
 // store the tokens and values if there is any secret token input 
-var secretTokens: {[id: string] : string} = {};
-if(typeof secretTokenInput !== "undefined") {
+var secretTokens: {[id: string]: string} = {};
+if (typeof secretTokenInput !== "undefined") {
     var inputArray : string[] = secretTokenInput.split(";");
     for (var token of inputArray) {
-        if(token.indexOf(":") > -1) {  
+        if (token.indexOf(":") > -1) {  
             var valArray : string[] = token.split(":");
-            if(valArray.length == 2) {
-                secretTokens[valArray[0].trim().toLowerCase()] = valArray[1].trim();
-                console.log(`Secret token input found "${valArray[0].trim()}"`); 
+            if (valArray.length == 2) {
+                var key = valArray[0].trim().toLowerCase();
+                secretTokens[key] = valArray[1].trim();
+                console.log(`Secret token input found "${key}"`); 
             }
         }
-    }    
+    }
+    tl.debug(`secretTokens: found ${Object.keys(secretTokens).length} tokens`);    
 }
 
-tl.debug(`sourcePath :${sourcePath}`);
-tl.debug(`filePattern : ${filePattern}`);
-tl.debug(`tokenRegex : ${tokenRegex}`);
+tl.debug(`sourcePath: ${sourcePath}`);
+tl.debug(`filePattern: ${filePattern}`);
+tl.debug(`tokenRegex: ${tokenRegex}`);
 
 if (filePattern === undefined || filePattern.length === 0){
 	filePattern = "*.*";
@@ -54,7 +56,7 @@ for (var i = 0; i < files.length; i++) {
         if (typeof secretTokens[vName.toLowerCase()] !== "undefined") {
 			// try find the variable in secret tokens input first
             contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
-            tl.debug(`Replaced token "${vName }" with a secret value`);
+            tl.debug(`Replaced token "${vName}" with a secret value`);
         } else {
 			// find the variable value in the environment
             var vValue = tl.getVariable(vName);

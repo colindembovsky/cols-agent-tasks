@@ -16,15 +16,17 @@ if (typeof secretTokenInput !== "undefined") {
         if (token.indexOf(":") > -1) {
             var valArray = token.split(":");
             if (valArray.length == 2) {
-                secretTokens[valArray[0].trim().toLowerCase()] = valArray[1].trim();
-                console.log("Secret token input found \"" + valArray[0].trim() + "\"");
+                var key = valArray[0].trim().toLowerCase();
+                secretTokens[key] = valArray[1].trim();
+                console.log("Secret token input found \"" + key + "\"");
             }
         }
     }
+    tl.debug("secretTokens: found " + Object.keys(secretTokens).length + " tokens");
 }
-tl.debug("sourcePath :" + sourcePath);
-tl.debug("filePattern : " + filePattern);
-tl.debug("tokenRegex : " + tokenRegex);
+tl.debug("sourcePath: " + sourcePath);
+tl.debug("filePattern: " + filePattern);
+tl.debug("tokenRegex: " + tokenRegex);
 if (filePattern === undefined || filePattern.length === 0) {
     filePattern = "*.*";
 }

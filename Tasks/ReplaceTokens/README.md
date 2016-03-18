@@ -46,5 +46,14 @@ You can see all the environment variables in the logs for a deployment.
 
 1. Secrets
 
-    Secrets are not set as environment variables. You have to pass them explicitly to scripts and tasks.
-That means that if you wish to set secret values, you will need to do so outside of this task.
+    Since the native [vso-task-lib](https://github.com/Microsoft/vsts-task-lib) does not support secrets for 
+    Node (it does for PowerShell) there is a hack that allows you to specify secrets as an advanced parameter.
+    You specify them in key-value pairs (with the key being the name and the value being the secret variable) 
+    and can use a semi-colon to separate them:
+    
+    ```
+    key1:$(secret1);key2:$(secret2)
+    ```
+    
+    Hopefully [this issue](https://github.com/Microsoft/vsts-task-lib/issues/48) will be implemented and I can 
+    remove this "hack" - thanks to [Di](https://github.com/dixu99) for the contribution!

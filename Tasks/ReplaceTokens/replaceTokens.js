@@ -24,6 +24,8 @@ if (typeof secretTokenInput !== "undefined") {
     }
     tl.debug("secretTokens: found " + Object.keys(secretTokens).length + " tokens");
 }
+// remove quotes around the source path
+sourcePath = sourcePath.replace("\"", "");
 tl.debug("sourcePath: " + sourcePath);
 tl.debug("filePattern: " + filePattern);
 tl.debug("tokenRegex: " + tokenRegex);

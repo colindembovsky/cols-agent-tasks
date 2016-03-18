@@ -15,9 +15,10 @@ The task requires the following settings:
 ## Advanced Settings
 The following settings are optional and are used for advanced scenarios:
 
+1. **Build Regex Group Index**: Use this if the Build Regex Pattern has groups to index the group that you want to use as the version number.
 1. **Regex Replace Pattern**: Use this if the regex to search for in the target files is different from the Build Regex Pattern.
 1. **Prefix for Replacements**: Use this if you want to prefix the replacement value with a string.
-1. **Source Group Index**: Use this if the Build Regex Pattern has groups to index the group that you want to use as the version number.
+1. **Fail If No Target Match Found**: Use this to fail the task if there are no matches in the target file using the replacement regex.
 
 ## Using the Task
 The task should be inserted before any build tasks.

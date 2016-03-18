@@ -23,7 +23,7 @@
     }
   ],
   "minimumAgentVersion": "1.91.0",
-  "instanceNameFormat": "Replace tokens in $(filePath)",
+  "instanceNameFormat": "Replace tokens in $(sourcePath)",
   "inputs": [
     {
       "name": "sourcePath",

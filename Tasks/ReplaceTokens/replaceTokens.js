@@ -1,7 +1,7 @@
 var tl = require('vso-task-lib');
 var sh = require('shelljs');
 var fs = require('fs');
-tl.debug("Starting Replace Tokens step");
+tl.debug("Starting Replace Tokens task");
 // get the task vars
 var sourcePath = tl.getPathInput("sourcePath", true, true);
 var filePattern = tl.getInput("filePattern", true);
@@ -18,29 +18,29 @@ if (typeof secretTokenInput !== "undefined") {
             if (valArray.length == 2) {
                 var key = valArray[0].trim().toLowerCase();
                 secretTokens[key] = valArray[1].trim();
-                console.log("Secret token input found \"" + key + "\"");
+                console.log("Secret token input found [" + key + "]");
             }
         }
     }
-    tl.debug("secretTokens: found " + Object.keys(secretTokens).length + " tokens");
+    tl.debug("secretTokens: found [" + Object.keys(secretTokens).length + "] tokens");
 }
-// remove quotes around the source path
-sourcePath = sourcePath.replace("\"", "");
-tl.debug("sourcePath: " + sourcePath);
-tl.debug("filePattern: " + filePattern);
-tl.debug("tokenRegex: " + tokenRegex);
+tl.debug("sourcePath: [" + sourcePath + "]");
+tl.debug("filePattern: [" + filePattern + "]");
+tl.debug("tokenRegex: [" + tokenRegex + "]");
 if (filePattern === undefined || filePattern.length === 0) {
     filePattern = "*.*";
 }
-tl.debug("Using " + filePattern + " as filePattern");
-var files = tl.glob(sourcePath + "\\" + filePattern);
+tl.debug("Using [" + filePattern + "] as filePattern");
+// create a glob removing any spurious quotes
+var globPattern = (sourcePath + "\\" + filePattern).replace("\"", "");
+var files = tl.glob(globPattern);
 if (files.length === 0) {
-    tl.error("Could not find files with pattern [" + filePattern + "] in path [" + sourcePath + "]");
+    tl.error("Could not find files with glob [" + globPattern + "]");
     tl.exit(1);
 }
 for (var i = 0; i < files.length; i++) {
     var file = files[i];
-    console.info("Starting regex replacement in " + file);
+    console.info("Starting regex replacement in [" + file + "]");
     var contents = fs.readFileSync(file, 'utf8').toString();
     var reg = new RegExp(tokenRegex, "g");
     // loop through each match
@@ -50,17 +50,17 @@ for (var i = 0; i < files.length; i++) {
         if (typeof secretTokens[vName.toLowerCase()] !== "undefined") {
             // try find the variable in secret tokens input first
             contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
-            tl.debug("Replaced token \"" + vName + "\" with a secret value");
+            tl.debug("Replaced token [" + vName + "] with a secret value");
         }
         else {
             // find the variable value in the environment
             var vValue = tl.getVariable(vName);
             if (typeof vValue === 'undefined') {
-                tl.warning("Token \"" + vName + "\" does not have an environment value");
+                tl.warning("Token [" + vName + "] does not have an environment value");
             }
             else {
                 contents = contents.replace(match[0], vValue);
-                tl.debug("Replaced token \"" + vName + "\"");
+                tl.debug("Replaced token [" + vName + "]");
             }
         }
     }
@@ -69,5 +69,5 @@ for (var i = 0; i < files.length; i++) {
     sh.chmod(666, file);
     fs.writeFileSync(file, contents);
 }
-tl.debug("Leaving Replace Tokens step");
+tl.debug("Leaving Replace Tokens task");
 //# sourceMappingURL=replaceTokens.js.map

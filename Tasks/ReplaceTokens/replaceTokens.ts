@@ -37,7 +37,7 @@ if (filePattern === undefined || filePattern.length === 0){
 tl.debug(`Using [${filePattern}] as filePattern`);
 
 // create a glob removing any spurious quotes
-var globPattern = `${sourcePath}\\${filePattern}`.replace("\"", "");
+var globPattern = `${sourcePath}\\${filePattern}`.replace(/\"/g,"");
 var files = tl.glob(globPattern);
 if (files.length === 0) {
     tl.error(`Could not find files with glob [${globPattern}]`);

@@ -1,6 +1,7 @@
 import * as tl from 'vso-task-lib/vsotask';
 import * as sh from 'shelljs';
 import * as fs from 'fs';
+import * as os from 'os';
 
 tl.debug("Starting Version Assemblies step");
 
@@ -40,12 +41,14 @@ if (buildRegexIndex === undefined || buildRegexIndex.length === 0){
 }
 tl.debug(`Using ${buildRegexIndex} as the build regex index regex`);
 
+var separator = os.platform() === "win32" ? "\\" : "/";
+
 var buildRegexObj = new RegExp(buildRegex);
 if (buildRegexObj.test(buildNumber)) {
 	var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
 	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] in folder [${sourcePath}]`);
 	
-    var filesToReplace = tl.glob(`${sourcePath}\\${filePattern}`);
+    var filesToReplace = tl.glob(`${sourcePath}${separator}${filePattern}`);
 	
 	if (filesToReplace === undefined || filesToReplace.length === 0) {
 		tl.warning("No files found");

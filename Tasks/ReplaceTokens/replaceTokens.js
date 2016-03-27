@@ -1,6 +1,7 @@
 var tl = require('vso-task-lib');
 var sh = require('shelljs');
 var fs = require('fs');
+var os = require('os');
 tl.debug("Starting Replace Tokens task");
 // get the task vars
 var sourcePath = tl.getPathInput("sourcePath", true, true);
@@ -31,8 +32,9 @@ if (filePattern === undefined || filePattern.length === 0) {
     filePattern = "*.*";
 }
 tl.debug("Using [" + filePattern + "] as filePattern");
+var separator = os.platform() === "win32" ? "\\" : "/";
 // create a glob removing any spurious quotes
-var globPattern = (sourcePath + "\\" + filePattern).replace(/\"/g, "");
+var globPattern = ("" + sourcePath + separator + filePattern).replace(/\"/g, "");
 var files = tl.glob(globPattern);
 if (files.length === 0) {
     tl.error("Could not find files with glob [" + globPattern + "]");

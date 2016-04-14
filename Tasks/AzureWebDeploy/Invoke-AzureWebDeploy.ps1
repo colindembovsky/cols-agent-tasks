@@ -87,7 +87,7 @@ $cmdFormat = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic"
 $cmdArgs = $cmdFormat -f $azureMachine, $siteObj.PublishingUsername, $siteObj.PublishingPassword
 $printArgs = $cmdFormat -f $azureMachine, $siteObj.PublishingUsername, "*****"
 
-Write-Host "cmd /c $cmdFile $printArgs"
-cmd /c "$cmdFile $cmdArgs"
+Write-Host "cmd.exe /c `"$cmdFile`" $printArgs"
+iex "cmd.exe /c `"$cmdFile`" $cmdArgs"
 
 Write-Verbose -Verbose "Leaving script Invoke-WebDeployment.ps1"

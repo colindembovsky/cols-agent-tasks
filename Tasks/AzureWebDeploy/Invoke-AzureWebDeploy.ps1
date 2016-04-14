@@ -83,7 +83,7 @@ $siteParam.value = $iisSiteName
 $paramXml.Save($setParamsFile)
 
 ### build the Azure command args
-$username = siteObj.PublishingUsername.Replace("$", "`$")
+$username = $siteObj.PublishingUsername.Replace("$", "`$")
 $password = $siteObj.PublishingPassword.Replace("$", "`$")
 
 $cmdFormat = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic"

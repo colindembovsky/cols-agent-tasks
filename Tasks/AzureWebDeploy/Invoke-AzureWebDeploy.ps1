@@ -83,9 +83,12 @@ $siteParam.value = $iisSiteName
 $paramXml.Save($setParamsFile)
 
 ### build the Azure command args
+$username = siteObj.PublishingUsername.Replace("$", "`$")
+$password = $siteObj.PublishingPassword.Replace("$", "`$")
+
 $cmdFormat = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic"
-$cmdArgs = $cmdFormat -f $azureMachine, $siteObj.PublishingUsername, $siteObj.PublishingPassword
-$printArgs = $cmdFormat -f $azureMachine, $siteObj.PublishingUsername, "*****"
+$cmdArgs = $cmdFormat -f $azureMachine, $username, $password
+$printArgs = $cmdFormat -f $azureMachine, $username, "*****"
 
 Write-Host "cmd.exe /c `"$cmdFile`" $printArgs"
 iex "cmd.exe /c `"$cmdFile`" $cmdArgs"

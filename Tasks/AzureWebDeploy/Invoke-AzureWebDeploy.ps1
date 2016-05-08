@@ -13,7 +13,10 @@ param (
     $Slot,
     
     [String] [Parameter(Mandatory = $true)]
-    $PackagePath
+    $PackagePath,
+    
+    [String] [Parameter(Mandatory = $false)]
+    $AdditionalArguments
 )
 
 # Import the Task.Common dll that has all the cmdlets we need for Build
@@ -39,6 +42,7 @@ Write-Host "PackagePath= $PackagePath"
 Write-Host "PackagePath= $SetParametersFilePath"
 Write-Host "PackagePath= $CmdFilePath"
 Write-Host "Slot= $Slot"
+Write-Host "AdditionalArguments= $AdditionalArguments"
 
 ### find the package, setParameters and cmd files
 import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
@@ -86,11 +90,11 @@ $paramXml.Save($setParamsFile)
 $username = $siteObj.PublishingUsername.Replace("$", "`$")
 $password = $siteObj.PublishingPassword.Replace("$", "`$")
 
-$cmdFormat = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic"
-$cmdArgs = $cmdFormat -f $azureMachine, $username, $password
-$printArgs = $cmdFormat -f $azureMachine, $username, "*****"
+$cmdFormat = "/Y `"/M:{0}`" `"/u:{1}`" `"/p:{2}`" /a:Basic {3}"
+$cmdArgs = $cmdFormat -f $azureMachine, $username, $password, $AdditionalArguments
+$printArgs = $cmdFormat -f $azureMachine, $username, "*****", $AdditionalArguments
 
 Write-Host "& `"$cmdFile`" $printArgs"
-& "$cmdFile" /Y /M:"$azureMachine" /u:"$username" /p:"$password" /a:Basic
+& "$cmdFile" /Y /M:"$azureMachine" /u:"$username" /p:"$password" /a:Basic $AdditionalArguments
 
 Write-Verbose -Verbose "Leaving script Invoke-WebDeployment.ps1"

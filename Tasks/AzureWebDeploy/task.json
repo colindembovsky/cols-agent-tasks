@@ -80,6 +80,14 @@
       "defaultValue": "",
       "helpMarkDown": "Path to the folder containing the WebDeploy zip file, cmd and SetParameters.xml file.",
       "required": true
+    },
+    {
+      "name": "AdditionalArguments",
+      "type": "multiLine",
+      "label": "Additional Arguments",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Additional arguments"
     }
   ],
   "sourceDefinitions": [

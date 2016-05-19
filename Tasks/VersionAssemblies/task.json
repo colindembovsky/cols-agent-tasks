@@ -77,6 +77,15 @@
       "groupName": "advanced"
     },
     {
+      "name": "replacePostfix",
+      "type": "string",
+      "label": "Postfix for Replacements",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "String to postfix the regex replacement with.",
+      "groupName": "advanced"
+    },
+    {
         "name": "failIfNoMatchFound",
         "type": "boolean",
         "label": "Fail If No Target Match Found",

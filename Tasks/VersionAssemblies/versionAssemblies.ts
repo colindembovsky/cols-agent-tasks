@@ -12,6 +12,7 @@ var buildRegex = tl.getInput("buildRegex", true);
 var buildRegexIndex = tl.getInput("buildRegexIndex", false);
 var replaceRegex = tl.getInput("replaceRegex", false);
 var replacePrefix = tl.getInput("replacePrefix", false);
+var replacePostfix = tl.getInput("replacePostfix", false);
 var failIfNoMatchFoundStr = tl.getInput("failIfNoMatchFound", false);
 
 var failIfNoMatchFound = false;
@@ -30,6 +31,7 @@ tl.debug(`buildRegex : ${buildRegex}`);
 tl.debug(`buildRegexIndex : ${buildRegexIndex}`);
 tl.debug(`replaceRegex : ${replaceRegex}`);
 tl.debug(`replacePrefix : ${replacePrefix}`);
+tl.debug(`replacePostfix : ${replacePostfix}`);
 tl.debug(`failIfNoMatchFound : ${failIfNoMatchFound}`);
 tl.debug(`buildNumber : ${buildNumber}`);
 
@@ -48,7 +50,7 @@ var separator = os.platform() === "win32" ? "\\" : "/";
 var buildRegexObj = new RegExp(buildRegex);
 if (buildRegexObj.test(buildNumber)) {
 	var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
-	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] in folder [${sourcePath}]`);
+	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] and postfix [$(replacePostfix)] in folder [${sourcePath}]`);
 	
     var filesToReplace = tl.glob(`${sourcePath}${separator}${filePattern}`);
 	
@@ -74,7 +76,7 @@ if (buildRegexObj.test(buildNumber)) {
                 // make the file writable
                 sh.chmod(666, file);
                 // replace all occurrences by adding g to the pattern
-                sh.sed("-i", new RegExp(replaceRegex, "g"), replacePrefix + versionNum, file);
+                sh.sed("-i", new RegExp(replaceRegex, "g"), replacePrefix + versionNum + replacePostfix, file);
             }
         }
 		console.info(`Processed ${filesToReplace.length} files`);

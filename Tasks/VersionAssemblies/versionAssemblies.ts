@@ -18,6 +18,8 @@ var failIfNoMatchFound = false;
 if (failIfNoMatchFoundStr === 'true') {
     failIfNoMatchFound = true;
 }
+// clear leading and trailing quotes for paths with spaces
+sourcePath = sourcePath.replace(/"/g, "");
 
 // get the build number from the env vars
 var buildNumber = tl.getVariable("Build.BuildNumber");

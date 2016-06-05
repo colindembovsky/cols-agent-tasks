@@ -5,6 +5,8 @@ var os = require('os');
 tl.debug("Starting Replace Tokens task");
 // get the task vars
 var sourcePath = tl.getPathInput("sourcePath", true, true);
+// clear leading and trailing quotes for paths with spaces
+sourcePath = sourcePath.replace(/"/g, "");
 var filePattern = tl.getInput("filePattern", true);
 var tokenRegex = tl.getInput("tokenRegex", true);
 var secretTokenInput = tl.getInput("secretTokens", false);

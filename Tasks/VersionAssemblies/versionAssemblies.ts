@@ -50,7 +50,7 @@ var separator = os.platform() === "win32" ? "\\" : "/";
 var buildRegexObj = new RegExp(buildRegex);
 if (buildRegexObj.test(buildNumber)) {
 	var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
-	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] and postfix [$(replacePostfix)] in folder [${sourcePath}]`);
+	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] and postfix [${replacePostfix}] in folder [${sourcePath}]`);
 	
     var filesToReplace = tl.glob(`${sourcePath}${separator}${filePattern}`);
 	

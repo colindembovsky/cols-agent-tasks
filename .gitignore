@@ -195,3 +195,4 @@ ModelManifest.xml
 /Package
 
 *.vsix
+**/*.tar.gz

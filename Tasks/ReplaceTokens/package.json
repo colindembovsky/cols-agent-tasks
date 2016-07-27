@@ -1,6 +1,6 @@
 {
-  "name": "ColinsALMCorner.BuildTasks.ReplaceTokens",
-  "version": "0.0.2",
+  "name": "colinsalmcornerbuildtasksreplacetokens",
+  "version": "0.0.3",
   "description": "Replaces tokens in a file",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,6 +23,6 @@
   "devDependencies": {
     "minimatch": "^2.0.10",
     "shelljs": "^0.5.3",
-    "vso-task-lib": "^0.5.1"
+    "vsts-task-lib": "^0.9.6"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "ColinsALMCorner.BuildTasks.VersionAssemblies",
-  "version": "0.1.4",
+  "name": "colinsalmcornerbuildtasksversionassemblies",
+  "version": "0.1.5",
   "description": "Versions assemblies",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,6 +23,6 @@
   "devDependencies": {
     "minimatch": "^2.0.10",
     "shelljs": "^0.5.3",
-    "vso-task-lib": "^0.5.1"
+    "vsts-task-lib": "^0.9.6"
   }
 }

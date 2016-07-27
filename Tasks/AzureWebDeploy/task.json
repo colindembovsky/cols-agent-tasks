@@ -1,7 +1,7 @@
 {
   "id": "5C9EA8BE-E6FB-4AE7-905E-67BFD6741967",
   "name": "AzureWebDeploy",
-  "friendlyName": "Azure Web Deploy",
+  "friendlyName": "(deprecated) Azure Web Deploy",
   "description": "Invokes web deploy to Azure website, substituting any Environment variables into the SetParameters.xml file",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/AzureWebDeploy)",
@@ -16,7 +16,7 @@
   "version": {
     "Major": "0",
     "Minor": "1",
-    "Patch": "14"
+    "Patch": "16"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Invoke WebDeploy for $(WebSiteName)",

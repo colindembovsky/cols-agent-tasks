@@ -1,4 +1,4 @@
-var tl = require('vso-task-lib/vsotask');
+var tl = require('vsts-task-lib/task');
 var sh = require('shelljs');
 var fs = require('fs');
 var os = require('os');
@@ -18,8 +18,18 @@ if (failIfNoMatchFoundStr === 'true') {
 }
 // clear leading and trailing quotes for paths with spaces
 sourcePath = sourcePath.replace(/"/g, "");
+if (os.platform() !== "win32") {
+    sourcePath = sourcePath.replace(/\\/g, "/");
+    filePattern = filePattern.replace(/\\/g, "/");
+}
+sourcePath = sourcePath.replace(/"/g, "");
 // get the build number from the env vars
 var buildNumber = tl.getVariable("Build.BuildNumber");
+// these will be null if not specified - change to empty string
+if (!replacePrefix)
+    replacePrefix = "";
+if (!replacePostfix)
+    replacePostfix = "";
 tl.debug("sourcePath :" + sourcePath);
 tl.debug("filePattern : " + filePattern);
 tl.debug("buildRegex : " + buildRegex);
@@ -29,11 +39,11 @@ tl.debug("replacePrefix : " + replacePrefix);
 tl.debug("replacePostfix : " + replacePostfix);
 tl.debug("failIfNoMatchFound : " + failIfNoMatchFound);
 tl.debug("buildNumber : " + buildNumber);
-if (replaceRegex === undefined || replaceRegex.length === 0) {
+if (!replaceRegex || replaceRegex.length === 0) {
     replaceRegex = buildRegex;
 }
 tl.debug("Using " + replaceRegex + " as the replacement regex");
-if (buildRegexIndex === undefined || buildRegexIndex.length === 0) {
+if (!buildRegexIndex || buildRegexIndex.length === 0) {
     buildRegexIndex = "0";
 }
 tl.debug("Using " + buildRegexIndex + " as the build regex index regex");
@@ -43,7 +53,7 @@ if (buildRegexObj.test(buildNumber)) {
     var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
     console.info("Using prefix [" + replacePrefix + "] and version [" + versionNum + "] and postfix [" + replacePostfix + "] in folder [" + sourcePath + "]");
     var filesToReplace = tl.glob("" + sourcePath + separator + filePattern);
-    if (filesToReplace === undefined || filesToReplace.length === 0) {
+    if (!filesToReplace || filesToReplace.length === 0) {
         tl.warning("No files found");
     }
     else {

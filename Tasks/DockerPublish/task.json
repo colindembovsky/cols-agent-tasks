@@ -1,7 +1,7 @@
 {
   "id": "639B8E0C-2C2C-41E7-B822-4D03AEFCB92B",
   "name": "DockerPublish",
-  "friendlyName": "Docker Publish",
+  "friendlyName": "(deprecated) Docker Publish",
   "description": "Invokes the VS Tools for Docker script with optional overrides",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DockerPublish)",
@@ -14,7 +14,7 @@
   "version": {
     "Major": "0",
     "Minor": "1",
-    "Patch": "36"
+    "Patch": "37"
   },
   "instanceNameFormat": "Docker Publish",
   "groups": [

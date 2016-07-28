@@ -1,6 +1,6 @@
 FROM microsoft/dotnet:1.0.0-core
 
-# defualts
+# defaults - override them using --build-arg
 ARG AGENT_URL=https://github.com/Microsoft/vsts-agent/releases/download/v2.103.1/vsts-agent-ubuntu.14.04-x64-2.103.1.tar.gz
 ARG AGENT_NAME=docker
 ARG AGENT_POOL=default

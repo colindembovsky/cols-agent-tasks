@@ -16,7 +16,7 @@ var secretTokenInput = tl.getInput("secretTokens", false);
 
 // store the tokens and values if there is any secret token input 
 var secretTokens: {[id: string]: string} = {};
-if (typeof secretTokenInput !== "undefined") {
+if (secretTokenInput != null && typeof secretTokenInput !== 'undefined') {
     var inputArray : string[] = secretTokenInput.split(";");
     for (var token of inputArray) {
         if (token.indexOf(":") > -1) {  
@@ -68,7 +68,7 @@ for (var i = 0; i < files.length; i++) {
     var match: RegExpExecArray;
     while((match = reg.exec(contents)) !== null) {
         var vName = match[1];
-        if (typeof secretTokens[vName.toLowerCase()] !== "undefined") {
+        if (typeof secretTokens[vName.toLowerCase()] !== 'undefined') {
             // try find the variable in secret tokens input first
             contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
             tl.debug(`Replaced token [${vName}] with a secret value`);

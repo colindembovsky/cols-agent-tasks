@@ -23,15 +23,15 @@ The following tasks are available:
 
 	This task versions assemblies according to the build number. [More...](./Tasks/VersionAssemblies)
 
-2. **Docker Publish**
-
-	This task performs `docker build` and (optionally) `docker run` to deploy your app to a docker host. [More...](./Tasks/DockerPublish)
-		
-3. **Replace Tokens**
+2. **Replace Tokens**
 
 	This task replaces tokens in a file using Environment variables. [More...](./Tasks/ReplaceTokens)
 
-4. **Azure Web Deploy**
+3. **Docker Publish (Deprecated)**
+
+	This task performs `docker build` and (optionally) `docker run` to deploy your app to a docker host. [More...](./Tasks/DockerPublish)
+
+4. **Azure Web Deploy (Deprecated)**
 
 	This task executes WebDeploy to publish a WebDeploy package to an Azure Web App. [More...](./Tasks/AzureWebDeploy)
 

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "colinsalmcorner-buildtasks",
     "name": "Colin's ALM Corner Build & Release Tools",
-    "version": "1.0.30",
+    "version": "1.0.31",
     "publisher": "colinsalmcorner",
     "public": true,
     "targets": [
@@ -17,9 +17,8 @@
     "tags": [
         "version",
         "build",
-        "webdeploy",
-        "tokens",
-        "docker"  
+        "replacement",
+        "tokens"
     ],
     "screenshots": [
         {

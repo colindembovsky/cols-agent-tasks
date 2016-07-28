@@ -1,4 +1,6 @@
 # Colin's ALM Corner Build Tasks - Docker Publish
+## DEPRECATED
+> The [Docker Integration Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscs-rm.docker) is finally fully featured, so I'm deprecating this task.
 
 ![Docker Publish Task](../../images/ss_dockerPublish.png)
 

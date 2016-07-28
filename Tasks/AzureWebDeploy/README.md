@@ -1,4 +1,6 @@
 # Colin's ALM Corner Build Tasks - Azure Web Deploy
+## DEPRECATED
+> The [Azure RM WebApp Deploy Task](https://github.com/Microsoft/vsts-tasks/tree/master/Tasks/AzureRmWebAppDeployment) now does everything this task does, so I'm deprecating this task.
 
 ![Azure Web Deploy Task](../../images/ss_AzureWebdeploy.png)
 

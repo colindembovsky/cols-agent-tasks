@@ -21,11 +21,6 @@ if (failIfNoMatchFoundStr === 'true') {
 }
 // clear leading and trailing quotes for paths with spaces
 sourcePath = sourcePath.replace(/"/g, "");
-if (os.platform() !== "win32") {
-    sourcePath = sourcePath.replace(/\\/g, "/");
-    filePattern = filePattern.replace(/\\/g, "/");
-}
-sourcePath = sourcePath.replace(/"/g, "");
 
 // get the build number from the env vars
 var buildNumber = tl.getVariable("Build.BuildNumber");
@@ -61,7 +56,12 @@ if (buildRegexObj.test(buildNumber)) {
 	var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
 	console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] and postfix [${replacePostfix}] in folder [${sourcePath}]`);
 	
-    var filesToReplace = tl.glob(`${sourcePath}${separator}${filePattern}`);
+    var globPattern = `${sourcePath}${separator}${filePattern}`;
+    if (os.platform() !== "win32") {
+        // replace \ with /
+        globPattern = globPattern.replace(/\\/g, "/");
+    }
+    var filesToReplace = tl.glob(globPattern);
 	
 	if (!filesToReplace || filesToReplace.length === 0) {
 		tl.warning("No files found");

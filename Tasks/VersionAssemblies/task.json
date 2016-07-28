@@ -13,7 +13,7 @@
   "version": {
     "Major": "0",
     "Minor": "1",
-    "Patch": "30"
+    "Patch": "34"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Version Assemblies using $(filePattern)",
@@ -31,7 +31,7 @@
       "label": "Source Path",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files)." 
+      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). NOTE: this is casese sensitive for non-Windows systems." 
     },
     {
       "name": "filePattern",
@@ -39,7 +39,7 @@
       "label": "File Pattern",
       "defaultValue": "**\\AssemblyInfo.*",
       "required": true,
-      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch"
+      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch. NOTE: this is casese sensitive for non-Windows systems."
     },
     {
       "name": "buildRegex",

@@ -13,7 +13,7 @@
   "version": {
     "Major": "0",
     "Minor": "0",
-    "Patch": "19"
+    "Patch": "24"
   },
   "groups": [
     {
@@ -23,14 +23,14 @@
     }
   ],
   "minimumAgentVersion": "1.91.0",
-  "instanceNameFormat": "Replace tokens in $(sourcePath)",
+  "instanceNameFormat": "Replace tokens in $(sourcePath).",
   "inputs": [
     {
       "name": "sourcePath",
       "type": "filePath",
       "label": "Source Path",
       "defaultValue": "",
-      "helpMarkDown": "Path to the file(s) containing tokens.",
+      "helpMarkDown": "Path to the file(s) containing tokens. NOTE: this is casese sensitive for non-Windows systems.",
       "required": true
     },
     {
@@ -38,7 +38,7 @@
       "type": "string",
       "label": "Target File Pattern",
       "defaultValue": "*.config",
-      "helpMarkDown": "File pattern to find in source path. Supports minimatch.",
+      "helpMarkDown": "File pattern to find in source path. Supports minimatch. NOTE: this is casese sensitive for non-Windows systems.",
       "required": true
     },
     {

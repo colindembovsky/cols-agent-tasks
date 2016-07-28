@@ -35,48 +35,50 @@ if (!filePattern || filePattern.length === 0) {
 }
 tl.debug("Using [" + filePattern + "] as filePattern");
 var separator = os.platform() === "win32" ? "\\" : "/";
-if (os.platform() !== "win32") {
-    sourcePath = sourcePath.replace(/\\/g, "/");
-    filePattern = filePattern.replace(/\\/g, "/");
-}
 // create a glob removing any spurious quotes
 var globPattern = ("" + sourcePath + separator + filePattern).replace(/\"/g, "");
+if (os.platform() !== "win32") {
+    // replace \ with /
+    globPattern = globPattern.replace(/\\/g, "/");
+}
 var files = tl.glob(globPattern);
 if (!files || files.length === 0) {
-    tl.error("Could not find files with glob [" + globPattern + "]");
+    var msg = "Could not find files with glob [" + globPattern + "].";
+    if (os.platform() !== "win32") {
+        tl.warning("No files found for pattern. Non-windows file systems are case sensitvive, so check the case of your path and file patterns.");
+    }
+    tl.setResult(tl.TaskResult.Failed, msg);
 }
-else {
-    for (var i = 0; i < files.length; i++) {
-        var file = files[i];
-        console.info("Starting regex replacement in [" + file + "]");
-        var contents = fs.readFileSync(file, 'utf8').toString();
-        var reg = new RegExp(tokenRegex, "g");
-        // loop through each match
-        var match;
-        while ((match = reg.exec(contents)) !== null) {
-            var vName = match[1];
-            if (typeof secretTokens[vName.toLowerCase()] !== "undefined") {
-                // try find the variable in secret tokens input first
-                contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
-                tl.debug("Replaced token [" + vName + "] with a secret value");
+for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    console.info("Starting regex replacement in [" + file + "]");
+    var contents = fs.readFileSync(file, 'utf8').toString();
+    var reg = new RegExp(tokenRegex, "g");
+    // loop through each match
+    var match;
+    while ((match = reg.exec(contents)) !== null) {
+        var vName = match[1];
+        if (typeof secretTokens[vName.toLowerCase()] !== "undefined") {
+            // try find the variable in secret tokens input first
+            contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
+            tl.debug("Replaced token [" + vName + "] with a secret value");
+        }
+        else {
+            // find the variable value in the environment
+            var vValue = tl.getVariable(vName);
+            if (typeof vValue === 'undefined') {
+                tl.warning("Token [" + vName + "] does not have an environment value");
             }
             else {
-                // find the variable value in the environment
-                var vValue = tl.getVariable(vName);
-                if (typeof vValue === 'undefined') {
-                    tl.warning("Token [" + vName + "] does not have an environment value");
-                }
-                else {
-                    contents = contents.replace(match[0], vValue);
-                    tl.debug("Replaced token [" + vName + "]");
-                }
+                contents = contents.replace(match[0], vValue);
+                tl.debug("Replaced token [" + vName + "]");
             }
         }
-        console.info("Writing new values to file");
-        // make the file writable
-        sh.chmod(666, file);
-        fs.writeFileSync(file, contents);
     }
+    console.info("Writing new values to file");
+    // make the file writable
+    sh.chmod(666, file);
+    fs.writeFileSync(file, contents);
 }
 tl.debug("Leaving Replace Tokens task");
 //# sourceMappingURL=replaceTokens.js.map

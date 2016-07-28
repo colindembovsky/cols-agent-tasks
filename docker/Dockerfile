@@ -21,7 +21,7 @@ WORKDIR /home/agent
 # download the agent tarball
 #RUN curl -Lo agent.tar.gz $AGENT_URL && tar xvf agent.tar.gz && rm agent.tar.gz
 COPY *.tar.gz .
-RUN tar xzf *.tar.gz
+RUN tar xzf *.tar.gz && rm -f *.tar.gz
 RUN bin/Agent.Listener configure --url https://$VSTS_ACC.visualstudio.com --agent $AGENT_NAME --pool $AGENT_POOL --acceptteeeula --auth PAT --token $PAT --unattended
 
 ENTRYPOINT ./run.sh

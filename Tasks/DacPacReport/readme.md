@@ -1,0 +1,28 @@
+# Colin's ALM Corner Build Tasks - Version Assemblies
+
+![DacPac Report Task](../../images/ss_dacpacReport.png)
+
+## Overview
+This task produces a deployment report showing changes in a database schema project since the last build.
+
+## Settings
+The task requires the following settings:
+
+1. **Source Path**: path to the sources that contain the version number files (such as AssemblyInfo.cs).
+1. **File Pattern**: file pattern to search for within the `Source Path`. Defaults to "AssemblyInfo.*"
+1. **Build Regex Pattern**: Regex pattern to apply to the build number in order to extract a version number. Defaults to `\d+\.\d+\.\d+\.\d+`.
+
+## Advanced Settings
+The following settings are optional and are used for advanced scenarios:
+
+1. **Build Regex Group Index**: Use this if the Build Regex Pattern has groups to index the group that you want to use as the version number.
+1. **Regex Replace Pattern**: Use this if the regex to search for in the target files is different from the Build Regex Pattern.
+1. **Prefix for Replacements**: Use this if you want to prefix the replacement value with a string.
+1. **Fail If No Target Match Found**: Use this to fail the task if there are no matches in the target file using the replacement regex.
+
+## Using the Task
+The task should be inserted before any build tasks.
+
+Also, you must customize the build number format (on the General tab of the build definition) in order to specify a format in such a way that the `Build Regex Pattern` can extract a build number from it. For example, if the build number is `1.0.0$(rev:.r)`, then you can use the regex `\d+\.\d+\.\d+\.\d+` to extract the version number.
+
+If you're just versioning assemblies, then the defaults should work just fine. However, there are some advanced scenarios.

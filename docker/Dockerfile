@@ -1,7 +1,8 @@
-FROM microsoft/dotnet:1.0.0-core
+#FROM microsoft/dotnet:latest
+FROM colin/agentbase:latest
 
 # defaults - override them using --build-arg
-ARG AGENT_URL=https://github.com/Microsoft/vsts-agent/releases/download/v2.103.1/vsts-agent-ubuntu.14.04-x64-2.103.1.tar.gz
+ARG AGENT_URL=https://github.com/Microsoft/vsts-agent/releases/download/v2.104.0/vsts-agent-ubuntu.14.04-x64-2.104.0.tar.gz
 ARG AGENT_NAME=docker
 ARG AGENT_POOL=default
 
@@ -11,7 +12,11 @@ ARG PAT
 
 # install git
 #RUN apt-get update && apt-get -y install software-properties-common && apt-add-repository ppa:git-core/ppa
-RUN apt-get update && apt-get -y install git
+#RUN apt-get update && apt-get -y install git
+
+# prereqs required to run dotnet publish
+#RUN apt-get install -y nodejs-legacy npm
+#RUN npm install -g bower
 
 # create a user
 RUN useradd -ms /bin/bash agent

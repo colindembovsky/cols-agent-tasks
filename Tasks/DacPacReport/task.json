@@ -1,0 +1,104 @@
+{
+  "id": "5b4d14d0-3868-11e4-a31d-3f0a2d8202f4",
+  "name": "DacPacReport",
+  "friendlyName": "DacPac Report",
+  "description": "Provides a report on database model changes since the last build",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DacPacReport)",
+  "category": "Build",
+  "visibility": [
+    "Build"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "1",
+    "Patch": "34"
+  },
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Version Assemblies using $(filePattern)",
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "name": "sourcePath",
+      "type": "filePath",
+      "label": "Source Path",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). NOTE: this is casese sensitive for non-Windows systems." 
+    },
+    {
+      "name": "filePattern",
+      "type": "string",
+      "label": "File Pattern",
+      "defaultValue": "**\\AssemblyInfo.*",
+      "required": true,
+      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch. NOTE: this is casese sensitive for non-Windows systems."
+    },
+    {
+      "name": "buildRegex",
+      "type": "string",
+      "label": "Build Regex Pattern",
+      "defaultValue": "\\d+\\.\\d+\\.\\d+\\.\\d+",
+      "required": true,
+      "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings)."
+    },
+    {
+      "name": "buildRegexIndex",
+      "type": "string",
+      "label": "Build Regex Group Index",
+      "defaultValue": "0",
+      "required": false,
+      "helpMarkDown": "Index of group in build regular expression that you want to use as the version number. Leave as 0 if you have no groups.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "replaceRegex",
+      "type": "string",
+      "label": "Regex Replace Pattern",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Regular Expression to replace with in files. Leave blank to use the Build Regex Pattern.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "replacePrefix",
+      "type": "string",
+      "label": "Prefix for Replacements",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "String to prefix the regex replacement with.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "replacePostfix",
+      "type": "string",
+      "label": "Postfix for Replacements",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "String to postfix the regex replacement with.",
+      "groupName": "advanced"
+    },
+    {
+        "name": "failIfNoMatchFound",
+        "type": "boolean",
+        "label": "Fail If No Target Match Found",
+        "defaultValue": "false",
+        "required": false,
+        "helpMarkDown": "Fail the build if no match is found for the replace regex in the target file(s).",
+        "groupName": "advanced"
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "versionAssemblies.js",
+      "argumentFormat": ""
+    }
+  }
+}

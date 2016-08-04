@@ -1,0 +1,28 @@
+{
+  "name": "colinsalmcornerbuildtasksdacpacreport",
+  "version": "0.0.1",
+  "description": "Provides a report on database model changes since the last build",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colindembovsky/cols-agent-tasks"
+  },
+  "keywords": [
+    "VSO",
+    "build",
+    "dacpac"
+  ],
+  "author": "Colin Dembovsky (ColinsALMCorner.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colindembovsky/cols-agent-tasks/issues"
+  },
+  "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
+  "devDependencies": {
+    "minimatch": "^2.0.10",
+    "shelljs": "^0.5.3",
+    "vsts-task-lib": "^0.9.6"
+  }
+}

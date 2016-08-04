@@ -3,11 +3,11 @@ This extension contains helpful build and release Tasks.
 
 1. **Version Assemblies**
 
-	This task versions assemblies according to the build number.
+	This task versions assemblies according to the build number. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/VersionAssemblies)
 
 2. **Replace Tokens**
 
-	This task replaces tokens in a file using Environment variables.
+	This task replaces tokens in a file using Environment variables. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/ReplaceTokens)
 
 3. **Docker Publish (Deprecated)**
 

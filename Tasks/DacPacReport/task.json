@@ -1,7 +1,7 @@
 {
   "id": "5b4d14d0-3868-11e4-a31d-3f0a2d8202f4",
   "name": "DacPacReport",
-  "friendlyName": "DacPac Report",
+  "friendlyName": "DacPac Schema Compare",
   "description": "Provides a report on database model changes since the last build",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DacPacReport)",
@@ -19,7 +19,7 @@
     "Patch": "1"
   },
   "minimumAgentVersion": "1.103.0",
-  "instanceNameFormat": "Schema Compare $(dacpacName).dacpac",
+  "instanceNameFormat": "DacPac Schema Compare $(dacpacName).dacpac",
   "inputs": [
     {
       "name": "dropName",

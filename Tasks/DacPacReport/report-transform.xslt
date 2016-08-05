@@ -112,6 +112,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:dr="http://schemas.micros
             </xsl:for-each>
           </div>
         </xsl:if>
+
+        <xsl:if test="count(dr:DeploymentReport/dr:Operations)=0">
+          <p>No changes - models are identical.</p>
+        </xsl:if>
+
       </body>
     </html>
   </xsl:template>

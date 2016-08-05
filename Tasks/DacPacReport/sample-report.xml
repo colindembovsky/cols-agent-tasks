@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DeploymentReport xmlns="http://schemas.microsoft.com/sqlserver/dac/DeployReport/2012/02">
+  <Alerts>
+    <Alert Name="DataMotion">
+      <Issue Value="[dbo].[Customers]" />
+    </Alert>
+    <Alert Name="DataIssue">
+      <Issue Value="The column [dbo].[Customers].[FullName] is being dropped, data loss could occur." Id="1" />
+      <Issue Value="The column [dbo].[Forecasts].[WeatherType] is being dropped, data loss could occur." Id="2" />
+      <Issue Value="The type for column Start in table [dbo].[ScheduleItems] is currently  DATETIME2 (7) NOT NULL but is being changed to  DATETIME NOT NULL. Data loss could occur." Id="3" />
+    </Alert>
+  </Alerts>
+  <Operations>
+    <Operation Name="Drop">
+      <Item Value="Default Constraint: unnamed constraint on [dbo].[Forecasts]" Type="SqlDefaultConstraint" />
+      <Item Value="[dbo].[ServiceTicket_Customer]" Type="SqlForeignKeyConstraint" />
+    </Operation>
+    <Operation Name="TableRebuild">
+      <Item Value="[dbo].[Customers]" Type="SqlTable">
+        <Issue Id="1" />
+      </Item>
+    </Operation>
+    <Operation Name="Alter">
+      <Item Value="[dbo].[Forecasts]" Type="SqlTable">
+        <Issue Id="2" />
+      </Item>
+      <Item Value="[dbo].[ScheduleItems]" Type="SqlTable">
+        <Issue Id="3" />
+      </Item>
+      <Item Value="[dbo].[GetForecastsForDates]" Type="SqlProcedure" />
+    </Operation>
+    <Operation Name="Create">
+      <Item Value="[dbo].[Alerts]" Type="SqlTable" />
+      <Item Value="[dbo].[ServiceTicket_Customer]" Type="SqlForeignKeyConstraint" />
+    </Operation>
+  </Operations>
+</DeploymentReport>

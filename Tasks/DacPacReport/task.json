@@ -7,39 +7,35 @@
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DacPacReport)",
   "category": "Build",
   "visibility": [
-    "Build"
+    "Build",
+    "Release"
   ],
-  "demands": [],
+  "demands": [
+    "sqlpackage"
+  ],
   "version": {
     "Major": "0",
-    "Minor": "1",
-    "Patch": "34"
+    "Minor": "0",
+    "Patch": "1"
   },
-  "minimumAgentVersion": "1.91.0",
-  "instanceNameFormat": "Version Assemblies using $(filePattern)",
-  "groups": [
-    {
-      "name": "advanced",
-      "displayName": "Advanced",
-      "isExpanded": false
-    }
-  ],
+  "minimumAgentVersion": "1.103.0",
+  "instanceNameFormat": "Schema Compare $(dacpacName).dacpac",
   "inputs": [
     {
-      "name": "sourcePath",
-      "type": "filePath",
-      "label": "Source Path",
-      "defaultValue": "",
+      "name": "dropName",
+      "type": "string",
+      "label": "Drop Name",
+      "defaultValue": "drop",
       "required": true,
-      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). NOTE: this is casese sensitive for non-Windows systems." 
+      "helpMarkDown": "Name of the drop in which to find previous build dacpac file." 
     },
     {
-      "name": "filePattern",
+      "name": "dacpacName",
       "type": "string",
-      "label": "File Pattern",
-      "defaultValue": "**\\AssemblyInfo.*",
+      "label": "DacPac Name",
+      "defaultValue": "",
       "required": true,
-      "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch. NOTE: this is casese sensitive for non-Windows systems."
+      "helpMarkDown": "Name of the dacpac (without .dacpac extension) to run the schema compare on."
     },
     {
       "name": "buildRegex",
@@ -50,55 +46,17 @@
       "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings)."
     },
     {
-      "name": "buildRegexIndex",
-      "type": "string",
-      "label": "Build Regex Group Index",
-      "defaultValue": "0",
-      "required": false,
-      "helpMarkDown": "Index of group in build regular expression that you want to use as the version number. Leave as 0 if you have no groups.",
-      "groupName": "advanced"
-    },
-    {
-      "name": "replaceRegex",
-      "type": "string",
-      "label": "Regex Replace Pattern",
+      "name": "targetDacPacPath",
+      "type": "filePath",
+      "label": "Compiled DacPac Path",
       "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "Regular Expression to replace with in files. Leave blank to use the Build Regex Pattern.",
-      "groupName": "advanced"
-    },
-    {
-      "name": "replacePrefix",
-      "type": "string",
-      "label": "Prefix for Replacements",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "String to prefix the regex replacement with.",
-      "groupName": "advanced"
-    },
-    {
-      "name": "replacePostfix",
-      "type": "string",
-      "label": "Postfix for Replacements",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "String to postfix the regex replacement with.",
-      "groupName": "advanced"
-    },
-    {
-        "name": "failIfNoMatchFound",
-        "type": "boolean",
-        "label": "Fail If No Target Match Found",
-        "defaultValue": "false",
-        "required": false,
-        "helpMarkDown": "Fail the build if no match is found for the replace regex in the target file(s).",
-        "groupName": "advanced"
+      "required": true,
+      "helpMarkDown": "Path to find the target dacpac (typically the artifact staging path where the dacpac will be uploaded from)."
     }
   ],
   "execution": {
-    "Node": {
-      "target": "versionAssemblies.js",
-      "argumentFormat": ""
+    "PowerShell3": {
+      "target": "DacPacReport.ps1"
     }
   }
 }

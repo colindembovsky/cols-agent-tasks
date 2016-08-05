@@ -23,6 +23,7 @@
   "devDependencies": {
     "minimatch": "^2.0.10",
     "shelljs": "^0.5.3",
-    "vsts-task-lib": "^0.9.6"
+    "vsts-task-lib": "^0.9.6",
+    "libxslt": "^0.6.3"
   }
 }

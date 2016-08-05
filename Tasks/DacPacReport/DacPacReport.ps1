@@ -18,13 +18,12 @@ function Get-LatestBuild {
 
     $uri = "$($RootUri)/build/builds?definitions=$($env:SYSTEM_DEFINITIONID)&resultFilter=succeeded&`$top=1&api-version=2.0"
     $build = Invoke-RestMethod -Uri $uri -Headers $Headers
-    Write-Host $build
 
     if ($build.count -ne 1) {
-        Write-VstsTaskWarning -Message "There appears to be no successful build to compare."
+        Write-Warning "There appears to be no successful build to compare."
         $null
     } else {
-        Write-VstsTaskDebug -Message "Found build $($build.value[0].buildNumber) for compare"
+        Write-Verbose -Verbose "Found build $($build.value[0]) for compare"
         $build.value[0]
     }
 }
@@ -35,7 +34,7 @@ function Find-File {
         [string]$FilePattern
     )
 
-    Write-VstsTaskVerbose -Message "Searching for $FilePattern in $Path"
+    Write-Verbose -Verbose "Searching for $FilePattern in $Path"
     $files = Find-VstsFiles -LiteralDirectory $Path -LegacyPattern $FilePattern
 
     if ($files -eq $null -or $files.GetType().Name -ne "String") {
@@ -43,7 +42,7 @@ function Find-File {
         if ($files -ne $null) {
             $count = $files.length
         }
-        Write-VstsTaskWarning -Message "Found $count matching files in folder. Expected a single file."
+        Write-Warning "Found $count matching files in folder. Expected a single file."
         $null
     } else {
         $files
@@ -87,12 +86,27 @@ function Download-BuildDrop {
     $artifacts = Invoke-RestMethod -Uri $uri -Headers $Headers
     $drop = $artifacts.value | ? { $_.name.ToUpperInvariant() -eq $DropName.ToUpperInvariant() }
     if ($drop -eq $null) {
-        Write-VstsTaskWarning -Message "There is no drop with the name $DropName."
+        Write-Warning "There is no drop with the name $DropName."
         ""
     } else {
-        Write-VstsTaskDebug -Message "Downloading drop $($drop.resource.downloadUrl)"
+        Write-Verbose -Verbose "Downloading drop $($drop.resource.downloadUrl)"
         wget -Uri $drop.resource.downloadUrl -Headers $Headers -OutFile "$DropName.zip"
-        Expand-Archive -Path "$DropName.zip" -DestinationPath ".\sourceDrop" -Force
+
+        # extract the zip file
+        if (Get-Command "Expand-Archive" -ErrorAction SilentlyContinue) {
+            Expand-Archive -Path "$DropName.zip" -DestinationPath ".\sourceDrop" -Force
+        } else {
+            Write-Verbose -Verbose "Expand-Archive does not exist. Using System.IO.Compression.ZipFile"
+            
+            $zipPath = Resolve-Path ".\$DropName.zip"
+            $tPath = Resolve-Path ".\SourceDrop"
+
+            if (Test-Path -Path $tPath) {
+                Remove-Item -Path $tPath -Recurse -Force
+            }
+            Add-Type -AssemblyName "System.IO.Compression.FileSystem"
+            [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tPath)
+        }
         Find-File -Path ".\sourceDrop" -FilePattern "**\$DacpacName.dacpac"
     }
 }
@@ -125,13 +139,13 @@ function Create-Report {
     Run-Command -command $scriptCommand
 }
 
-function Convert-ReportToHtml {
+function Convert-Report {
     param(
-        [string]$ReportPath = "./SchemaCompare/SchemaCompare.xml"
+        [string]$ReportPath = ".\SchemaCompare\SchemaCompare.xml"
     )
 
-    Write-Verbose "Converting report $reportPath to HTML"
-    $xslXml = [xml](gc ".\report-transform.xslt")
+    Write-Verbose -Verbose "Converting report $reportPath to md"
+    $xslXml = [xml](gc ".\report-transformToMd.xslt")
     $reportXml = [xml](gc $reportPath)
 
     $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
@@ -140,43 +154,59 @@ function Convert-ReportToHtml {
     $xslt.Transform($reportXml, $null, $stream)
     $stream.Position = 0
     $reader = New-Object System.IO.StreamReader($stream)
-    $html = $reader.ReadToEnd()
+    $text = $reader.ReadToEnd()
 
-    Write-Verbose "Writing out transformed report to deploymentReport.html"
-    sc -Path "SchemaCompare\deploymentReport.html" -Value $html
+    Write-Verbose -Verbose "Writing out transformed report to deploymentReport.md"
+    sc -Path "SchemaCompare\deploymentReport.md" -Value $text
+
+    # make an md file out of the sql script
+
+    $mdTemplate = @"
+``````
+{0}
+``````
+"@
+    $md = $mdTemplate -f (gc ".\SchemaCompare\ChangeScript.sql" -Raw)
+    sc -Path "SchemaCompare\ChangeScript.md" -Value $md
 }
 
 #
 # Main script
 #
 $SqlPackagePath = Get-SqlPackageOnTargetMachine
-Write-VstsTaskDebug -Message "Using sqlPackage path $SqlPackagePath"
+Write-Verbose -Verbose "Using sqlPackage path $SqlPackagePath"
 
 $rootUri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis"
 
 # just for testing
-$headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
-# for reals
-#$headers = @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+$headers = @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+if (-not ($env:TF_BUILD)) {
+   Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
+   $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
+}
 
 $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
 if ($compareBuild -ne $null) {
     $sourceDacpac = Download-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
     if ($sourceDacpac -ne $null) {
-        Write-VstsTaskDebug -Message "Found source dacpac $($sourceDacpac)"
+        Write-Verbose -Verbose "Found source dacpac $($sourceDacpac)"
 
         $targetDacpac = Find-File -Path $targetDacpacPath -FilePattern "$dacpacName.dacpac"
         if ($targetDacpac -ne $null) {
-            Write-VstsTaskDebug -Message "Found target dacpac $($targetDacpac)"
+            Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
             Create-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac
 
-            $reportPath = "./SchemaCompare/SchemaCompare.xml"
-            Convert-ReportToHtml
+            $reportPath = ".\SchemaCompare\SchemaCompare.xml"
+            Convert-Report
 
             # upload the schema report files as artifacts
-            $schemaComparePath = Resolve-Path "./SchemaCompare" 
-            Write-VstsUploadArtifact -ContainerFolder "SchemaCompare" -Name "SchemaCompare" -Path "$schemaComparePath\*.*"
+            Write-Verbose -Verbose "Uploading report"
+            $schemaComparePath = Resolve-Path ".\SchemaCompare"
+            
+            # Add the summary sections
+            Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Schema Change Summary - $dacpacName.dacpac" -Path "$schemaComparePath\deploymentReport.md"
+            Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Change Script - $dacpacName.dacpac" -Path "$schemaComparePath\ChangeScript.md"
         }
     }
 }

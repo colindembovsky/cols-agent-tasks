@@ -1,5 +1,5 @@
 {
-  "id": "5b4d14d0-3868-11e4-a31d-3f0a2d8202f4",
+  "id": "1EBF2967-63B3-4372-89F7-6799108A22F0",
   "name": "DacPacReport",
   "friendlyName": "DacPac Schema Compare",
   "description": "Provides a report on database model changes since the last build",
@@ -36,14 +36,6 @@
       "defaultValue": "",
       "required": true,
       "helpMarkDown": "Name of the dacpac (without .dacpac extension) to run the schema compare on."
-    },
-    {
-      "name": "buildRegex",
-      "type": "string",
-      "label": "Build Regex Pattern",
-      "defaultValue": "\\d+\\.\\d+\\.\\d+\\.\\d+",
-      "required": true,
-      "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings)."
     },
     {
       "name": "targetDacPacPath",

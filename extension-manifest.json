@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "colinsalmcorner-buildtasks",
     "name": "Colin's ALM Corner Build & Release Tools",
-    "version": "1.0.33",
+    "version": "1.0.34",
     "publisher": "colinsalmcorner",
     "public": true,
     "targets": [
@@ -18,7 +18,8 @@
         "version",
         "build",
         "replacement",
-        "tokens"
+        "tokens",
+        "dacpac"
     ],
     "screenshots": [
         {
@@ -32,6 +33,9 @@
         },
         {
             "path": "images/ss_versionAssemblies.png"
+        },
+        {
+            "path": "images/ss_DacPacChangeReport.png"
         }    
     ],
     "content": {
@@ -72,6 +76,9 @@
         },
         {
             "path": "Tasks/VersionAssemblies"
+        },
+        {
+            "path": "Tasks/DacPacReport"
         }
     ],
     "contributions": [
@@ -113,6 +120,16 @@
             ],
             "properties": {
                 "name": "Tasks/VersionAssemblies"
+            }
+        },
+        {
+            "id": "dacpac-report-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/DacPacReport"
             }
         }
     ]

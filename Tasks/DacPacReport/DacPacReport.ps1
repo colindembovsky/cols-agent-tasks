@@ -99,11 +99,12 @@ function Download-BuildDrop {
             Write-Verbose -Verbose "Expand-Archive does not exist. Using System.IO.Compression.ZipFile"
             
             $zipPath = Resolve-Path ".\$DropName.zip"
-            $tPath = Resolve-Path ".\SourceDrop"
+            $tPath = ".\SourceDrop"
 
             if (Test-Path -Path $tPath) {
                 Remove-Item -Path $tPath -Recurse -Force
             }
+            mkdir $tPath
             Add-Type -AssemblyName "System.IO.Compression.FileSystem"
             [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tPath)
         }

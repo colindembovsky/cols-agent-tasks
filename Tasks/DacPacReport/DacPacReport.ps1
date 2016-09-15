@@ -45,7 +45,7 @@ function Find-File {
         Write-Warning "Found $count matching files in folder. Expected a single file."
         $null
     } else {
-        $files
+        return $files
     }
 }
 
@@ -93,23 +93,28 @@ function Download-BuildDrop {
         wget -Uri $drop.resource.downloadUrl -Headers $Headers -OutFile "$DropName.zip"
 
         # extract the zip file
+        $tPath = "sourceDrop"
         if (Get-Command "Expand-Archive" -ErrorAction SilentlyContinue) {
-            Expand-Archive -Path "$DropName.zip" -DestinationPath ".\sourceDrop" -Force
+            Expand-Archive -Path "$DropName.zip" -DestinationPath ".\$tPath" -Force
+            $tPath = Resolve-Path $tPath
         } else {
             Write-Verbose -Verbose "Expand-Archive does not exist. Using System.IO.Compression.ZipFile"
             
             $zipPath = Resolve-Path ".\$DropName.zip"
-            $tPath = ".\SourceDrop"
+            $tPath = "SourceDrop"
 
             if (Test-Path -Path $tPath) {
                 Remove-Item -Path $tPath -Recurse -Force
             }
             mkdir $tPath
+            $tPath = Resolve-Path $tPath
             
             Add-Type -AssemblyName "System.IO.Compression.FileSystem"
             [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tPath)
         }
-        Find-File -Path ".\sourceDrop" -FilePattern "**\$DacpacName.dacpac"
+
+        $tfile = Find-File -Path $tPath -FilePattern "**\$DacpacName.dacpac"
+        return $tFile
     }
 }
 
@@ -190,8 +195,15 @@ if (-not ($env:TF_BUILD)) {
 $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
 if ($compareBuild -ne $null) {
     $sourceDacpac = Download-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
+
+    # hack: when using unzip, the Download-BuildDrop return is an array [not sure why]
+    if ($sourceDacpac.GetType().Name -ne "String") {
+        $sourceDacpac = $sourceDacpac[1]
+    }
+    Write-Host "Got $sourceDacpac"
+
     if ($sourceDacpac -ne $null) {
-        Write-Verbose -Verbose "Found source dacpac $($sourceDacpac)"
+        Write-Verbose -Verbose "Found source dacpac $sourceDacpac"
 
         $targetDacpac = Find-File -Path $targetDacpacPath -FilePattern "$dacpacName.dacpac"
         if ($targetDacpac -ne $null) {

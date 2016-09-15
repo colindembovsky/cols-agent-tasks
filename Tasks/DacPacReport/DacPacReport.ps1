@@ -105,6 +105,7 @@ function Download-BuildDrop {
                 Remove-Item -Path $tPath -Recurse -Force
             }
             mkdir $tPath
+            
             Add-Type -AssemblyName "System.IO.Compression.FileSystem"
             [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tPath)
         }

@@ -26,4 +26,8 @@ This extension contains helpful build and release Tasks.
 	> The [Azure RM WebApp Deploy Task](https://github.com/Microsoft/vsts-tasks/tree/master/Tasks/AzureRmWebAppDeployment) now does everything this task does, so I'm deprecating this task.
 
 ## Source Code
+<<<<<<< HEAD
 The source repo for this extension is [on Github.](https://github.com/colindembovsky/cols-agent-tasks)
+=======
+The source repo for this extension is [on Github.](https://github.com/colindembovsky/cols-agent-tasks)
+>>>>>>> dacpacfix

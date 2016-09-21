@@ -13,7 +13,7 @@
   "version": {
     "Major": "0",
     "Minor": "0",
-    "Patch": "25"
+    "Patch": "26"
   },
   "groups": [
     {
@@ -30,7 +30,7 @@
       "type": "filePath",
       "label": "Source Path",
       "defaultValue": "",
-      "helpMarkDown": "Path to the file(s) containing tokens. NOTE: this is casese sensitive for non-Windows systems.",
+      "helpMarkDown": "Path to the file(s) containing tokens. NOTE: this is casese sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
       "required": true
     },
     {

@@ -1,5 +1,7 @@
 # Colin's ALM Corner Custom Build Tasks
 
+![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
+
 ## Overview
 This repo contains custom tasks that meant to be used with Visual Studio Online and Team Foundation Server.
 

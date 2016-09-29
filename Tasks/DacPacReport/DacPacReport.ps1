@@ -9,6 +9,7 @@ Trace-VstsEnteringInvocation $MyInvocation
 $dropName = Get-VstsInput -Name "dropName" -Require
 $targetDacpacPath = Get-VstsInput -Name "targetDacpacPath" -Require
 $dacpacName = Get-VstsInput -Name "dacpacName" -Require
+$extraArgs = GEt-VstsInput -Name "extraArgs"
 
 function Get-LatestBuild {
     param(
@@ -122,25 +123,26 @@ function Create-Report {
     param(
         [string]$SlPackagePath,
         [string]$SourceDacpac,
-        [string]$TargetDacpac
+        [string]$TargetDacpac,
+        [string]$ExtraArgs
     )
 
     $SourceDacpac = Resolve-Path -Path $SourceDacpac
     $TargetDacpac = Resolve-Path -Path $TargetDacpac
 
     Write-Verbose "Generating report: source = $SourceDacpac, target = $TargetDacpac"
-    $commandArgs = "/a:{0} /sf:`"$SourceDacpac`" /tf:`"$TargetDacpac`" /tdn:Test /op:`"{1}`""
+    $commandArgs = "/a:{0} /sf:`"$SourceDacpac`" /tf:`"$TargetDacpac`" /tdn:Test /op:`"{1}`" {2}"
 
     if (-not (Test-Path -Path "./SchemaCompare")) {
         mkdir "SchemaCompare"
     }
 
-    $reportArgs = $commandArgs -f "DeployReport", "./SchemaCompare/SchemaCompare.xml"
+    $reportArgs = $commandArgs -f "DeployReport", "./SchemaCompare/SchemaCompare.xml", $ExtraArgs
     $reportCommand = "`"$SqlPackagePath`" $reportArgs"
     $reportCommand
     Run-Command -command $reportCommand
 
-    $scriptArgs = $commandArgs -f "Script", "./SchemaCompare/ChangeScript.sql"
+    $scriptArgs = $commandArgs -f "Script", "./SchemaCompare/ChangeScript.sql", $ExtraArgs
     $scriptCommand = "`"$SqlPackagePath`" $scriptArgs"
     $scriptCommand
     Run-Command -command $scriptCommand
@@ -209,7 +211,7 @@ if ($compareBuild -ne $null) {
         if ($targetDacpac -ne $null) {
             Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
-            Create-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac
+            Create-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
 
             $reportPath = ".\SchemaCompare\SchemaCompare.xml"
             Convert-Report

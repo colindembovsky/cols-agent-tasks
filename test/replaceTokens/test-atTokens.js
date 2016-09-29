@@ -45,8 +45,6 @@ var expected = `
   </appSettings>.2
 </configuration>.37
 `;
-if ((expected !== actual)) {
-    console.info("should have matched");
-    throw 'Result should have matched';
-}
+console.info("setting testRES");
+process.env["testresult"] = `${expected !== actual}`;
 //# sourceMappingURL=test-atTokens.js.map

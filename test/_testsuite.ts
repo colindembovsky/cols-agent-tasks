@@ -38,6 +38,8 @@ describe('replaceTokens', function () {
 
         tr.run();
         console.log(tr.stdout);
+        console.log("tesres===============================")
+        console.log(process.env["testresult"]);
         //console.log(tr.stderr);
         // if (tr.stderr) {
         //    done(tr.stderr);

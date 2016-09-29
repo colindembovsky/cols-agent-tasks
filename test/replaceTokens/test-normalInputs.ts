@@ -45,7 +45,6 @@ tmr.run();
 
 // validate the replacement
 let actual = (<any>_mockfs).readFileSync('working/file.config', 'utf-8');
-
 var expected = `
 <configuration>
   <appSettings>
@@ -54,5 +53,5 @@ var expected = `
   </appSettings>
 </configuration>
 `;
-
-assert(expected.indexOf(actual) >= 0, 'should match');
+throw "hahah";
+//assert(expected.indexOf(actual) >= 0, 'should match');

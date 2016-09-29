@@ -2,7 +2,6 @@
 const tmrm = require('vsts-task-lib/mock-run');
 const path = require('path');
 const mockfs = require('mock-fs');
-const assert = require('assert');
 var testRoot = path.resolve(__dirname);
 let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'ReplaceTokens', 'replaceTokens.js');
 let tmr = new tmrm.TaskMockRunner(taskPath);
@@ -45,5 +44,6 @@ var expected = `
   </appSettings>
 </configuration>
 `;
-assert(expected.indexOf(actual) >= 0, 'should match');
+throw "hahah";
+//assert(expected.indexOf(actual) >= 0, 'should match'); 
 //# sourceMappingURL=test-normalInputs.js.map

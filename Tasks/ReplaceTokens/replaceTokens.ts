@@ -66,6 +66,8 @@ async function run() {
             var contents = fs.readFileSync(file, 'utf8').toString();
             var reg = new RegExp(tokenRegex, "g");
                     
+            console.log(contents);
+
             // loop through each match
             var match: RegExpExecArray;
             while((match = reg.exec(contents)) !== null) {
@@ -81,6 +83,7 @@ async function run() {
                         tl.warning(`Token [${vName}] does not have an environment value`);
                     } else {
                         contents = contents.replace(match[0], vValue);
+                        console.log(contents);
                         console.info(`Replaced token [${vName }]`);
                     }           
                 }

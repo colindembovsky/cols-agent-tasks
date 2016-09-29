@@ -65,6 +65,7 @@ function run() {
                 console.info(`Starting regex replacement in [${file}]`);
                 var contents = fs.readFileSync(file, 'utf8').toString();
                 var reg = new RegExp(tokenRegex, "g");
+                console.log(contents);
                 // loop through each match
                 var match;
                 while ((match = reg.exec(contents)) !== null) {
@@ -82,6 +83,7 @@ function run() {
                         }
                         else {
                             contents = contents.replace(match[0], vValue);
+                            console.log(contents);
                             console.info(`Replaced token [${vName}]`);
                         }
                     }

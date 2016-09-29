@@ -3,9 +3,7 @@ import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import fse = require('fs-extra');
 import mockfs = require('mock-fs');
-import assert = require('assert');
 
-var testRoot = path.resolve(__dirname);
 let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'ReplaceTokens', 'replaceTokens.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
@@ -25,21 +23,24 @@ let _mockfs = mockfs.fs({
     "working/file.config": `
 <configuration>
   <appSettings>
-    <add key="CoolKey" value="__CoolKey__" />
-    <add key="Secret1" value="__Secret1__" />
-  </appSettings>
-</configuration>
+    <add key="AtSym" value="@@X@@" />
+  </appSettings>.@@Y@@
+</configuration>.@@Z@@
 `});
 tmr.registerMock('fs', _mockfs);
 
 // set inputs
 tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', '*.config');
-tmr.setInput('tokenRegex', '__(\\w+)__'); 
+tmr.setInput('tokenRegex', '@@(\\w+)@@'); 
 
 // set variables
-process.env["CoolKey"] = "MyCoolKey";
-process.env["SECRET_Secret1"] = "supersecret1";
+//process.env["CUSTOM_BUILDMAJORNUM"] = "1";
+//process.env["CUSTOM_BUILDMINORNUM"] = "2";
+//process.env["CUSTOM_BUILDPATCHNUM"] = "3";
+process.env["X"] = "1";
+process.env["Y"] = "2";
+process.env["Z"] = "3";
 
 tmr.run();
 
@@ -49,10 +50,12 @@ let actual = (<any>_mockfs).readFileSync('working/file.config', 'utf-8');
 var expected = `
 <configuration>
   <appSettings>
-    <add key="CoolKey" value="MyCoolKey" />
-    <add key="Secret1" value="supersecret1" />
-  </appSettings>
-</configuration>
+    <add key="AtSym" value="1" />
+  </appSettings>.2
+</configuration>.37
 `;
 
-assert(expected.indexOf(actual) >= 0, 'should match');
+if ((expected !== actual)) {
+  console.info("should have matched");
+  throw 'Result should have matched'
+}

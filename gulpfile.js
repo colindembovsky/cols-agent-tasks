@@ -2,7 +2,7 @@
 var gulp = require('gulp');
 var path = require('path');
 var mocha = require('gulp-mocha');
-require('babel-core/register');  // for mocha
+//require('babel-core/register');  // for mocha
 
 gulp.task('test', function() {
     var testPath = path.resolve(__dirname, 'test', '_testsuite.js');

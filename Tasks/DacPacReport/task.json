@@ -20,6 +20,13 @@
   },
   "minimumAgentVersion": "1.103.0",
   "instanceNameFormat": "DacPac Schema Compare $(dacpacName).dacpac",
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
   "inputs": [
     {
       "name": "dropName",
@@ -51,7 +58,8 @@
       "label": "Extra SQLPackage args",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "Extra args to use for running the SQLPackage.exe schema compare command."
+      "helpMarkDown": "Extra args to use for running the SQLPackage.exe schema compare command.",
+      "groupName": "advanced"
     }
   ],
   "execution": {

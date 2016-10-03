@@ -50,7 +50,7 @@ function Find-File {
     }
 }
 
-function Run-Command {
+function Invoke-Command {
     param(
         [String][Parameter(Mandatory=$true)] $command
     )
@@ -74,7 +74,7 @@ function Run-Command {
     }
 }
 
-function Download-BuildDrop {
+function Get-BuildDrop {
     param(
         [string]$RootUri,
         $Headers,
@@ -119,7 +119,7 @@ function Download-BuildDrop {
     }
 }
 
-function Create-Report {
+function New-Report {
     param(
         [string]$SlPackagePath,
         [string]$SourceDacpac,
@@ -140,12 +140,12 @@ function Create-Report {
     $reportArgs = $commandArgs -f "DeployReport", "./SchemaCompare/SchemaCompare.xml", $ExtraArgs
     $reportCommand = "`"$SqlPackagePath`" $reportArgs"
     $reportCommand
-    Run-Command -command $reportCommand
+    Invoke-Command -command $reportCommand
 
     $scriptArgs = $commandArgs -f "Script", "./SchemaCompare/ChangeScript.sql", $ExtraArgs
     $scriptCommand = "`"$SqlPackagePath`" $scriptArgs"
     $scriptCommand
-    Run-Command -command $scriptCommand
+    Invoke-Command -command $scriptCommand
 }
 
 function Convert-Report {
@@ -196,9 +196,9 @@ if (-not ($env:TF_BUILD)) {
 
 $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
 if ($compareBuild -ne $null) {
-    $sourceDacpac = Download-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
+    $sourceDacpac = Get-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
 
-    # hack: when using unzip, the Download-BuildDrop return is an array [not sure why]
+    # hack: when using unzip, the Get-BuildDrop return is an array [not sure why]
     if ($sourceDacpac.GetType().Name -ne "String") {
         $sourceDacpac = $sourceDacpac[1]
     }
@@ -211,7 +211,7 @@ if ($compareBuild -ne $null) {
         if ($targetDacpac -ne $null) {
             Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
-            Create-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
+            New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
 
             $reportPath = ".\SchemaCompare\SchemaCompare.xml"
             Convert-Report

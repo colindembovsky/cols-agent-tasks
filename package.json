@@ -1,5 +1,5 @@
 {
-  "name": "ColinsALMCorner.BuildTasks",
+  "name": "colinsalmcorner-buildtasks",
   "version": "0.1.1",
   "description": "Custom build tasks for TFS or VSO",
   "scripts": {
@@ -21,13 +21,20 @@
   },
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "devDependencies": {
+    "assert": "^1.4.1",
+    "fs-extra": "^0.30.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^3.0.1",
     "minimatch": "^2.0.10",
-    "shelljs": "^0.5.3",
-    "vso-task-lib": "^0.5.1"
+    "mock-fs": "^3.11.0",
+    "mockery": "^1.7.0",
+    "path": "^0.12.7",
+    "shelljs": "^0.5.3"
   },
   "main": "index.js",
   "dependencies": {
     "process": "^0.11.1",
-    "q": "^1.4.1"
+    "q": "^1.4.1",
+    "vsts-task-lib": "^0.9.20"
   }
 }

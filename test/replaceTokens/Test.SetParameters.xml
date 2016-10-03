@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <setParameter name="IIS Web Application Name" value="__SiteName__" />
-  <setParameter name="CoolKey" value="__CoolKey__" />
-  <setParameter name="EntityDB-Web.config Connection String" value="__EntityDB__" />
-</parameters>
-

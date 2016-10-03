@@ -23,9 +23,9 @@ let _mockfs = mockfs.fs({
     "working/file.config": `
 <configuration>
   <appSettings>
-    <add key="AtSym" value="@@X@@" />
-  </appSettings>.@@Y@@
-</configuration>.@@Z@@
+    <add key="AtSym" value="@@CUSTOM_BUILDMAJORNUM@@.@@CUSTOM_BUILDMINORNUM@@.@@CUSTOM_BUILDPATCHNUM@@" />
+  </appSettings>
+</configuration>
 `});
 tmr.registerMock('fs', _mockfs);
 
@@ -35,12 +35,9 @@ tmr.setInput('filePattern', '*.config');
 tmr.setInput('tokenRegex', '@@(\\w+)@@'); 
 
 // set variables
-//process.env["CUSTOM_BUILDMAJORNUM"] = "1";
-//process.env["CUSTOM_BUILDMINORNUM"] = "2";
-//process.env["CUSTOM_BUILDPATCHNUM"] = "3";
-process.env["X"] = "1";
-process.env["Y"] = "2";
-process.env["Z"] = "3";
+process.env["CUSTOM_BUILDMAJORNUM"] = "1";
+process.env["CUSTOM_BUILDMINORNUM"] = "2";
+process.env["CUSTOM_BUILDPATCHNUM"] = "3";
 
 tmr.run();
 
@@ -50,12 +47,14 @@ let actual = (<any>_mockfs).readFileSync('working/file.config', 'utf-8');
 var expected = `
 <configuration>
   <appSettings>
-    <add key="AtSym" value="1" />
-  </appSettings>.2
-</configuration>.37
+    <add key="AtSym" value="1.2.3" />
+  </appSettings>
+</configuration>
 `;
 
-if ((expected !== actual)) {
-  console.info("should have matched");
-  throw 'Result should have matched'
+if (actual !== expected) {
+  console.log(actual);
+  console.error("Replacement failed.");
+} else {
+  console.log("Replacement succeeded!")
 }

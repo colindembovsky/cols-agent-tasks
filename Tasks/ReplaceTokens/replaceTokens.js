@@ -65,14 +65,16 @@ function run() {
                 console.info(`Starting regex replacement in [${file}]`);
                 var contents = fs.readFileSync(file, 'utf8').toString();
                 var reg = new RegExp(tokenRegex, "g");
-                console.log(contents);
                 // loop through each match
                 var match;
+                // keep a separate var for the contents so that the regex index doesn't get messed up
+                // by replacing items underneath it
+                var newContents = contents;
                 while ((match = reg.exec(contents)) !== null) {
                     var vName = match[1];
                     if (typeof secretTokens[vName.toLowerCase()] !== 'undefined') {
                         // try find the variable in secret tokens input first
-                        contents = contents.replace(match[0], secretTokens[vName.toLowerCase()]);
+                        newContents = newContents.replace(match[0], secretTokens[vName.toLowerCase()]);
                         console.info(`Replaced token [${vName}] with a secret value`);
                     }
                     else {
@@ -82,8 +84,7 @@ function run() {
                             tl.warning(`Token [${vName}] does not have an environment value`);
                         }
                         else {
-                            contents = contents.replace(match[0], vValue);
-                            console.log(contents);
+                            newContents = newContents.replace(match[0], vValue);
                             console.info(`Replaced token [${vName}]`);
                         }
                     }
@@ -91,7 +92,7 @@ function run() {
                 tl.debug("Writing new values to file...");
                 // make the file writable
                 sh.chmod(666, file);
-                fs.writeFileSync(file, contents);
+                fs.writeFileSync(file, newContents);
             }
             tl.debug("Leaving Replace Tokens task");
         }

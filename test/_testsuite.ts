@@ -10,25 +10,25 @@ describe('replaceTokens', function () {
     after(() => {
     });
 
-    // it('should succeed with default inputs', (done: MochaDone) => {
-    //     // this.timeout(1000);
+    it('should succeed with default inputs', (done: MochaDone) => {
+        // this.timeout(1000);
 
-    //     let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
-    //     let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-    //     tr.run();
-    //     console.log(tr.stdout);
-    //     if (tr.stderr) {
-    //        done(tr.stderr);
-    //        return;
-    //     }
+        tr.run();
+        console.log(tr.stdout);
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
-    //     assert(tr.succeeded, 'should have succeeded');
-    //     assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-    //     assert.equal(tr.errorIssues.length, 0, "should have no errors");
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
 
-    //     done();
-    // });
+        done();
+    });
 
     it('should succeed with @ tokens', (done: MochaDone) => {
         // this.timeout(1000);
@@ -36,15 +36,13 @@ describe('replaceTokens', function () {
         let tp = path.join(__dirname, 'replaceTokens', 'test-atTokens.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-        tr.run();
+        let x = tr.run();
         console.log(tr.stdout);
-        console.log("tesres===============================")
-        console.log(process.env["testresult"]);
-        //console.log(tr.stderr);
-        // if (tr.stderr) {
-        //    done(tr.stderr);
-        //    return;
-        // }
+        console.log(tr.stderr);
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.succeeded, 'should have succeeded');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");

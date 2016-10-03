@@ -44,6 +44,11 @@ var expected = `
   </appSettings>
 </configuration>
 `;
-throw "hahah";
-//assert(expected.indexOf(actual) >= 0, 'should match'); 
+if (actual !== expected) {
+    console.log(actual);
+    console.error("Replacement failed.");
+}
+else {
+    console.log("Replacement succeeded!");
+}
 //# sourceMappingURL=test-normalInputs.js.map

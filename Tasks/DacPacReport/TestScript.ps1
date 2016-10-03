@@ -26,6 +26,7 @@ $env:SYSTEM_DEFINITIONID=9 # FabFiberExpress-DACPAC
 $env:INPUT_DROPNAME="drop"
 $env:INPUT_DACPACNAME="fabFiber.Schema"
 $env:INPUT_TARGETDACPACPATH="C:\mData\ws\col\dac"
+$env:INPUT_EXTRAARGS="/v:Hello=Bye"
 
 # invoke the script
 Invoke-VstsTaskScript -ScriptBlock { . .\DacPacReport.ps1 } -Verbose

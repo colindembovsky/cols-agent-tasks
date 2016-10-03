@@ -104,4 +104,5 @@ function run() {
         }
     });
 }
+run();
 //# sourceMappingURL=versionAssemblies.js.map

@@ -103,3 +103,4 @@ async function run() {
     }
 }
 
+run();

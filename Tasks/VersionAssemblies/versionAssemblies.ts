@@ -76,7 +76,7 @@ async function run() {
                     var checkMatches = new RegExp(replaceRegex).exec(contents);
                     if (!checkMatches || checkMatches.length === 0) {
                         if (failIfNoMatchFound) {
-                            tl.error(`No matches for regex [${replaceRegex}] found in file ${file}`);
+                            tl.setResult(tl.TaskResult.Failed, `No matches for regex [${replaceRegex}] found in file ${file}`);
                             process.exit(1);
                         } else {
                             tl.warning(`No matches for regex [${replaceRegex}] found in file ${file}`);

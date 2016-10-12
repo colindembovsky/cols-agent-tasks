@@ -79,14 +79,14 @@ async function run() {
         }
 
         if (filesRecursive && filesRecursive.length > 0) {
-            console.log(`Absolute files count found recursively is: [${filesRecursive.length}]`);
+            console.info(`Absolute files count found recursively is: [${filesRecursive.length}]`);
             for (var i = 0; i < filesRecursive.length; i++) {
-                console.log(`File found: [${filesRecursive[i]}]`);
+                console.info(`File found: [${filesRecursive[i]}]`);
 
                 var lastIndex = filesRecursive[i].lastIndexOf(filePattern);
-                tl.warning(`Pattern Index is: [${lastIndex}]`);
+                console.info(`Pattern Index is: [${lastIndex}]`);
                 if (lastIndex !== -1) {
-                    tl.warning(`File: [${filesRecursive[i]}] match pattern [${filePattern}]`);
+                    console.info(`File: [${filesRecursive[i]}] match pattern [${filePattern}]`);
                     files.push(filesRecursive[i]);
                 }
             }

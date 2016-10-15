@@ -97,11 +97,15 @@ function run() {
             else {
                 tl.warning(`Could not extract a version from [${buildNumber}] using pattern [${buildRegex}]`);
             }
-            tl.debug("Leaving Version Assemblies step");
         }
         catch (err) {
-            tl.setResult(tl.TaskResult.Failed, err.message);
+            let msg = err;
+            if (err.message) {
+                msg = err.message;
+            }
+            tl.setResult(tl.TaskResult.Failed, msg);
         }
+        tl.debug("Leaving Version Assemblies step");
     });
 }
 run();

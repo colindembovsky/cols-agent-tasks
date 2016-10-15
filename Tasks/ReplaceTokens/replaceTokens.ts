@@ -95,11 +95,15 @@ async function run() {
             fs.writeFileSync(file, newContents);
         }
 
-        tl.debug("Leaving Replace Tokens task");
+    } catch (err) {
+        let msg = err;
+        if (err.message) {
+            msg = err.message;
+        }
+        tl.setResult(tl.TaskResult.Failed, msg);
     }
-    catch (err) {
-        tl.setResult(tl.TaskResult.Failed, err.message);
-    }
+
+    tl.debug("Leaving Replace Tokens task");
 }
 
 run();

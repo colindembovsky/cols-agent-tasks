@@ -94,11 +94,15 @@ function run() {
                 sh.chmod(666, file);
                 fs.writeFileSync(file, newContents);
             }
-            tl.debug("Leaving Replace Tokens task");
         }
         catch (err) {
-            tl.setResult(tl.TaskResult.Failed, err.message);
+            let msg = err;
+            if (err.message) {
+                msg = err.message;
+            }
+            tl.setResult(tl.TaskResult.Failed, msg);
         }
+        tl.debug("Leaving Replace Tokens task");
     });
 }
 run();

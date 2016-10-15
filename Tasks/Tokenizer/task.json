@@ -1,0 +1,78 @@
+{
+  "id": "6D9895EB-8056-4111-B4B3-7B80FD383E44",
+  "name": "JSONTokenizer",
+  "friendlyName": "Tokenize File",
+  "description": "Tokenizes a file.",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/Tokenizer)",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "26"
+  },
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Tokenize files.",
+  "inputs": [
+    {
+      "name": "sourcePath",
+      "type": "filePath",
+      "label": "Source Path",
+      "defaultValue": "",
+      "helpMarkDown": "Path to the file(s) containing files to tokenize. NOTE: this is casese sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
+      "required": true
+    },
+    {
+      "name": "filePattern",
+      "type": "string",
+      "label": "File Pattern",
+      "defaultValue": "appsettings.json",
+      "helpMarkDown": "File pattern to find in source path. Supports minimatch. NOTE: this is casese sensitive for non-Windows systems.",
+      "required": true
+    },
+    {
+      "name": "tokenizeType",
+      "type": "pickList",
+      "label": "Tokenize Type",
+      "defaultValue": "json",
+      "helpMarkDown": "Type of tokenization type.",
+      "required": true,
+      "options": {
+          "Json": "Json"
+      }
+    },
+    {
+      "name": "includes",
+      "type": "string",
+      "label": "Include Fields",
+      "defaultValue": "ConnectionStrings.DefaultConnection,Logging.LogLevel.Default",
+      "helpMarkDown": "Comma-separated list of keys to tokenize. If left empty, all values are tokenized.",
+      "required": false
+    },
+    {
+      "name": "excludes",
+      "type": "string",
+      "label": "Exclude Fields",
+      "defaultValue": "LogLevel",
+      "helpMarkDown": "Comma-separated list of keys NOT to tokenize.",
+      "required": false
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "tokenizer.js",
+      "argumentFormat": ""
+    }
+  }
+}

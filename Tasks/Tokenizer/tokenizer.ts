@@ -14,13 +14,14 @@ function replaceProps(obj: any, parent: string, includeSet: Set<string>, exclude
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
         if (typeof(obj[prop]) === 'object') {
             replaceProps(obj[prop], propPath, includeSet, excludeSet);
-        }
-        if ((!includeSet && !excludeSet) ||
-            (includeSet && includeSet.has(propPath)) || 
-            (excludeSet && !excludeSet.has(propPath))
-        ) {
-            console.info(`Tokenizing ${propPath}`)
-            obj[prop] = `__${propPath}__`;
+        } else {
+            if ((!includeSet && !excludeSet) ||
+                (includeSet && includeSet.has(propPath)) || 
+                (excludeSet && !excludeSet.has(propPath))
+            ) {
+                console.info(`Tokenizing ${propPath}`)
+                obj[prop] = `__${propPath}__`;
+            }
         }
     }
 }
@@ -52,7 +53,7 @@ async function run() {
         tl.debug(`excludes: [${excludes}]`);
 
         // only one or the other can be specified
-        if (includes.length > 0 && excludes.length > 0) {
+        if (includes && includes.length > 0 && excludes && excludes.length > 0) {
             throw `You cannot specify includes and excludes - please specify one or the other`;
         }
 
@@ -82,14 +83,13 @@ async function run() {
 
         // comma-split the include and excludes
         let includeSet: Set<string>, excludeSet: Set<string>;
-        let includeArr = includes.split(',');
-        if (includeArr.length > 0) {
-            includeSet = new Set(includeArr);
-        } else {
-            let excludeArr = excludes.split(',');
-            if (excludeArr.length > 0) {
-                excludeSet = new Set(excludeArr);
-            }
+        if (includes && includes.length > 0) {
+            includeSet = new Set(includes.split(','));
+            tl.debug(`Includeset has ${includeSet.size} elements`);
+        }
+        if (excludes && excludes.length > 0) {
+            excludeSet = new Set(excludes.split(','));
+            tl.debug(`Excludeset has ${excludeSet.size} elements`);
         }
 
         for (var i = 0; i < files.length; i++) {

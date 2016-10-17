@@ -59,7 +59,7 @@ var expected = `{
     "DefaultConnection": "__ConnectionStrings.DefaultConnection__"
   },
   "Tricky": {
-    "Tricky": "__Tricky.Tricky",
+    "Tricky": "__Tricky.Tricky__",
     "Tricky1": {
       "Tricky2": "__Tricky.Tricky1.Tricky2__"
     }

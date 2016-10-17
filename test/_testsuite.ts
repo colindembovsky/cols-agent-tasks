@@ -3,130 +3,130 @@ import assert = require('assert');
 import fse = require('fs-extra');
 import ttm = require('vsts-task-lib/mock-test');
 
-const debug = true;
+const debug = false;
 
-// describe('replaceTokens', function () {
-//     before(() => {
-//     });
+describe('replaceTokens', function () {
+    before(() => {
+    });
 
-//     after(() => {
-//     });
+    after(() => {
+    });
 
-//     it('should succeed with default inputs', (done: MochaDone) => {
-//         // this.timeout(1000);
+    it('should succeed with default inputs', (done: MochaDone) => {
+        // this.timeout(1000);
 
-//         let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
-//         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-//         tr.run();
-//         if (debug) {
-//             console.log(tr.stdout);
-//         }
-//         if (tr.stderr) {
-//            done(tr.stderr);
-//            return;
-//         }
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
-//         assert(tr.succeeded, 'should have succeeded');
-//         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-//         assert.equal(tr.errorIssues.length, 0, "should have no errors");
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
 
-//         done();
-//     });
+        done();
+    });
 
-//     it('should succeed with @ tokens', (done: MochaDone) => {
-//         // this.timeout(1000);
+    it('should succeed with @ tokens', (done: MochaDone) => {
+        // this.timeout(1000);
 
-//         let tp = path.join(__dirname, 'replaceTokens', 'test-atTokens.js');
-//         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'replaceTokens', 'test-atTokens.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-//         let x = tr.run();
-//         if (debug) {
-//             console.log(tr.stdout);
-//         }
-//         if (tr.stderr) {
-//            done(tr.stderr);
-//            return;
-//         }
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
-//         assert(tr.succeeded, 'should have succeeded');
-//         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-//         assert.equal(tr.errorIssues.length, 0, "should have no errors");
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
 
-//         done();
-//     });
-// });
+        done();
+    });
+});
 
-// describe('versionAssemblies', function () {
-//     before(() => {
-//     });
+describe('versionAssemblies', function () {
+    before(() => {
+    });
 
-//     after(() => {
-//     });
+    after(() => {
+    });
 
-//     it('should succeed with default inputs', (done: MochaDone) => {
-//         // this.timeout(1000);
+    it('should succeed with default inputs', (done: MochaDone) => {
+        // this.timeout(1000);
 
-//         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults.js');
-//         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-//         tr.run();
-//         if (debug) {
-//             console.log(tr.stdout);
-//         }
-//         if (tr.stderr) {
-//            done(tr.stderr);
-//            return;
-//         }
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
-//         assert(tr.succeeded, 'should have succeeded');
-//         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-//         assert.equal(tr.errorIssues.length, 0, "should have no errors");
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
 
-//         done();
-//     });
+        done();
+    });
 
-//     it('should succeed with complex Android-like setup', (done: MochaDone) => {
-//         // this.timeout(1000);
+    it('should succeed with complex Android-like setup', (done: MochaDone) => {
+        // this.timeout(1000);
 
-//         let tp = path.join(__dirname, 'versionAssemblies', 'test-complex.js');
-//         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'versionAssemblies', 'test-complex.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-//         let x = tr.run();
-//         if (debug) {
-//             console.log(tr.stdout);
-//         }
-//         if (tr.stderr) {
-//            done(tr.stderr);
-//            return;
-//         }
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
-//         assert(tr.succeeded, 'should have succeeded');
-//         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-//         assert.equal(tr.errorIssues.length, 0, "should have no errors");
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
 
-//         done();
-//     });
+        done();
+    });
 
-//     it('should fail if there is no match', (done: MochaDone) => {
-//         // this.timeout(1000);
+    it('should fail if there is no match', (done: MochaDone) => {
+        // this.timeout(1000);
 
-//         let tp = path.join(__dirname, 'versionAssemblies', 'test-failIfNotFound.js');
-//         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'versionAssemblies', 'test-failIfNotFound.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-//         let x = tr.run();
-//         if (debug) {
-//             console.log(tr.stdout);
-//         }
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
 
-//         assert(tr.failed, 'should have failed');
-//         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-//         assert.equal(tr.errorIssues.length, 1, "should have 1 error");
-//         assert.equal(tr.errorIssues[0], "No matches for regex [\\d+\\.\\d+\\.\\d+\\.\\d+] found in file working\\AssemblyInfo.cs");
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have 1 error");
+        assert.equal(tr.errorIssues[0], "No matches for regex [\\d+\\.\\d+\\.\\d+\\.\\d+] found in file working\\AssemblyInfo.cs");
 
-//         done();
-//     });
-// });
+        done();
+    });
+});
 
 describe('tokenizer JSON', function () {
     before(() => {
@@ -170,6 +170,24 @@ describe('tokenizer JSON', function () {
         if (tr.stderr) {
            done(tr.stderr);
            return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should replace all if includes and excludes are both empty', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tokenizer', 'test-all.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
         }
 
         assert(tr.succeeded, 'should have succeeded');

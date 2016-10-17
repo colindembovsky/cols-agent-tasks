@@ -25,13 +25,15 @@ let _mockfs = mockfs.fs({
   "Tricky": {
     "Tricky": "Tricky",
     "Tricky1": {
-      "Tricky2": "Tricky"
+        "Tricky2": "Tricky"
     }
   },
   "Logging": {
     "IncludeScopes": false,
     "LogLevel": {
-      "Default": "Debug"
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
     }
   }
 }
@@ -42,7 +44,7 @@ tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', 'appsettings.json');
 tmr.setInput('tokenizeType', 'Json');
 tmr.setInput('includes', '');
-tmr.setInput('excludes', 'Logging.IncludeScopes');
+tmr.setInput('excludes', '');
 tmr.run();
 // validate the replacement
 let actual = _mockfs.readFileSync('working/appsettings.json', 'utf-8');
@@ -57,9 +59,11 @@ var expected = `{
     }
   },
   "Logging": {
-    "IncludeScopes": false,
+    "IncludeScopes": "__Logging.IncludeScopes__",
     "LogLevel": {
-      "Default": "__Logging.LogLevel.Default__"
+      "Default": "__Logging.LogLevel.Default__",
+      "System": "__Logging.LogLevel.System__",
+      "Microsoft": ""__Logging.LogLevel.Microsoft__"
     }
   }
 }`;
@@ -70,4 +74,4 @@ if (actual !== expected) {
 else {
     console.log("Tokenization succeeded!");
 }
-//# sourceMappingURL=test-exclude.js.map
+//# sourceMappingURL=test-all.js.map

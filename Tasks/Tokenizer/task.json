@@ -13,15 +13,8 @@
   "version": {
     "Major": "0",
     "Minor": "0",
-    "Patch": "26"
+    "Patch": "27"
   },
-  "groups": [
-    {
-      "name": "advanced",
-      "displayName": "Advanced",
-      "isExpanded": false
-    }
-  ],
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Tokenize files.",
   "inputs": [
@@ -56,7 +49,7 @@
       "name": "includes",
       "type": "string",
       "label": "Include Fields",
-      "defaultValue": "ConnectionStrings.DefaultConnection,Logging.LogLevel.Default",
+      "defaultValue": "ConnectionStrings.DefaultConnection",
       "helpMarkDown": "Comma-separated list of keys to tokenize. If left empty, all values are tokenized.",
       "required": false
     },
@@ -65,7 +58,7 @@
       "type": "string",
       "label": "Exclude Fields",
       "defaultValue": "LogLevel",
-      "helpMarkDown": "Comma-separated list of keys NOT to tokenize.",
+      "helpMarkDown": "Comma-separated list of keys NOT to tokenize. You should not specify both include and exclude.",
       "required": false
     }
   ],

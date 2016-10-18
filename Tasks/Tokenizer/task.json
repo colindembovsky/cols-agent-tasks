@@ -16,7 +16,7 @@
     "Patch": "27"
   },
   "minimumAgentVersion": "1.91.0",
-  "instanceNameFormat": "Tokenize files.",
+  "instanceNameFormat": "Tokenize file(s)",
   "inputs": [
     {
       "name": "sourcePath",
@@ -39,7 +39,7 @@
       "type": "pickList",
       "label": "Tokenize Type",
       "defaultValue": "json",
-      "helpMarkDown": "Type of tokenization type.",
+      "helpMarkDown": "Type of tokenization.",
       "required": true,
       "options": {
           "Json": "Json"
@@ -48,7 +48,7 @@
     {
       "name": "includes",
       "type": "string",
-      "label": "Include Fields",
+      "label": "Includes",
       "defaultValue": "ConnectionStrings.DefaultConnection",
       "helpMarkDown": "Comma-separated list of keys to tokenize. If left empty, all values are tokenized.",
       "required": false
@@ -56,7 +56,7 @@
     {
       "name": "excludes",
       "type": "string",
-      "label": "Exclude Fields",
+      "label": "Excludes",
       "defaultValue": "LogLevel",
       "helpMarkDown": "Comma-separated list of keys NOT to tokenize. You should not specify both include and exclude.",
       "required": false

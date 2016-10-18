@@ -11,11 +11,6 @@ const tl = require('vsts-task-lib/task');
 const sh = require('shelljs');
 const fs = require('fs');
 const os = require('os');
-// Object.resolve = function(path, obj) {
-//     return path.split('.').reduce(function(prev, curr) {
-//         return prev ? prev[curr] : undefined
-//     }, obj || self)
-// }
 function replaceProps(obj, parent, includeSet, excludeSet) {
     for (let prop of Object.getOwnPropertyNames(obj)) {
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
@@ -93,8 +88,8 @@ function run() {
                 let file = files[i];
                 console.info(`Starting tokenization in [${file}]`);
                 let contents = fs.readFileSync(file, 'utf8').toString();
-                // replace \ with \\
-                contents = contents.replace(/\\/, "\\\\");
+                // remove BOM if present
+                contents = contents.replace(String.fromCharCode(65279), '');
                 let json = JSON.parse(contents);
                 // find the include properties recursively
                 replaceProps(json, '', includeSet, excludeSet);

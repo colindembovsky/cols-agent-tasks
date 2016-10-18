@@ -3,12 +3,6 @@ import * as sh from 'shelljs';
 import * as fs from 'fs';
 import * as os from 'os';
 
-// Object.resolve = function(path, obj) {
-//     return path.split('.').reduce(function(prev, curr) {
-//         return prev ? prev[curr] : undefined
-//     }, obj || self)
-// }
-
 function replaceProps(obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
     for (let prop of Object.getOwnPropertyNames(obj)) {
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
@@ -97,10 +91,10 @@ async function run() {
             console.info(`Starting tokenization in [${file}]`);
 
             let contents = fs.readFileSync(file, 'utf8').toString();
-            // replace \ with \\
-            contents = contents.replace(/\\/, "\\\\");
+            // remove BOM if present
+            contents = contents.replace(String.fromCharCode(65279), '');
             let json = JSON.parse(contents);
-            
+
             // find the include properties recursively
             replaceProps(json, '', includeSet, excludeSet);
 

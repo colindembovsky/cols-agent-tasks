@@ -21,7 +21,7 @@ then specify the full path for the values you want to tokenize. Similarly, use E
 
 The "path" for the Includes and Excludes is the full JSON path in the file. For example, if the file is:
 
-```
+```JSON
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=aspnet-WebApplication1-26e8893e-d7c0-4fc6-8aab-29b59971d622;Trusted_Connection=True;MultipleActiveResultSets=true"
@@ -47,7 +47,7 @@ ConnectionStrings.DefaultConnection,Tricky.Gollum,Tricky.Hobbit
 ```
 
 After tokenization, the file would appear as follows:
-```
+```JSON
 {
   "ConnectionStrings": {
     "DefaultConnection": "__ConnectionStrings.DefaultConnection__"

@@ -15,11 +15,11 @@
         "Build and release"
     ],
     "tags": [
-        "version",
+        "version", "versioning",
         "build",
         "replacement",
-        "tokens",
-        "dacpac"
+        "tokens", "tokenize",
+        "dacpac", "SSDT"
     ],
     "screenshots": [
         {

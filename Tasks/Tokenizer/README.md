@@ -68,7 +68,7 @@ After tokenization, the file would appear as follows:
 ```
 
 ## Using Tokenizer with ReplaceTokens
-It is expected that this combination will be used for DotNet Core applications. You will likely want to tokenize the appsettings.json file during the build and then use the [ReplaceTokens](..\ReplaceTokens\readme.md) task to fill in
+It is expected that this combination will be used for DotNet Core applications. You will likely want to tokenize the appsettings.json file during the build and then use the [ReplaceTokens](../ReplaceTokens/readme.md) task to fill in
 values during the Release. This is possible, but you will need to change the defaults for the ReplaceTokens task in order to work with
 the json "namespaces". The following process will get you going:
 

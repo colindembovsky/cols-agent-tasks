@@ -23,12 +23,6 @@
     ],
     "screenshots": [
         {
-            "path": "images/ss_AzureWebDeploy.png"
-        },
-        {
-            "path": "images/ss_dockerPublish.png"
-        },
-        {
             "path": "images/ss_replaceTokens.png"
         },
         {
@@ -36,6 +30,9 @@
         },
         {
             "path": "images/ss_DacPacChangeReport.png"
+        },
+        {
+            "path": "images/ss_tokenize.png"
         }    
     ],
     "content": {

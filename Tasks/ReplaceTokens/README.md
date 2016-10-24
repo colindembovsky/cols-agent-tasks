@@ -63,7 +63,7 @@ It is expected that this combination will be used for DotNet Core applications. 
 values during the Release. This is possible, but you will need to change the defaults for the ReplaceTokens task in order to work with
 the json "namespaces". The following process will get you going:
 
-1. Use the [Tokenizer](../Tokenizer/readme.md) to tokenize the appsettings.json file as described above.
+1. Use the [Tokenizer](../Tokenizer) to tokenize the appsettings.json file as described above.
 2. On the Release, enter the name of the tokens but substitute an `_` (underscore) for the `.` (period). Using the above example, you'd need three environment
 variables: `ConnectionStrings_DefaultConnection`, `Tricky_Gollum` and `Tricky_Hobbit`.
 3. On the Release, add a ReplaceTokens task and change the default Token Regex parameter to `__(\w+[\.\w+]*)__`

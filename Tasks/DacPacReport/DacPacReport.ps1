@@ -187,14 +187,15 @@ Write-Verbose -Verbose "Using sqlPackage path $SqlPackagePath"
 
 $rootUri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis"
 
-# just for testing
 $headers = @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+if (-not($env:SYSTEM_ACCESSTOKEN) -or $env:SYSTEM_ACCESSTOKEN -eq '') {
+    Write-Error "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options"
+    throw
+}
+
+# just for testing
 if (-not ($env:TF_BUILD)) {
    Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
-   if (-not($env:SYSTEM_ACCESSTOKEN) -or $env:SYSTEM_ACCESSTOKEN -eq '') {
-       Write-Error "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options"
-       throw
-   }
    $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
 }
 

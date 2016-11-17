@@ -1,0 +1,26 @@
+{
+  "id": "0b6f0167-8389-4db8-89c6-4ae7688cd15a",
+  "name": "CoverateTrend",
+  "friendlyName": "Coverage Trend",
+  "description": "Adds a coverage trend summary section to the build report.",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/CoverageTrend)",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "1"
+  },
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Add coverage trend to summary",
+  "execution": {
+    "Node": {
+      "target": "coverageTrend.js",
+      "argumentFormat": ""
+    }
+  }
+}

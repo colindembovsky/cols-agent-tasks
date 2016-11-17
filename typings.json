@@ -7,6 +7,7 @@
     "mockery": "registry:dt/mockery#1.4.0+20160316155526",
     "node": "registry:dt/node#6.0.0+20160923124626",
     "q": "registry:dt/q#0.0.0+20160613154756",
-    "shelljs": "registry:dt/shelljs#0.0.0+20160526131156"
+    "shelljs": "registry:dt/shelljs#0.0.0+20160526131156",
+    "vso-node-api": "registry:dt/vso-node-api#0.3.2+20160724062053"
   }
 }

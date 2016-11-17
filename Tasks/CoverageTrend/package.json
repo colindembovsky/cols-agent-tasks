@@ -21,10 +21,9 @@
     "url": "https://github.com/colindembovsky/cols-agent-tasks/issues"
   },
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "dependencies": {
-    "node-rest-client": "^2.0.1",
+    "vso-node-api": "^5.1.1",
     "vsts-task-lib": "^0.9.6"
   }
 }

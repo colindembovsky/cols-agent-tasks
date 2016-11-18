@@ -186,7 +186,7 @@ function Convert-Report {
     # make an md file out of the sql script
 
     $mdTemplate = @"
-**Note**: Even if there are no changes, this script would still be run against the target environment. This usually includes
+**Note**: Even if there are no schema changes, this script would still be run against the target environment. This usually includes
 some housekeeping code and any pre- and post-deployment scripts you may have in your database model.
 
 ``````

@@ -90,28 +90,43 @@ function Get-BuildDrop {
         Write-Warning "There is no drop with the name $DropName."
         ""
     } else {
-        Write-Verbose -Verbose "Downloading drop $($drop.resource.downloadUrl)"
-        wget -Uri $drop.resource.downloadUrl -Headers $Headers -OutFile "$DropName.zip"
-
-        # extract the zip file
         $tPath = "sourceDrop"
-        if (Get-Command "Expand-Archive" -ErrorAction SilentlyContinue) {
-            Expand-Archive -Path "$DropName.zip" -DestinationPath ".\$tPath" -Force
-            $tPath = Resolve-Path $tPath
-        } else {
-            Write-Verbose -Verbose "Expand-Archive does not exist. Using System.IO.Compression.ZipFile"
-            
-            $zipPath = Resolve-Path ".\$DropName.zip"
-            $tPath = "SourceDrop"
 
+        # the drop is a file share
+        if ($drop.resource.downloadUrl.StartsWith('file')) {
             if (Test-Path -Path $tPath) {
                 Remove-Item -Path $tPath -Recurse -Force
             }
             mkdir $tPath
             $tPath = Resolve-Path $tPath
-            
-            Add-Type -AssemblyName "System.IO.Compression.FileSystem"
-            [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tPath)
+
+            $uncPath = [System.Uri]($drop.resource.downloadUrl)
+            Write-Verbose -Verbose "Copying drop from server share $uncPath"
+            Copy-Item -Path $uncPath.LocalPath -Destination $tPath -Recurse -Force
+        } else {
+            # the drop is a server drop
+            Write-Verbose -Verbose "Downloading drop $($drop.resource.downloadUrl)"
+            wget -Uri $drop.resource.downloadUrl -Headers $Headers -OutFile "$DropName.zip"
+
+            # extract the zip file
+            if (Get-Command "Expand-Archive" -ErrorAction SilentlyContinue) {
+                Expand-Archive -Path "$DropName.zip" -DestinationPath ".\$tPath" -Force
+                $tPath = Resolve-Path $tPath
+            } else {
+                Write-Verbose -Verbose "Expand-Archive does not exist. Using System.IO.Compression.ZipFile"
+                
+                $zipPath = Resolve-Path ".\$DropName.zip"
+                $tPath = "SourceDrop"
+
+                if (Test-Path -Path $tPath) {
+                    Remove-Item -Path $tPath -Recurse -Force
+                }
+                mkdir $tPath
+                $tPath = Resolve-Path $tPath
+                
+                Add-Type -AssemblyName "System.IO.Compression.FileSystem"
+                [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $tPath)
+            }
         }
 
         $tfile = Find-File -Path $tPath -FilePattern "**\$DacpacName.dacpac"

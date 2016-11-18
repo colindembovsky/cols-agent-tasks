@@ -8,35 +8,39 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const tl = require('vsts-task-lib/task');
-const httpClient = require('vso-node-api/HttpClient');
-const restClient = require('vso-node-api/RestClient');
-const buildApi = require('vso-node-api/BuildApi');
+const webApi = require('vso-node-api/WebApi');
+const bi = require('vso-node-api/interfaces/BuildInterfaces');
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             tl.debug("Starting Coverate Trend task");
             var tpcUri = tl.getVariable("System.TeamFoundationCollectionUri");
-            var projectId = tl.getVariable("System.TeamProjectId");
-            var rootUri = `{tpcUri}{projectId}/_apis`;
-            // handle headers
+            var teamProject = tl.getVariable("System.TeamProject");
+            var definitionId = parseInt(tl.getVariable("System.DefinitionId"));
+            // handle creds
+            var credHandler;
             var accessToken = tl.getVariable("System.AccessToken");
             if (!accessToken || accessToken.length === 0) {
                 tl.warning("Could not find token for autheniticating. Please enable OAuth token in Build Options");
             }
-            var headerName = "Bearer";
-            var inBuild = tl.getVariable("TF.BUILD");
-            if (!inBuild || inBuild.length === 0) {
-                tl.debug("*** NOT RUNNING IN A BUILD ***");
-                headerName = "Basic"; //s = `@{Authorization = "Basic ${accessToken}"}`;
-            }
-            var authHeader = `${headerName} ${accessToken}`;
-            var args = {
-                headers: {}
-            };
-            args.headers[headerName] = authHeader;
-            var httpObj = new httpClient.HttpClient("userAgent??");
-            var client = new restClient.RestClient(httpObj);
-            var buildClient = new buildApi.BuildApi(rootUri, null);
+            credHandler = webApi.getBearerHandler(accessToken);
+            var vsts = new webApi.WebApi(tpcUri, credHandler);
+            // get previous successful builds
+            tl.debug("Connecting to build and test APIs");
+            var buildApi = vsts.getQBuildApi();
+            var testApi = vsts.getTestApi();
+            tl.debug("Getting previous builds");
+            var prevBuilds = yield buildApi.getBuilds(teamProject, [definitionId], null, // queues: number[]
+            null, // buildNumber
+            null, //new Date(2016, 1, 1),  // minFinishTime
+            null, // maxFinishTime
+            null, // requestedFor: string
+            bi.BuildReason.All, bi.BuildStatus.Completed, bi.BuildResult.Succeeded, null, // tagFilters: string[]
+            null, // properties: string[]
+            5 // top: number
+            );
+            tl.debug("Calculating coverage trend");
+            var buildId = prevBuilds[0].buildNumber;
         }
         catch (err) {
             let msg = err;

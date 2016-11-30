@@ -24,6 +24,6 @@
   "devDependencies": {},
   "dependencies": {
     "vso-node-api": "^5.1.1",
-    "vsts-task-lib": "^0.9.6"
+    "vsts-task-lib": "^1.1.0"
   }
 }

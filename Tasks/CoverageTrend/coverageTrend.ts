@@ -1,5 +1,6 @@
 import * as tl from 'vsts-task-lib/task';
 import * as webApi from 'vso-node-api/WebApi';
+import * as buildApi from 'vso-node-api/BuildApi';
 import * as vstsInterfaces from 'vso-node-api/interfaces/common/VsoBaseInterfaces';
 import * as bi from 'vso-node-api/interfaces/BuildInterfaces';
 import * as ti from 'vso-node-api/interfaces/TestInterfaces';
@@ -11,6 +12,7 @@ async function run() {
         var tpcUri = tl.getVariable("System.TeamFoundationCollectionUri");
         var teamProject = tl.getVariable("System.TeamProject");
         var definitionId = parseInt(tl.getVariable("System.DefinitionId"));
+        var thisBuildId = parseInt(tl.getVariable("Build.BuildId"));
 
         // handle creds
         var credHandler: vstsInterfaces.IRequestHandler;
@@ -23,28 +25,25 @@ async function run() {
 
         // get previous successful builds
         tl.debug("Connecting to build and test APIs");
-        var buildApi = vsts.getQBuildApi();
         var testApi = vsts.getTestApi();
 
-        tl.debug("Getting previous builds");
-        var prevBuilds = await buildApi.getBuilds(teamProject, [definitionId],
-                        null,                       // queues: number[]
-                        null,                       // buildNumber
-                        null,                       //new Date(2016, 1, 1),  // minFinishTime
-                        null,                       // maxFinishTime
-                        null,                       // requestedFor: string
-                        bi.BuildReason.All,
-                        bi.BuildStatus.Completed,
-                        bi.BuildResult.Succeeded,
-                        null,                       // tagFilters: string[]
-                        null,                        // properties: string[]
-                        5                          // top: number
-                        );
+        tl.debug("Getting coverage data");
+        // 1 = modules, 2 = function, 4 = block
+        var covData = await testApi.getCodeCoverageSummary(teamProject, thisBuildId);
+        if (covData) {
+            var data = covData.coverageData[0];
+            var trends = data.coverageStats.filter(c => c.isDeltaAvailable)
+                .map(u => {
+                    return {
+                        Label: u.label,
+                        Delta: u.delta
+                    };
+                });
+            var anyNeg = trends.some(t => t.Delta < 0);
+        } else {
+            tl.debug("No coverage data for build");
+        }
         
-        tl.debug("Calculating coverage trend");
-        var buildId = prevBuilds[0].buildNumber;
-        //TODO
-        //testApi.getBuildCodeCoverage(teamProject, buildId, )
         
     } catch (err) {
         let msg = err;

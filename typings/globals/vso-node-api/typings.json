@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/d8d32d70b44d80c7b49bf515737e71f0b4b62b35/vso-node-api/vso-node-api.d.ts",
-    "raw": "registry:dt/vso-node-api#0.3.2+20160724062053",
-    "typings": "https://raw.githubusercontent.com/DefinitelyTyped/DefinitelyTyped/d8d32d70b44d80c7b49bf515737e71f0b4b62b35/vso-node-api/vso-node-api.d.ts"
-  }
-}

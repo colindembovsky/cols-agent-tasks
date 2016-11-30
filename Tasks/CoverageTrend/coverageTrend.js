@@ -27,12 +27,12 @@ function run() {
             var vsts = new webApi.WebApi(tpcUri, credHandler);
             // get previous successful builds
             tl.debug("Connecting to build and test APIs");
-            var buildApi = vsts.getQBuildApi();
+            var buildApi = vsts.getBuildApi();
             var testApi = vsts.getTestApi();
             tl.debug("Getting previous builds");
             var prevBuilds = yield buildApi.getBuilds(teamProject, [definitionId], null, // queues: number[]
             null, // buildNumber
-            null, //new Date(2016, 1, 1),  // minFinishTime
+            null, // new Date(2016, 1, 1),  // minFinishTime
             null, // maxFinishTime
             null, // requestedFor: string
             bi.BuildReason.All, bi.BuildStatus.Completed, bi.BuildResult.Succeeded, null, // tagFilters: string[]
@@ -41,6 +41,9 @@ function run() {
             );
             tl.debug("Calculating coverage trend");
             var buildId = prevBuilds[0].buildNumber;
+            tl.debug(`Retrieved build with Id ${buildId}`);
+            //1 = modules, 2 = function, 4 = block
+            testApi.getBuildCodeCoverage(teamProject, parseInt(buildId), 4);
         }
         catch (err) {
             let msg = err;

@@ -198,3 +198,4 @@ ModelManifest.xml
 **/*.tar.gz
 
 coverage
+test/instrumented

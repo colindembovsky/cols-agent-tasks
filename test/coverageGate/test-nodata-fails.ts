@@ -4,8 +4,8 @@ import path = require('path');
 import assert = require('assert');
 import mocks = require('./mocks');
 
-var testRoot = path.resolve(__dirname);
-let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'CoverageGate', 'coverageGate.js');
+let rootDir = path.join(__dirname, '..', 'instrumented');
+let taskPath = path.join(rootDir, 'coverageGate.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // provide mocks

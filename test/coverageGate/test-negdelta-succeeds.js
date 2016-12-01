@@ -2,8 +2,8 @@
 const tmrm = require('vsts-task-lib/mock-run');
 const path = require('path');
 const mocks = require('./mocks');
-var testRoot = path.resolve(__dirname);
-let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'CoverageGate', 'coverageGate.js');
+let rootDir = path.join(__dirname, '..', 'instrumented');
+let taskPath = path.join(rootDir, 'coverageGate.js');
 let tmr = new tmrm.TaskMockRunner(taskPath);
 // provide mocks
 mocks.MockWebApi.covData = {

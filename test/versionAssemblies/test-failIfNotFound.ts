@@ -5,8 +5,8 @@ import fse = require('fs-extra');
 import mockfs = require('mock-fs');
 import assert = require('assert');
 
-var testRoot = path.resolve(__dirname);
-let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'VersionAssemblies', 'VersionAssemblies.js');
+let rootDir = path.join(__dirname, '..', 'instrumented');
+let taskPath = path.join(rootDir, 'versionAssemblies.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // provide answers for task mock

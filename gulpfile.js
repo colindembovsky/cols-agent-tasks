@@ -15,26 +15,30 @@ gulp.task('test', function(cb) {
 
     // path to test files
     var testPaths = [
-        path.resolve(__dirname, 'test', '_testsuite.js')
+        'test/instrumented/*.js',
+        'test/_testsuite.js'
     ];
 
     // paths to src files for instrumentation
     var srcPaths = [
-        path.resolve(__dirname, 'Tasks', 'CoverageGate', '*.js'),
-        path.resolve(__dirname, 'Tasks', 'ReplaceTokens', '*.js'),
-        path.resolve(__dirname, 'Tasks', 'Tokenizer', '*.js'),
-        path.resolve(__dirname, 'Tasks', 'VersionAssemblies', '*.js'),
+        'Tasks/CoverageGate/*.js',
+        'Tasks/ReplaceTokens/*.js',
+        'Tasks/Tokenizer/*.js',
+        'Tasks/VersionAssemblies/*.js'
     ];
 
     // invoke the tests
     gulp.src(srcPaths)
         .pipe(istanbul())
-        .pipe(istanbul.hookRequire())
+        .pipe(gulp.dest('./test/instrumented'))
         .on('finish', function() {
             gulp.src(testPaths)
                 .pipe(mocha({ reporter: 'spec', ui: 'bdd', useColors: !tfBuild })
                     .on('error', reportErr))
-                .pipe(istanbul.writeReports())
+                .pipe(istanbul.writeReports({
+                    includeAllSources: true,
+                    reporters: [ 'lcov', 'json', 'text', 'text-summary', 'html', 'cobertura' ]
+                }))
                 .on('error', reportErr)
                 .on('end', cb);
         })

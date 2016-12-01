@@ -1,5 +1,8 @@
 export module MockWebApi {
-    var covData;
+    export var covData;
+    export var calledBasic = false;
+    export var calledBearer = false;
+
     var mockCredHandler = { // a mock IRequestHandler
         prepareRequest: (options: any) => { },
         canHandleAuthentication: (res) => true,
@@ -8,11 +11,13 @@ export module MockWebApi {
 
     export function getBasicHandler(username, password) { 
         console.log("--- MOCK: return fake basic handler");
+        calledBasic = true;
         return mockCredHandler;
     }
     
     export function getBearerHandler(token) { 
         console.log("--- MOCK: return fake bearer handler");
+        calledBearer = true;
         return mockCredHandler; 
     }
 
@@ -25,10 +30,5 @@ export module MockWebApi {
                 getCodeCoverageSummary: (teamProject, buildId) => covData
             }
         }
-    }
-
-    export function setCovDataResult(_covData) { 
-        console.log("--- MOCK: setting covData")
-        covData = _covData;
     }
 }

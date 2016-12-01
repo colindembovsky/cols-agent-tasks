@@ -5,7 +5,7 @@ import ttm = require('vsts-task-lib/mock-test');
 
 const debug = false;
 
-xdescribe('replaceTokens', function () {
+describe('replaceTokens', function () {
     before(() => {
     });
 
@@ -79,7 +79,7 @@ xdescribe('replaceTokens', function () {
     });
 });
 
-xdescribe('versionAssemblies', function () {
+describe('versionAssemblies', function () {
     before(() => {
     });
 
@@ -150,7 +150,7 @@ xdescribe('versionAssemblies', function () {
     });
 });
 
-xdescribe('tokenizer JSON', function () {
+describe('tokenizer JSON', function () {
     before(() => {
     });
 
@@ -268,6 +268,50 @@ describe('coverageGate', function () {
         done();
     });
 
+    it('should succeed with lt and negative delta', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'coverageGate', 'test-negdelta-succeeds.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should succeed with lt and positive delta', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'coverageGate', 'test-posdelta-succeeds.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
     it('should fail with le and 0 delta', (done: MochaDone) => {
         // this.timeout(1000);
 
@@ -287,6 +331,97 @@ describe('coverageGate', function () {
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have failed");
         assert.equal(tr.errorIssues[0], "Coverage delta is below the threshold of 0");
+
+        done();
+    });
+
+    it('should fail with no coverage data', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'coverageGate', 'test-nodata-fails.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have failed");
+        assert.equal(tr.errorIssues[0], "No coverage data for build. Cannot determine trend.");
+
+        done();
+    });
+
+    it('should fail with no deltas', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'coverageGate', 'test-nodelta-fails.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have failed");
+        assert.equal(tr.errorIssues[0], "There are no coverage deltas. Make sure you have at least 2 builds.");
+
+        done();
+    });
+
+    it('should fail with no auth', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'coverageGate', 'test-noauth-fails.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have failed");
+        assert.equal(tr.errorIssues[0], "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options or supply username/password.");
+
+        done();
+    });
+
+    it('should succeed with username', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'coverageGate', 'test-username-succeeds.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have 0 errors");
 
         done();
     });

@@ -9,7 +9,7 @@ let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'CoverageGate', 'covera
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // provide mocks
-mocks.MockWebApi.setCovDataResult({
+mocks.MockWebApi.covData = {
     coverageData: [{
         coverageStats: [
           {
@@ -25,7 +25,7 @@ mocks.MockWebApi.setCovDataResult({
         ]
       }
     ]
-  });
+  };
 tmr.registerMock('vso-node-api/WebApi', mocks.MockWebApi);
 
 // set variables

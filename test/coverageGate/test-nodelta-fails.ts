@@ -13,12 +13,12 @@ mocks.MockWebApi.covData = {
     coverageData: [{
         coverageStats: [
           {
-            isDeltaAvailable: true,
+            isDeltaAvailable: false,
             label: 'Lines',
             delta: 0
           },
           {
-            isDeltaAvailable: true,
+            isDeltaAvailable: false,
             label: 'Blocks',
             delta: 0
           }
@@ -36,19 +36,6 @@ process.env["SYSTEM_ACCESSTOKEN"] = "faketoken";
 
 // set inputs
 tmr.setInput('minDelta', "0");
-tmr.setInput('operator', "lt");
+tmr.setInput('operator', "le");
 
 tmr.run();
-
-// assert to check bearer auth
-if (mocks.MockWebApi.calledBearer) {
-  console.log("Bearer auth called.");
-} else {
-  console.error("Bearer auth not called.")
-}
-
-if (mocks.MockWebApi.calledBasic) {
-  console.error("Basic auth called.");
-} else {
-  console.log("Basic auth not called.")
-}

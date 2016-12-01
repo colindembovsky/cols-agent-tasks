@@ -6,23 +6,6 @@ var testRoot = path.resolve(__dirname);
 let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'CoverageGate', 'coverageGate.js');
 let tmr = new tmrm.TaskMockRunner(taskPath);
 // provide mocks
-mocks.MockWebApi.covData = {
-    coverageData: [{
-            coverageStats: [
-                {
-                    isDeltaAvailable: true,
-                    label: 'Lines',
-                    delta: 0
-                },
-                {
-                    isDeltaAvailable: true,
-                    label: 'Blocks',
-                    delta: 0
-                }
-            ]
-        }
-    ]
-};
 tmr.registerMock('vso-node-api/WebApi', mocks.MockWebApi);
 // set variables
 process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";
@@ -33,4 +16,4 @@ process.env["SYSTEM_ACCESSTOKEN"] = "faketoken";
 tmr.setInput('minDelta', "0");
 tmr.setInput('operator', "le");
 tmr.run();
-//# sourceMappingURL=test-lessEqual0-fails.js.map
+//# sourceMappingURL=test-nodata-fails.js.map

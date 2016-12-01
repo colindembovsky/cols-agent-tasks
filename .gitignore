@@ -196,3 +196,5 @@ ModelManifest.xml
 
 *.vsix
 **/*.tar.gz
+
+coverage

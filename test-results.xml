@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="6.1129999999999995" tests="18" failures="0">
+  <testsuite name="Root Suite" timestamp="2016-12-02T04:47:51" tests="0" failures="0" time="0">
+  </testsuite>
+  <testsuite name="replaceTokens" timestamp="2016-12-02T04:47:51" tests="3" failures="0" time="1.42">
+    <testcase name="replaceTokens should succeed with default inputs" time="0.656" classname="should succeed with default inputs">
+    </testcase>
+    <testcase name="replaceTokens should succeed with @ tokens" time="0.385" classname="should succeed with @ tokens">
+    </testcase>
+    <testcase name="replaceTokens should succeed with dotted tokens" time="0.379" classname="should succeed with dotted tokens">
+    </testcase>
+  </testsuite>
+  <testsuite name="versionAssemblies" timestamp="2016-12-02T04:47:53" tests="3" failures="0" time="1.139">
+    <testcase name="versionAssemblies should succeed with default inputs" time="0.384" classname="should succeed with default inputs">
+    </testcase>
+    <testcase name="versionAssemblies should succeed with complex Android-like setup" time="0.37" classname="should succeed with complex Android-like setup">
+    </testcase>
+    <testcase name="versionAssemblies should fail if there is no match" time="0.385" classname="should fail if there is no match">
+    </testcase>
+  </testsuite>
+  <testsuite name="tokenizer JSON" timestamp="2016-12-02T04:47:54" tests="4" failures="0" time="1.519">
+    <testcase name="tokenizer JSON should succeed with default inputs" time="0.383" classname="should succeed with default inputs">
+    </testcase>
+    <testcase name="tokenizer JSON should succeed with excludes" time="0.381" classname="should succeed with excludes">
+    </testcase>
+    <testcase name="tokenizer JSON should replace all if includes and excludes are both empty" time="0.37" classname="should replace all if includes and excludes are both empty">
+    </testcase>
+    <testcase name="tokenizer JSON should fail if includes and excludes are both specified" time="0.385" classname="should fail if includes and excludes are both specified">
+    </testcase>
+  </testsuite>
+  <testsuite name="coverageGate" timestamp="2016-12-02T04:47:55" tests="8" failures="0" time="2.0349999999999997">
+    <testcase name="coverageGate should succeed with lt and 0 delta" time="0.265" classname="should succeed with lt and 0 delta">
+    </testcase>
+    <testcase name="coverageGate should succeed with lt and negative delta" time="0.252" classname="should succeed with lt and negative delta">
+    </testcase>
+    <testcase name="coverageGate should succeed with lt and positive delta" time="0.254" classname="should succeed with lt and positive delta">
+    </testcase>
+    <testcase name="coverageGate should fail with le and 0 delta" time="0.262" classname="should fail with le and 0 delta">
+    </testcase>
+    <testcase name="coverageGate should fail with no coverage data" time="0.254" classname="should fail with no coverage data">
+    </testcase>
+    <testcase name="coverageGate should fail with no deltas" time="0.248" classname="should fail with no deltas">
+    </testcase>
+    <testcase name="coverageGate should fail with no auth" time="0.253" classname="should fail with no auth">
+    </testcase>
+    <testcase name="coverageGate should succeed with username" time="0.247" classname="should succeed with username">
+    </testcase>
+  </testsuite>
+</testsuites>

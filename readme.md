@@ -25,18 +25,25 @@ The following tasks are available:
 
 	This task versions assemblies according to the build number. [More...](./Tasks/VersionAssemblies)
 
-2. **Replace Tokens**
+1. **Version Assemblies**
+
+	This task versions assemblies according to the build number. [More...](./Tasks/VersionAssemblies)
+
+1. **Replace Tokens**
 
 	This task replaces tokens in a file using Environment variables. [More...](./Tasks/ReplaceTokens)
 
-3. **Docker Publish (Deprecated)**
+1. **DacPac Change Report Task**
 
-	This task performs `docker build` and (optionally) `docker run` to deploy your app to a docker host. [More...](./Tasks/DockerPublish)
+	This task calculates the changes in an SSDT project between builds. [More...](./Tasks/DacPacReport)
 
-4. **Azure Web Deploy (Deprecated)**
+1. **Tokenizer**
 
-	This task executes WebDeploy to publish a WebDeploy package to an Azure Web App. [More...](./Tasks/AzureWebDeploy)
+	This task tokenizes a file automatically. [More...](./Tasks/Tokenizer)
 
+1. **Coverage Gate**
+
+	This task allows you to fail a release (or build) based of coverage delta. [More...](./Tasks/CoverateGate)
 ## Changing the Code
 The easiest way to open the source is to clone the repo and open in [VSCode](https://code.visualstudio.com/). 
 If you change the .ts files, then run build (ctrl-shift-b) to compile the .js files.

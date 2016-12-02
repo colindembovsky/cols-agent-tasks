@@ -31,6 +31,11 @@ This extension contains helpful build and release Tasks.
 
 	This task allows you to fail a release (or build) based of coverage delta. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/CoverateGate)
 
+## Release Notes
+
+### 1.1.56
+- Added Coverage Trend task
+
 ## Source Code
 The source repo for this extension is [on Github.](https://github.com/colindembovsky/cols-agent-tasks)
 

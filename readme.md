@@ -25,10 +25,6 @@ The following tasks are available:
 
 	This task versions assemblies according to the build number. [More...](./Tasks/VersionAssemblies)
 
-1. **Version Assemblies**
-
-	This task versions assemblies according to the build number. [More...](./Tasks/VersionAssemblies)
-
 1. **Replace Tokens**
 
 	This task replaces tokens in a file using Environment variables. [More...](./Tasks/ReplaceTokens)
@@ -43,7 +39,7 @@ The following tasks are available:
 
 1. **Coverage Gate**
 
-	This task allows you to fail a release (or build) based of coverage delta. [More...](./Tasks/CoverateGate)
+	This task allows you to fail a release (or build) based of coverage delta. [More...](./Tasks/CoverageGate)
 ## Changing the Code
 The easiest way to open the source is to clone the repo and open in [VSCode](https://code.visualstudio.com/). 
 If you change the .ts files, then run build (ctrl-shift-b) to compile the .js files.

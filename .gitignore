@@ -196,3 +196,6 @@ ModelManifest.xml
 
 *.vsix
 **/*.tar.gz
+
+coverage
+test/instrumented

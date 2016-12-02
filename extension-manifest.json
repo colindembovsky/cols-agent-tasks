@@ -33,7 +33,10 @@
         },
         {
             "path": "images/ss_tokenize.png"
-        }    
+        },
+        {
+            "path": "images/ss_coverageGate.png"
+        }  
     ],
     "content": {
         "details": {
@@ -76,6 +79,9 @@
         },
         {
             "path": "Tasks/DacPacReport"
+        },
+        {
+            "path": "Tasks/CoverageGate"
         }
     ],
     "contributions": [
@@ -127,6 +133,16 @@
             ],
             "properties": {
                 "name": "Tasks/DacPacReport"
+            }
+        },
+        {
+            "id": "coverage-gate-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/CoverageGate"
             }
         }
     ]

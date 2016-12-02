@@ -1,0 +1,71 @@
+{
+  "id": "0b6f0167-8389-4db8-89c6-4ae7688cd15a",
+  "name": "CoverateGate",
+  "friendlyName": "Coverage Gate",
+  "description": "Adds a coverage trend summary section to the build report.",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/CoverageGate)",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "9"
+  },
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Fail if coverage delta is below $(minDelta)",
+  "groups": [
+    {
+      "name": "2015",
+      "displayName": "TFS 2015",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "name": "minDelta",
+      "type": "string",
+      "label": "Delta",
+      "defaultValue": "0",
+      "helpMarkDown": "Fail if the coverage delta is below this value.",
+      "required": true
+    },
+    {
+      "name": "operator",
+      "type": "pickList",
+      "label": "Operator",
+      "defaultValue": "lt",
+      "helpMarkDown": "Operator to apply. Either < or <=",
+      "required": true,
+      "options": {
+          "le": "<=",
+          "lt": "<"
+      }
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "label": "Username",
+      "helpMarkDown": "Username to access TFS - only required for TFS 2015.3 or earlier, where OAuth",
+      "required": false,
+      "groupName": "2015"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "label": "Password",
+      "helpMarkDown": "Password to access TFS",
+      "required": false,
+      "groupName": "2015"
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "coverageGate.js",
+      "argumentFormat": ""
+    }
+  }
+}

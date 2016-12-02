@@ -4,7 +4,8 @@ import path = require('path');
 import fse = require('fs-extra');
 import mockfs = require('mock-fs');
 
-let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'ReplaceTokens', 'replaceTokens.js');
+let rootDir = path.join(__dirname, '..', 'instrumented');
+let taskPath = path.join(rootDir, 'replaceTokens.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // provide answers for task mock

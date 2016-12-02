@@ -2,8 +2,8 @@
 const tmrm = require('vsts-task-lib/mock-run');
 const path = require('path');
 const mockfs = require('mock-fs');
-var testRoot = path.resolve(__dirname);
-let taskPath = path.join(__dirname, '..', '..', 'Tasks', 'VersionAssemblies', 'VersionAssemblies.js');
+let rootDir = path.join(__dirname, '..', 'instrumented');
+let taskPath = path.join(rootDir, 'versionAssemblies.js');
 let tmr = new tmrm.TaskMockRunner(taskPath);
 // provide answers for task mock
 let a = {

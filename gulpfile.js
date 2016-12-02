@@ -39,7 +39,7 @@ gulp.task('test-cover', ['instrument'], function() {
             .on('error', reportErr))
         .pipe(istanbul.writeReports({
             includeAllSources: true,
-            reporters: [ 'lcov', 'json', 'text', 'text-summary', 'html', 'cobertura' ]
+            reporters: [ 'html', 'cobertura' ]
         }))
         .on('error', reportErr);
 });

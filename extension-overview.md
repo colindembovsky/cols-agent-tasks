@@ -33,7 +33,7 @@ This extension contains helpful build and release Tasks.
 
 ## Release Notes
 
-### 1.1.56
+### 1.1.57
 - Added Coverage Trend task
 
 ## Source Code

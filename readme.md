@@ -2,6 +2,10 @@
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
+[![Donate](./images/donate.png)](https://www.paypal.me/ColinDembovsky/5)
+
+> As [Scott Hanselman](http://www.hanselman.com/) says, "donations pay for tacos" (or low carb equivalent).
+
 ## Overview
 This repo contains custom tasks that meant to be used with Visual Studio Online and Team Foundation Server.
 

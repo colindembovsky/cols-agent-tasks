@@ -19,7 +19,8 @@
         "build",
         "replacement",
         "tokens", "tokenize",
-        "dacpac", "SSDT"
+        "dacpac", "SSDT",
+        "coverage"
     ],
     "screenshots": [
         {

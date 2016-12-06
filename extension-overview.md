@@ -27,6 +27,9 @@ This extension contains helpful build and release Tasks.
 
 ## Release Notes
 
+### 1.1.60
+- No task updates - added Tokenize task to extension manifest.
+
 ### 1.1.59
 - No task updates - just added a PayPal donate button to the extension manifest.
 

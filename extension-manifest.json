@@ -117,13 +117,13 @@
             }
         },
         {
-            "id": "tokenize-task",
+            "id": "tokenizer-task",
             "type": "ms.vss-distributed-task.task",
             "targets": [
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "Tasks/Tokenize"
+                "name": "Tasks/Tokenizer"
             }
         },
         {

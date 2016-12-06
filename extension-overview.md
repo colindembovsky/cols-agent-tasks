@@ -27,7 +27,7 @@ This extension contains helpful build and release Tasks.
 
 ## Release Notes
 
-### 1.1.61
+### 1.1.62
 - No task updates - added Tokenize task to extension manifest.
 
 ### 1.1.59

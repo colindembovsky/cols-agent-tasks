@@ -67,12 +67,6 @@
     },
     "files": [
         {
-            "path": "Tasks/AzureWebDeploy"
-        },
-        {
-            "path": "Tasks/DockerPublish"
-        },
-        {
             "path": "Tasks/ReplaceTokens"
         },
         {
@@ -83,6 +77,15 @@
         },
         {
             "path": "Tasks/CoverageGate"
+        },
+        {
+            "path": "Tasks/AzureWebDeploy"
+        },
+        {
+            "path": "Tasks/Tokenizer"
+        },
+        {
+            "path": "Tasks/DockerPublish"
         }
     ],
     "contributions": [

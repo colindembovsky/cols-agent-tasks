@@ -87,26 +87,6 @@
     ],
     "contributions": [
         {
-            "id": "azure-webdeploy-task",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "Tasks/AzureWebDeploy"
-            }
-        },
-        {
-            "id": "docker-publish-task",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [
-                "ms.vss-distributed-task.tasks"
-            ],
-            "properties": {
-                "name": "Tasks/DockerPublish"
-            }
-        },
-        {
             "id": "replace-tokens-task",
             "type": "ms.vss-distributed-task.task",
             "targets": [
@@ -137,6 +117,16 @@
             }
         },
         {
+            "id": "tokenize-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/Tokenize"
+            }
+        },
+        {
             "id": "coverage-gate-task",
             "type": "ms.vss-distributed-task.task",
             "targets": [
@@ -144,6 +134,26 @@
             ],
             "properties": {
                 "name": "Tasks/CoverageGate"
+            }
+        },
+        {
+            "id": "azure-webdeploy-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/AzureWebDeploy"
+            }
+        },
+        {
+            "id": "docker-publish-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/DockerPublish"
             }
         }
     ]

@@ -30,7 +30,7 @@
       "type": "filePath",
       "label": "Source Path",
       "defaultValue": "",
-      "helpMarkDown": "Path to the file(s) containing tokens. NOTE: this is casese sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
+      "helpMarkDown": "Path to the file(s) containing tokens. NOTE: this is case sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
       "required": true
     },
     {
@@ -38,7 +38,7 @@
       "type": "string",
       "label": "Target File Pattern",
       "defaultValue": "*.config",
-      "helpMarkDown": "File pattern to find in source path. Supports minimatch. NOTE: this is casese sensitive for non-Windows systems.",
+      "helpMarkDown": "File pattern to find in source path. Supports minimatch. NOTE: this is case sensitive for non-Windows systems.",
       "required": true
     },
     {

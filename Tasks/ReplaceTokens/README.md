@@ -3,7 +3,7 @@
 ![Replace Tokens Task](../../images/ss_replaceTokens.png)
 
 ## Overview
-This task invokes replaces tokens in a file with values from the matching varialbes set in the Environment.
+This task invokes replaces tokens in a file with values from the matching variables set in the Environment.
 
 ## Settings
 The task requires the following settings:

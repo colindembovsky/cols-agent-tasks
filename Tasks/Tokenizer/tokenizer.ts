@@ -6,11 +6,16 @@ import * as os from 'os';
 function replaceProps(obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
     for (let prop of Object.getOwnPropertyNames(obj)) {
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
-        if (typeof(obj[prop]) === 'object') {
+        if (obj[prop] instanceof Array) {
+            obj[prop].forEach((arrayObj, position) => {
+                propPath += `[${position}]`;
+                replaceProps(arrayObj, propPath, includeSet, excludeSet);
+            });
+        } else if (typeof (obj[prop]) === 'object') {
             replaceProps(obj[prop], propPath, includeSet, excludeSet);
         } else {
             if ((!includeSet && !excludeSet) ||
-                (includeSet && includeSet.has(propPath)) || 
+                (includeSet && includeSet.has(propPath)) ||
                 (excludeSet && !excludeSet.has(propPath))
             ) {
                 console.info(`Tokenizing ${propPath}`)
@@ -33,10 +38,10 @@ async function run() {
         let tokenizeType = tl.getInput("tokenizeType", true);
         let includes = tl.getInput("includes", false);
         let excludes = tl.getInput("excludes", false);
-        if (!includes){
+        if (!includes) {
             includes = '';
         }
-        if (!excludes){
+        if (!excludes) {
             excludes = '';
         }
 
@@ -51,7 +56,7 @@ async function run() {
             throw `You cannot specify includes and excludes - please specify one or the other`;
         }
 
-        if (!filePattern || filePattern.length === 0){
+        if (!filePattern || filePattern.length === 0) {
             filePattern = "*.*";
         }
         tl.debug(`Using [${filePattern}] as filePattern`);
@@ -59,7 +64,7 @@ async function run() {
         let separator = os.platform() === "win32" ? "\\" : "/";
 
         // create a glob removing any spurious quotes
-        let globPattern = `${sourcePath}${separator}${filePattern}`.replace(/\"/g,"");
+        let globPattern = `${sourcePath}${separator}${filePattern}`.replace(/\"/g, "");
         if (os.platform() !== "win32") {
             // replace \ with /
             globPattern = globPattern.replace(/\\/g, "/");

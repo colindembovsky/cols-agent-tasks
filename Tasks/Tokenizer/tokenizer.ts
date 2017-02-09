@@ -8,6 +8,12 @@ function replaceProps(obj: any, parent: string, includeSet: Set<string>, exclude
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
         if (obj[prop] instanceof Array) {
             obj[prop].forEach((arrayObj, position) => {
+                // if we're already in an array, we need to update the index
+                var posOfBracket = propPath.indexOf("[");
+                if (posOfBracket > -1) {
+                    propPath = propPath.substr(0, posOfBracket);
+                }
+                // now append the index
                 propPath += `[${position}]`;
                 replaceProps(arrayObj, propPath, includeSet, excludeSet);
             });
@@ -18,7 +24,7 @@ function replaceProps(obj: any, parent: string, includeSet: Set<string>, exclude
                 (includeSet && includeSet.has(propPath)) ||
                 (excludeSet && !excludeSet.has(propPath))
             ) {
-                console.info(`Tokenizing ${propPath}`)
+                console.info(`Tokenizing ${propPath}`);
                 obj[prop] = `__${propPath}__`;
             }
         }

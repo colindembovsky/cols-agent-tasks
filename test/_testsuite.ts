@@ -3,9 +3,9 @@ import assert = require('assert');
 import fse = require('fs-extra');
 import ttm = require('vsts-task-lib/mock-test');
 
-const debug = false;
+const debug = true;
 
-describe('replaceTokens', function () {
+xdescribe('replaceTokens', function () {
     before(() => {
     });
 
@@ -79,7 +79,7 @@ describe('replaceTokens', function () {
     });
 });
 
-describe('versionAssemblies', function () {
+xdescribe('versionAssemblies', function () {
     before(() => {
     });
 
@@ -140,6 +140,10 @@ describe('versionAssemblies', function () {
         if (debug) {
             console.log(tr.stdout);
         }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
@@ -157,7 +161,7 @@ describe('tokenizer JSON', function () {
     after(() => {
     });
 
-    it('should succeed with default inputs', (done: MochaDone) => {
+    xit('should succeed with default inputs', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-defaults.js');
@@ -179,7 +183,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed with excludes', (done: MochaDone) => {
+    xit('should succeed with excludes', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-exclude.js');
@@ -201,7 +205,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should replace all if includes and excludes are both empty', (done: MochaDone) => {
+    xit('should replace all if includes and excludes are both empty', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-all.js');
@@ -211,6 +215,10 @@ describe('tokenizer JSON', function () {
         if (debug) {
             console.log(tr.stdout);
         }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.succeeded, 'should have succeeded');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
@@ -219,7 +227,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should fail if includes and excludes are both specified', (done: MochaDone) => {
+    xit('should fail if includes and excludes are both specified', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failIfBothIncAndExcSpecified.js');
@@ -229,6 +237,10 @@ describe('tokenizer JSON', function () {
         if (debug) {
             console.log(tr.stdout);
         }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
@@ -237,9 +249,31 @@ describe('tokenizer JSON', function () {
 
         done();
     });
+
+    it('should succeed for array objects', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tokenizer', 'test-array.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have 0 errors");
+
+        done();
+    });
 });
 
-describe('coverageGate', function () {
+xdescribe('coverageGate', function () {
     before(() => {
     });
 

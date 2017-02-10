@@ -3,30 +3,38 @@ var gulp = require('gulp');
 var path = require('path');
 var mocha = require('gulp-mocha');
 var istanbul = require('gulp-istanbul');
+var ts = require('gulp-typescript');
 
-function reportErr(err){
+function reportErr(err) {
     console.log('##vso[task.logissue type=error]' + err.message);
     console.log('##vso[task.complete result=failed]Failed');
 }
 
-// path to test files
-var testPaths = [
-    'test/instrumented/*.js',
-    'test/_testsuite.js'
-];
+var tsProject = ts.createProject('tsconfig.json');
 
-// paths to src files for instrumentation
-var srcPaths = [
-    'Tasks/CoverageGate/*.js',
-    'Tasks/ReplaceTokens/*.js',
-    'Tasks/Tokenizer/*.js',
-    'Tasks/VersionAssemblies/*.js'
-];
+// path to test files
+var paths = {
+    tsFiles: [
+        'test/**/*.ts',
+        'Tasks/**/*.ts'
+    ],
+    testPaths: [
+        'test/instrumented/*.js',
+        'test/_testsuite.js'
+    ],
+    jsPaths: [
+        'Tasks/CoverageGate/*.js',
+        'Tasks/ReplaceTokens/*.js',
+        'Tasks/Tokenizer/*.js',
+        'Tasks/VersionAssemblies/*.js'
+    ],
+
+};
 
 var tfBuild = false;
 
-gulp.task('instrument', function() {
-    return gulp.src(srcPaths)
+gulp.task('instrument', ['build'], function() {
+    return gulp.src(paths.jsPaths)
         .pipe(istanbul())
         .pipe(gulp.dest('./test/instrumented'))
         .pipe(istanbul.hookRequire());
@@ -34,7 +42,7 @@ gulp.task('instrument', function() {
 
 gulp.task('test-cover', ['instrument'], function() {
     // invoke the tests
-    gulp.src(testPaths)
+    gulp.src(paths.testPaths)
         .pipe(mocha({ reporter: 'spec', ui: 'bdd', useColors: !tfBuild })
             .on('error', reportErr))
         .pipe(istanbul.writeReports({
@@ -45,12 +53,20 @@ gulp.task('test-cover', ['instrument'], function() {
 });
 
 gulp.task('test', ['instrument'], function() {
-    gulp.src(testPaths)
+    gulp.src(paths.testPaths)
         .pipe(mocha({ 
             reporter:'mocha-junit-reporter',
             reporterOptions: {
                 mochaFile: "./test-results.xml"
             }
         })
-            .on('error', reportErr));
+        .on('error', reportErr));
+});
+
+gulp.task('build', function() {
+    var compiled = gulp.src(paths.tsFiles, { base: "." })
+        .pipe(tsProject());
+    
+    return compiled.js
+        .pipe(gulp.dest('.'));
 });

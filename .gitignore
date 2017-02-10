@@ -197,5 +197,8 @@ ModelManifest.xml
 *.vsix
 **/*.tar.gz
 
+Tasks/**/*.js
+test/**/*.js
+
 coverage
 test/instrumented

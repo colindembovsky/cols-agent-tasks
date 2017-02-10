@@ -19,7 +19,7 @@ foreach ($task in $tasks.tasks) {
     } else {
         $taskJson.id = $task.id
     }
-    sc $path -Value (ConvertTo-Json $taskJson)
+    sc $path -Value (ConvertTo-Json $taskJson -Depth 100)
 }
 
 Write-Host "Done!" -f Green

@@ -30,7 +30,7 @@
       "type": "filePath",
       "label": "Source Path",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). NOTE: this is case sensitive for non-Windows systems." 
     },
     {

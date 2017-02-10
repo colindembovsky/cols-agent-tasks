@@ -40,7 +40,7 @@ gulp.task('instrument', ['build'], function() {
         .pipe(istanbul.hookRequire());
 });
 
-gulp.task('test-cover', ['test'], function() {
+gulp.task('test-console', function() {
     // invoke the tests
     gulp.src(paths.testPaths)
         .pipe(mocha({ reporter: 'spec', ui: 'bdd', useColors: !tfBuild })
@@ -50,6 +50,9 @@ gulp.task('test-cover', ['test'], function() {
             reporters: [ 'html', 'cobertura' ]
         }))
         .on('error', reportErr);
+});
+
+gulp.task('test-cover', ['test', 'test-console'], function() {
 });
 
 gulp.task('test', ['instrument'], function() {

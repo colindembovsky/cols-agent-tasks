@@ -24,7 +24,7 @@
       "label": "Source Path",
       "defaultValue": "",
       "helpMarkDown": "Path to the file(s) containing files to tokenize. NOTE: this is case sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
-      "required": true
+      "required": false
     },
     {
       "name": "filePattern",

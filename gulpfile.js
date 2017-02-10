@@ -40,7 +40,7 @@ gulp.task('instrument', ['build'], function() {
         .pipe(istanbul.hookRequire());
 });
 
-gulp.task('test-cover', ['instrument'], function() {
+gulp.task('test-cover', ['test'], function() {
     // invoke the tests
     gulp.src(paths.testPaths)
         .pipe(mocha({ reporter: 'spec', ui: 'bdd', useColors: !tfBuild })

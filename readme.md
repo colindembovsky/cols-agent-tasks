@@ -13,11 +13,13 @@ This repo contains custom tasks that meant to be used with Visual Studio Online 
 You need to upload these tasks to your TFS / VSTS server.
 
 1. Clone the repo
-2. Install [tfx-cli] (https://github.com/Microsoft/tfs-cli)
-3. Run `npm install` in the root folder.
-4. Run `npm install` in each Task folder.
-4. Run `tfx login` to login to your server.
-5. Run `tfx build tasks upload --task-path <path to task folder>` to upload a task, where <path to task folder> is the path 
+1. Install [tfx-cli] (https://github.com/Microsoft/tfs-cli)
+1. Run `yarn install` in the root folder.
+1. Run `yarn install` in each Task folder.
+1. Run `gulp build` to transpile.
+1. Run `gulp test-cover` to run tests.
+1. Run `tfx login` to login to your server.
+1. Run `tfx build tasks upload --task-path <path to task folder>` to upload a task, where <path to task folder> is the path 
 to the Task folder of the task you want to upload
 
 The task should now be available on your TFS / VSO.
@@ -53,7 +55,7 @@ Help Pages can be found [here](https://www.visualstudio.com/en-us/integrate/exte
 
 To compile the extension, update the version number in the `extension-manifest.json` file and run:
 ```
-tfx extension create --manifest-globs .\extension-manifest.json
+tfx extension create --manifest-globs .\vss-extension.json
 ```
 
 Upload to the marketplace by singing in to your [publisher profile](http://aka.ms/vsmarketplace-manage).

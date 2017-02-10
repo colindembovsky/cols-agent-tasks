@@ -31,7 +31,7 @@
       "label": "Source Path",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). NOTE: this is case sensitive for non-Windows systems." 
+      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). Leave empty to use the sources directory. NOTE: this is case sensitive for non-Windows systems." 
     },
     {
       "name": "filePattern",

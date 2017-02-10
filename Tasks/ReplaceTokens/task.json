@@ -30,7 +30,7 @@
       "type": "filePath",
       "label": "Source Path",
       "defaultValue": "",
-      "helpMarkDown": "Path to the file(s) containing tokens. NOTE: this is case sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
+      "helpMarkDown": "Path to the file(s) containing tokens. Leave empty to use the sources directory. NOTE: this is case sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
       "required": false
     },
     {

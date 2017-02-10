@@ -27,6 +27,10 @@ This extension contains helpful build and release Tasks.
 
 ## Release Notes
 
+### 1.1.78
+- Updated SourcePath for Tokenizer, ReplaceTokens and VersionAssemblies: leave empty to use the Build.SourcesDirectory.
+- Updated the internal build process for the extension to use Gulp to transpile TypeScript sources to JS
+
 ### 1.1.63
 - No task updates - fixed automated build to install dependencies for Tokenizer.
 

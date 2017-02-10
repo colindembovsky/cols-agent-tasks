@@ -21,6 +21,8 @@
   },
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "devDependencies": {
+    "@types/mocha": "^2.2.39",
+    "@types/node": "^7.0.5",
     "assert": "^1.4.1",
     "fs-extra": "^0.30.0",
     "gulp": "^3.9.1",

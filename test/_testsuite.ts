@@ -3,9 +3,9 @@ import assert = require('assert');
 import fse = require('fs-extra');
 import ttm = require('vsts-task-lib/mock-test');
 
-const debug = true;
+const debug = false;
 
-xdescribe('replaceTokens', function () {
+describe('replaceTokens', function () {
     before(() => {
     });
 
@@ -79,7 +79,7 @@ xdescribe('replaceTokens', function () {
     });
 });
 
-xdescribe('versionAssemblies', function () {
+describe('versionAssemblies', function () {
     before(() => {
     });
 
@@ -161,7 +161,7 @@ describe('tokenizer JSON', function () {
     after(() => {
     });
 
-    xit('should succeed with default inputs', (done: MochaDone) => {
+    it('should succeed with default inputs', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-defaults.js');
@@ -183,7 +183,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    xit('should succeed with excludes', (done: MochaDone) => {
+    it('should succeed with excludes', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-exclude.js');
@@ -205,7 +205,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    xit('should replace all if includes and excludes are both empty', (done: MochaDone) => {
+    it('should replace all if includes and excludes are both empty', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-all.js');
@@ -227,7 +227,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    xit('should fail if includes and excludes are both specified', (done: MochaDone) => {
+    it('should fail if includes and excludes are both specified', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failIfBothIncAndExcSpecified.js');
@@ -273,7 +273,7 @@ describe('tokenizer JSON', function () {
     });
 });
 
-xdescribe('coverageGate', function () {
+describe('coverageGate', function () {
     before(() => {
     });
 

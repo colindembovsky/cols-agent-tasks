@@ -203,3 +203,4 @@ test/**/*.js
 coverage
 test/instrumented
 test-results.xml
+.taskkey

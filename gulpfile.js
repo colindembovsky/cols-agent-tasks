@@ -40,7 +40,7 @@ gulp.task('instrument', ['build'], function() {
         .pipe(istanbul.hookRequire());
 });
 
-gulp.task('test-console', function() {
+gulp.task('test-cover', ['instrument'], function() {
     // invoke the tests
     gulp.src(paths.testPaths)
         .pipe(mocha({ reporter: 'spec', ui: 'bdd', useColors: !tfBuild })
@@ -52,10 +52,7 @@ gulp.task('test-console', function() {
         .on('error', reportErr);
 });
 
-gulp.task('test-cover', ['test', 'test-console'], function() {
-});
-
-gulp.task('test', ['instrument'], function() {
+gulp.task('test', ['build'], function() {
     gulp.src(paths.testPaths)
         .pipe(mocha({ 
             reporter:'mocha-junit-reporter',
@@ -65,6 +62,8 @@ gulp.task('test', ['instrument'], function() {
         })
         .on('error', reportErr));
 });
+
+gulp.task('test-all', ['test', 'test-cover'], function() {});
 
 gulp.task('build', function() {
     var compiled = gulp.src(paths.tsFiles, { base: "." })

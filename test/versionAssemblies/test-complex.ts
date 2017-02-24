@@ -34,9 +34,12 @@ tmr.registerMock('fs', _mockfs);
 // set inputs
 tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', 'AndroidManifest.xml');
-tmr.setInput('buildRegex', '(?:\\d+\\.\\d+\\.)(\\d+)'); 
-tmr.setInput('buildRegexIndex', '1'); 
-tmr.setInput('replaceRegex', 'versionCode="\\d+'); 
+tmr.setInput("versionSource", 'buildNumer');
+tmr.setInput("versionFormat", 'custom');
+tmr.setInput("replaceVersionFormat", 'custom');
+tmr.setInput('customBuildRegex', '(?:\\d+\\.\\d+\\.)(\\d+)'); 
+tmr.setInput('buildRegexIndex', '1');
+tmr.setInput('customReplaceRegex', 'versionCode="\\d+'); 
 tmr.setInput('replacePrefix', 'versionCode="'); 
 tmr.setInput('replacePostfix', '-alpha'); 
 tmr.setInput('failIfNoMatchFound', 'false'); 

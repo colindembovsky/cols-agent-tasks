@@ -108,10 +108,54 @@ describe('versionAssemblies', function () {
     after(() => {
     });
 
-    it('should succeed with default inputs', (done: MochaDone) => {
+    it('should succeed with default 4 part inputs', (done: MochaDone) => {
         // this.timeout(1000);
 
-        let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults.js');
+        let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults4.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should succeed with default 3 part inputs', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults3.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should succeed with custom settings', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'versionAssemblies', 'test-custom.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();

@@ -35,33 +35,33 @@ async function run() {
         if (!replacePrefix) replacePrefix = "";
         if (!replacePostfix) replacePostfix = "";
 
-        tl.debug(`sourcePath :${sourcePath}`);
-        tl.debug(`versionSource :${versionSource}`);
-        tl.debug(`versionFormat :${versionFormat}`);
-        tl.debug(`customNumberVariable :${customNumberVariable}`);
-        tl.debug(`sourcePath :${sourcePath}`);
-        tl.debug(`filePattern : ${filePattern}`);
-        tl.debug(`customBuildRegex : ${customBuildRegex}`);
-        tl.debug(`buildRegexIndex : ${buildRegexIndex}`);
-        tl.debug(`replaceVersionFormat : ${replaceVersionFormat}`);
-        tl.debug(`customReplaceRegex : ${customReplaceRegex}`);
-        tl.debug(`replacePrefix : ${replacePrefix}`);
-        tl.debug(`replacePostfix : ${replacePostfix}`);
-        tl.debug(`failIfNoMatchFound : ${failIfNoMatchFound}`);
-        tl.debug(`buildNumber : ${buildNumber}`);
+        tl.debug(`sourcePath: ${sourcePath}`);
+        tl.debug(`versionSource: ${versionSource}`);
+        tl.debug(`versionFormat: ${versionFormat}`);
+        tl.debug(`customNumberVariable: ${customNumberVariable}`);
+        tl.debug(`sourcePath: ${sourcePath}`);
+        tl.debug(`filePattern: ${filePattern}`);
+        tl.debug(`customBuildRegex: ${customBuildRegex}`);
+        tl.debug(`buildRegexIndex: ${buildRegexIndex}`);
+        tl.debug(`replaceVersionFormat: ${replaceVersionFormat}`);
+        tl.debug(`customReplaceRegex: ${customReplaceRegex}`);
+        tl.debug(`replacePrefix: ${replacePrefix}`);
+        tl.debug(`replacePostfix: ${replacePostfix}`);
+        tl.debug(`failIfNoMatchFound: ${failIfNoMatchFound}`);
+        tl.debug(`buildNumber: ${buildNumber}`);
 
         let buildRegex = customBuildRegex;
         switch (versionFormat) {
             default:
-            case "fourParts": buildRegex = "\d+\.\d+\.\d+\.\d+"; break;
-            case "threeParts": buildRegex = "\d+\.\d+\.\d+"; break;
+            case "fourParts": buildRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;
+            case "threeParts": buildRegex = "\\d+\\.\\d+\\.\\d+"; break;
             case "custom": buildRegex = customBuildRegex; break;
         }
         let replaceRegex = customReplaceRegex;
         switch (replaceVersionFormat) {
             default:
-            case "fourParts": replaceRegex = "\d+\.\d+\.\d+\.\d+"; break;
-            case "threeParts": replaceRegex = "\d+\.\d+\.\d+"; break;
+            case "fourParts": replaceRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;
+            case "threeParts": replaceRegex = "\\d+\.\\d+\\.\\d+"; break;
             case "custom": replaceRegex = customReplaceRegex; break;
         }
 
@@ -80,6 +80,7 @@ async function run() {
         switch (versionSource) {
             case "custom": {
                 versionNum = tl.getVariable(customNumberVariable);
+                console.info(`Using ${versionNum} for the custom version number`);
                 break;
             }
             default:

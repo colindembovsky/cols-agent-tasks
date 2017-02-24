@@ -28,24 +28,45 @@ let _mockfs = mockfs.fs({
 [assembly: AssemblyCopyright("Copyright © 2016")]
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("994fa927-3e6f-4794-a442-5003ca450d2b")]
-[assembly: AssemblyVersion("1.0.0")]
-[assembly: AssemblyFileVersion("1.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 `});
 tmr.registerMock('fs', _mockfs);
 
 // set inputs
 tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', '**\\AssemblyInfo.*');
-tmr.setInput('versionSource', 'buildNumber');
-tmr.setInput('versionFormat', 'fourParts');
-tmr.setInput('replaceVersionFormat', 'fourParts'); 
+tmr.setInput("versionSource", 'custom');
+tmr.setInput("versionFormat", 'custom');
+tmr.setInput("customNumberVariable", 'someVar');
+tmr.setInput('customBuildRegex', '\\d+\\.\\d+\\.\\d+\\.\\d+');
+tmr.setInput("replaceVersionFormat", 'fourParts');
 tmr.setInput('buildRegexIndex', '0'); 
-tmr.setInput('replaceRegex', ''); 
 tmr.setInput('replacePrefix', ''); 
 tmr.setInput('replacePostfix', ''); 
-tmr.setInput('failIfNoMatchFound', 'true'); 
+tmr.setInput('failIfNoMatchFound', 'false'); 
 
 // set variables
-process.env["Build_BuildNumber"] = "1.5.2.3";
+process.env["Build_BuildNumber"] = "2.45.67.2";
+process.env["SOMEVAR"] = "1.5.2.3";
 
 tmr.run();
+
+// validate the replacement
+let actual = (<any>_mockfs).readFileSync('working/AssemblyInfo.cs', 'utf-8');
+var expected = `
+[assembly: AssemblyTitle("TestAsm")]
+[assembly: AssemblyProduct("TestAsm")]
+[assembly: AssemblyCopyright("Copyright © 2016")]
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("994fa927-3e6f-4794-a442-5003ca450d2b")]
+[assembly: AssemblyVersion("1.5.2.3")]
+[assembly: AssemblyFileVersion("1.5.2.3")]
+`;
+
+if (actual !== expected) {
+  console.log(actual);
+  console.error("Versioning failed.");
+} else {
+  console.log("Versioning succeeded!")
+}

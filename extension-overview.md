@@ -27,6 +27,11 @@ This extension contains helpful build and release Tasks.
 
 ## Release Notes
 
+### 1.1.82
+- MAJOR CHANGE: VersionAssemblies
+	- improved UI for easier default settings.
+	- you can now specify a custom variable to use for the versioning if you don't want to use the build number.
+
 ### 1.1.78
 - Updated SourcePath for Tokenizer, ReplaceTokens and VersionAssemblies: leave empty to use the Build.SourcesDirectory.
 - Updated the internal build process for the extension to use Yarn instead of npm and to use Gulp to transpile TypeScript sources to JS, instead of checking in JS files.

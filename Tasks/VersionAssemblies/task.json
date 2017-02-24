@@ -95,7 +95,8 @@
         "custom": "Custom Regex"
       },
       "required": true,
-      "helpMarkDown": "Pattern to use to replace the version in the files."
+      "helpMarkDown": "Pattern to use to replace the version in the files.",
+      "groupName": "advanced"
     },
     {
       "name": "customReplaceRegex",
@@ -104,6 +105,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Regular Expression to replace with in files.",
+      "visibleRule": "replaceVersionFormat=custom",
       "groupName": "advanced"
     },
     {

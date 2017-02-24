@@ -7,21 +7,20 @@ async function run() {
     try {
         tl.debug("Starting Version Assemblies step");
 
-        // get the task vars
-        var filePattern = tl.getInput("filePattern", true);
-        var buildRegex = tl.getInput("buildRegex", true);
-        var buildRegexIndex = tl.getInput("buildRegexIndex", false);
-        var replaceRegex = tl.getInput("replaceRegex", false);
-        var replacePrefix = tl.getInput("replacePrefix", false);
-        var replacePostfix = tl.getInput("replacePostfix", false);
-        var failIfNoMatchFoundStr = tl.getInput("failIfNoMatchFound", false);
+        // get the task lets
+        let filePattern = tl.getInput("filePattern", true);
+        let versionSource = tl.getInput("versionSource", true);
+        let versionFormat = tl.getInput("versionFormat", true);
+        let customNumberVariable = tl.getInput("customNumberVariable", false);
+        let customBuildRegex = tl.getInput("customBuildRegex", false);
+        let buildRegexIndex = tl.getInput("buildRegexIndex", false);
+        let replaceVersionFormat = tl.getInput("replaceVersionFormat", true);
+        let customReplaceRegex = tl.getInput("customReplaceRegex", false);
+        let replacePrefix = tl.getInput("replacePrefix", false);
+        let replacePostfix = tl.getInput("replacePostfix", false);
+        let failIfNoMatchFound = tl.getBoolInput("failIfNoMatchFound", false);
 
-        var failIfNoMatchFound = false;
-        if (failIfNoMatchFoundStr === 'true') {
-            failIfNoMatchFound = true;
-        }
-        
-        var sourcePath = tl.getPathInput("sourcePath");
+        let sourcePath = tl.getPathInput("sourcePath");
         if (!sourcePath || sourcePath.length === 0) {
             sourcePath = tl.getVariable("Build.SourcesDirectory");
         }
@@ -29,56 +28,92 @@ async function run() {
         // clear leading and trailing quotes for paths with spaces
         sourcePath = sourcePath.replace(/"/g, "");
 
-        // get the build number from the env vars
-        var buildNumber = tl.getVariable("Build.BuildNumber");
+        // get the build number from the env lets
+        let buildNumber = tl.getVariable("Build.BuildNumber");
 
         // these will be null if not specified - change to empty string
         if (!replacePrefix) replacePrefix = "";
         if (!replacePostfix) replacePostfix = "";
 
         tl.debug(`sourcePath :${sourcePath}`);
+        tl.debug(`versionSource :${versionSource}`);
+        tl.debug(`versionFormat :${versionFormat}`);
+        tl.debug(`customNumberVariable :${customNumberVariable}`);
+        tl.debug(`sourcePath :${sourcePath}`);
         tl.debug(`filePattern : ${filePattern}`);
-        tl.debug(`buildRegex : ${buildRegex}`);
+        tl.debug(`customBuildRegex : ${customBuildRegex}`);
         tl.debug(`buildRegexIndex : ${buildRegexIndex}`);
-        tl.debug(`replaceRegex : ${replaceRegex}`);
+        tl.debug(`replaceVersionFormat : ${replaceVersionFormat}`);
+        tl.debug(`customReplaceRegex : ${customReplaceRegex}`);
         tl.debug(`replacePrefix : ${replacePrefix}`);
         tl.debug(`replacePostfix : ${replacePostfix}`);
         tl.debug(`failIfNoMatchFound : ${failIfNoMatchFound}`);
         tl.debug(`buildNumber : ${buildNumber}`);
 
-        if (!replaceRegex || replaceRegex.length === 0){
-            replaceRegex = buildRegex;
+        let buildRegex = customBuildRegex;
+        switch (versionFormat) {
+            default:
+            case "fourParts": buildRegex = "\d+\.\d+\.\d+\.\d+"; break;
+            case "threeParts": buildRegex = "\d+\.\d+\.\d+"; break;
+            case "custom": buildRegex = customBuildRegex; break;
         }
+        let replaceRegex = customReplaceRegex;
+        switch (replaceVersionFormat) {
+            default:
+            case "fourParts": replaceRegex = "\d+\.\d+\.\d+\.\d+"; break;
+            case "threeParts": replaceRegex = "\d+\.\d+\.\d+"; break;
+            case "custom": replaceRegex = customReplaceRegex; break;
+        }
+
+        tl.debug(`Using ${buildRegex} as the build regex`);
         tl.debug(`Using ${replaceRegex} as the replacement regex`);
 
         if (!buildRegexIndex || buildRegexIndex.length === 0){
             buildRegexIndex = "0";
         }
-        tl.debug(`Using ${buildRegexIndex} as the build regex index regex`);
+        tl.debug(`Using ${buildRegexIndex} as the build regex group index`);
 
-        var separator = os.platform() === "win32" ? "\\" : "/";
+        let separator = os.platform() === "win32" ? "\\" : "/";
 
-        var buildRegexObj = new RegExp(buildRegex);
-        if (buildRegexObj.test(buildNumber)) {
-            var versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
+        let versionNum = "";
+        let skip = false;
+        switch (versionSource) {
+            case "custom": {
+                versionNum = tl.getVariable(customNumberVariable);
+                break;
+            }
+            default:
+            case "buildNumber": {
+                let buildRegexObj = new RegExp(buildRegex);
+                if (buildRegexObj.test(buildNumber)) {
+                    versionNum = buildRegexObj.exec(buildNumber)[buildRegexIndex];
+                } else {
+                    skip = true;
+                    tl.warning(`Could not extract a version from [${buildNumber}] using pattern [${buildRegex}]`);
+                }
+                break;
+            }
+        }
+
+        if (!skip) {
             console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] and postfix [${replacePostfix}] in folder [${sourcePath}]`);
             
-            var globPattern = `${sourcePath}${separator}${filePattern}`;
+            let globPattern = `${sourcePath}${separator}${filePattern}`;
             if (os.platform() !== "win32") {
                 // replace \ with /
                 globPattern = globPattern.replace(/\\/g, "/");
             }
-            var filesToReplace = tl.glob(globPattern);
+            let filesToReplace = tl.glob(globPattern);
             
             if (!filesToReplace || filesToReplace.length === 0) {
                 tl.warning("No files found");
             } else {
-                for (var i = 0; i < filesToReplace.length; i++) {
-                    var file = filesToReplace[i];
+                for (let i = 0; i < filesToReplace.length; i++) {
+                    let file = filesToReplace[i];
                     console.info(`Changing version in ${file}`);
                     
-                    var contents = fs.readFileSync(file, 'utf8').toString();
-                    var checkMatches = new RegExp(replaceRegex).exec(contents);
+                    let contents = fs.readFileSync(file, 'utf8').toString();
+                    let checkMatches = new RegExp(replaceRegex).exec(contents);
                     if (!checkMatches || checkMatches.length === 0) {
                         if (failIfNoMatchFound) {
                             tl.setResult(tl.TaskResult.Failed, `No matches for regex [${replaceRegex}] found in file ${file}`);
@@ -97,8 +132,6 @@ async function run() {
                 }
                 console.info(`Processed ${filesToReplace.length} files`);
             }
-        } else {
-            tl.warning(`Could not extract a version from [${buildNumber}] using pattern [${buildRegex}]`);
         }
     }
     catch (err) {

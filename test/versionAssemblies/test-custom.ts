@@ -36,7 +36,7 @@ tmr.registerMock('fs', _mockfs);
 // set inputs
 tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', '**\\AssemblyInfo.*');
-tmr.setInput("versionSource", 'custom');
+tmr.setInput("versionSource", 'variable');
 tmr.setInput("versionFormat", 'custom');
 tmr.setInput("customNumberVariable", 'someVar');
 tmr.setInput('customBuildRegex', '\\d+\\.\\d+\\.\\d+\\.\\d+');

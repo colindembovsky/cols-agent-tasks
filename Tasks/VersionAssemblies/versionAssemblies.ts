@@ -35,19 +35,8 @@ async function run() {
         if (!replacePrefix) replacePrefix = "";
         if (!replacePostfix) replacePostfix = "";
 
-        tl.debug(`sourcePath: ${sourcePath}`);
-        tl.debug(`versionSource: ${versionSource}`);
-        tl.debug(`versionFormat: ${versionFormat}`);
-        tl.debug(`customNumberVariable: ${customNumberVariable}`);
-        tl.debug(`sourcePath: ${sourcePath}`);
-        tl.debug(`filePattern: ${filePattern}`);
-        tl.debug(`customBuildRegex: ${customBuildRegex}`);
-        tl.debug(`buildRegexIndex: ${buildRegexIndex}`);
-        tl.debug(`replaceVersionFormat: ${replaceVersionFormat}`);
-        tl.debug(`customReplaceRegex: ${customReplaceRegex}`);
         tl.debug(`replacePrefix: ${replacePrefix}`);
         tl.debug(`replacePostfix: ${replacePostfix}`);
-        tl.debug(`failIfNoMatchFound: ${failIfNoMatchFound}`);
         tl.debug(`buildNumber: ${buildNumber}`);
 
         let buildRegex = customBuildRegex;
@@ -78,7 +67,7 @@ async function run() {
         let versionNum = "";
         let skip = false;
         switch (versionSource) {
-            case "custom": {
+            case "variable": {
                 versionNum = tl.getVariable(customNumberVariable);
                 console.info(`Using ${versionNum} for the custom version number`);
                 break;

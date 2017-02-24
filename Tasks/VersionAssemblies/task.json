@@ -11,8 +11,8 @@
   ],
   "demands": [],
   "version": {
-    "Major": "0",
-    "Minor": "1",
+    "Major": "2",
+    "Minor": "0",
     "Patch": "34"
   },
   "minimumAgentVersion": "1.91.0",
@@ -42,12 +42,71 @@
       "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch. NOTE: this is case sensitive for non-Windows systems."
     },
     {
-      "name": "buildRegex",
-      "type": "string",
-      "label": "Build Regex Pattern",
-      "defaultValue": "\\d+\\.\\d+\\.\\d+\\.\\d+",
+      "name": "versionSource",
+      "type": "pickList",
+      "label": "Version Source",
+      "defaultValue": "buildNumber",
+      "options":{
+        "buildNumber": "Build Number",
+        "variable": "Variable"
+      },
       "required": true,
-      "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings)."
+      "helpMarkDown": "."
+    },
+    {
+      "name": "customNumberVariable",
+      "type": "string",
+      "label": "Variable to use",
+      "defaultValue": "myBuildNumber",
+      "required": false,
+      "helpMarkDown": "Variable to use for the version number. Do not specify $() - just enter the name.",
+      "visibleRule": "versionSource=variable"
+    },
+    {
+      "name": "versionFormat",
+      "type": "pickList",
+      "label": "Version Extract Pattern",
+      "defaultValue": "fourParts",
+      "options":{
+        "fourParts": "1.0.0.0",
+        "threeParts": "1.0.0",
+        "custom": "Custom Regex"
+      },
+      "required": true,
+      "helpMarkDown": "Pattern to use to extract the build number as well as default replacement pattern."
+    },
+    {
+      "name": "customBuildRegex",
+      "type": "string",
+      "label": "Custom Regex Find Pattern",
+      "defaultValue": "\\d+\\.\\d+\\.\\d+\\.\\d+",
+      "required": false,
+      "helpMarkDown": "Regular Expression to extract version from build number. This is also the default replace regex (unless otherwise specified in Advanced settings).",
+      "visibleRule": "versionFormat=custom"
+    },
+    {
+      "name": "replaceVersionFormat",
+      "type": "pickList",
+      "label": "Replace Pattern",
+      "defaultValue": "fourParts",
+      "options":{
+        "fourParts": "1.0.0.0",
+        "threeParts": "1.0.0",
+        "custom": "Custom Regex"
+      },
+      "required": true,
+      "helpMarkDown": "Pattern to use to replace the version in the files.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "customReplaceRegex",
+      "type": "string",
+      "label": "Custom Regex Replace Pattern",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Regular Expression to replace with in files.",
+      "visibleRule": "replaceVersionFormat=custom",
+      "groupName": "advanced"
     },
     {
       "name": "buildRegexIndex",
@@ -56,15 +115,6 @@
       "defaultValue": "0",
       "required": false,
       "helpMarkDown": "Index of group in build regular expression that you want to use as the version number. Leave as 0 if you have no groups.",
-      "groupName": "advanced"
-    },
-    {
-      "name": "replaceRegex",
-      "type": "string",
-      "label": "Regex Replace Pattern",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "Regular Expression to replace with in files. Leave blank to use the Build Regex Pattern.",
       "groupName": "advanced"
     },
     {

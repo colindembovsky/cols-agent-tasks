@@ -36,7 +36,9 @@ tmr.registerMock('fs', _mockfs);
 // set inputs
 tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', '**\\AssemblyInfo.*');
-tmr.setInput('buildRegex', '\\d+\\.\\d+\\.\\d+\\.\\d+'); 
+tmr.setInput("versionSource", 'buildNumer');
+tmr.setInput("versionFormat", 'threeParts');
+tmr.setInput("replaceVersionFormat", 'fourParts');
 tmr.setInput('buildRegexIndex', '0'); 
 tmr.setInput('replaceRegex', ''); 
 tmr.setInput('replacePrefix', ''); 
@@ -44,7 +46,7 @@ tmr.setInput('replacePostfix', '');
 tmr.setInput('failIfNoMatchFound', 'false'); 
 
 // set variables
-process.env["Build_BuildNumber"] = "1.5.2.3";
+process.env["Build_BuildNumber"] = "1.5.2";
 
 tmr.run();
 
@@ -56,8 +58,8 @@ var expected = `
 [assembly: AssemblyCopyright("Copyright © 2016")]
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("994fa927-3e6f-4794-a442-5003ca450d2b")]
-[assembly: AssemblyVersion("1.5.2.3")]
-[assembly: AssemblyFileVersion("1.5.2.3")]
+[assembly: AssemblyVersion("1.5.2")]
+[assembly: AssemblyFileVersion("1.5.2")]
 `;
 
 if (actual !== expected) {

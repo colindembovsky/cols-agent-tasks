@@ -70,6 +70,9 @@
             "path": "Tasks/ReplaceTokens"
         },
         {
+            "path": "Tasks/ReplaceTokensInPaths"
+        },
+        {
             "path": "Tasks/VersionAssemblies"
         },
         {
@@ -97,6 +100,16 @@
             ],
             "properties": {
                 "name": "Tasks/ReplaceTokens"
+            }
+        },
+        {
+            "id": "replace-tokens-task-in-paths",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/ReplaceTokensInPaths"
             }
         },
         {

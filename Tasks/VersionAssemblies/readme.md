@@ -88,7 +88,7 @@ To replace the version values, use two sepparate instances of the versioning ste
 The first step will replace the short version, with a three part version value using the following settings:
 
 1. **File Pattern**: `**\info.plist` - Example file pattern to match all info.plist files
-1. **Version Extract Pattern**: `1.0.0` - this extracts only the first three digits of the four digit build number.
+1. **Version Extract Pattern**: `1.0.0` - this extracts only the first three parts of the four part build number.
 1. **Replace Pattern**: `Custom Regex`
 1. **Custom Regex Replace Pattern**: `<key>CFBundleShortVersionString</key>\s*<string>.*</string>` - searches for the **short** version key and value in the file.
 1. **Build Regex Group Index**: `0` - selects the entire match
@@ -100,7 +100,7 @@ The first step will replace the short version, with a three part version value u
 The second step will replace the full version, with a four part version value using the following settings:
 
 1. **File Pattern**: `**\info.plist` - Example file pattern to match all info.plist files
-1. **Version Extract Pattern**: `1.0.0.0` - This extracts all four digits from the version number.
+1. **Version Extract Pattern**: `1.0.0.0` - This extracts a full four part version number.
 1. **Replace Pattern**: `Custom Regex`
 1. **Custom Regex Replace Pattern**: `<key>CFBundleVersion</key>\s*<string>.*</string>` - searches for the **full** version key and value in the file.
 1. **Build Regex Group Index**: `0` - selects the entire match
@@ -108,3 +108,48 @@ The second step will replace the full version, with a four part version value us
 1. **Postfix for Replacements** `</string>` - reinserts the postfix durring the replacement
 
 (Note: For version 1.x of this script, the build regex pattern is: `\d+\.\d+\.\d+\.\d+` with group index: `0`)
+
+### Windows Package.appxmanifest Versioning Example
+Previous windows store apps, and UWP apps use a Package.appxmanifest file to version the store packages. They can generally be versioned similarly.
+
+
+Note that these values do not have to be exactly three or four part version numbers, but in our example we will be using a short version with three parts, and full version with four parts. We are also assuming a four part build number as a source. You may adjust the approach as needed to accomodate different version structures, but these have been tested with app store delivery.
+
+The beginning of the `Package.appxmanifest` file might look like this:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  IgnorableNamespaces="uap mp">
+
+  <Identity
+    Name="1c842489-54f8-400b-8278-6414f7735883"
+    Publisher="CN=Some.Identity"
+    Version="1.2.5.5" />
+
+  <mp:PhoneIdentity PhoneProductId="1c842489-54f8-400b-8278-6414f7735883" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+
+  <Properties>
+    <DisplayName>App1</DisplayName>
+    <PublisherDisplayName>Some.Identity</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+	
+	<!-- ... further contents omitted ... -->
+```
+
+In order to replace the version value correctly, you should use the following settings:
+
+1. **File Pattern**: `**\Package.appxmanifest` - Example file pattern to match all Package.appxmanifest files
+1. **Version Extract Pattern**: `1.0.0.0` - This extracts a full four part version number.
+1. **Replace Pattern**: `Custom Regex`
+1. **Custom Regex Replace Pattern** = `(\s)Version="[^"]*"` - Matches the version property. **Note** that the matching leading whitespace and captial V are required to avoid matching other cases, such as the xml declaration tag version property (lowercase) or the MinVersion property present in some delcarations!
+1. **Build Regex Group Index**: `0` - selects the entire match
+1. **Prefix for Replacements**: `$1Version="` - reinserts the correct prefix during the replacement, including leading whitespace match.
+1. **Postfix for Replacements** `"` - reinserts the closing quote postfix durring the replacement
+
+(Note that in the 1.x version of this step, the buld regex pattern is: `\d+\.\d+\.\d+\.\d+` with regex group: `0`)

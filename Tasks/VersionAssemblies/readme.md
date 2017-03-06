@@ -112,9 +112,6 @@ The second step will replace the full version, with a four part version value us
 ### Windows Package.appxmanifest Versioning Example
 Previous windows store apps, and UWP apps use a Package.appxmanifest file to version the store packages. They can generally be versioned similarly.
 
-
-Note that these values do not have to be exactly three or four part version numbers, but in our example we will be using a short version with three parts, and full version with four parts. We are also assuming a four part build number as a source. You may adjust the approach as needed to accomodate different version structures, but these have been tested with app store delivery.
-
 The beginning of the `Package.appxmanifest` file might look like this:
 
 ```xml

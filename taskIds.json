@@ -1,0 +1,39 @@
+{
+    "tasks": [
+        {
+            "path": "Tasks/AzureWebDeploy",
+            "id": "5C9EA8BE-E6FB-4AE7-905E-67BFD6741967",
+            "beta-id": "95c56258-9a45-4afe-b862-f1c74efceabe"
+        },
+        {
+            "path": "Tasks/CoverageGate",
+            "id": "0b6f0167-8389-4db8-89c6-4ae7688cd15a",
+            "beta-id": "6712132c-98a9-42e0-a375-fcbe414e5269"
+        },
+        {
+            "path": "Tasks/DacPacReport",
+            "id": "1EBF2967-63B3-4372-89F7-6799108A22F0",
+            "beta-id": "5030ea81-41b7-4163-805b-f8e0116e8da3"
+        },
+        {
+            "path": "Tasks/DockerPublish",
+            "id": "639B8E0C-2C2C-41E7-B822-4D03AEFCB92B",
+            "beta-id": "f7c44198-1c25-477f-a9d2-01e36d3244a5"
+        },
+        {
+            "path": "Tasks/ReplaceTokens",
+            "id": "9240B5C1-A1B2-4799-9325-E071C63236FB",
+            "beta-id": "1d7dea50-482b-4b76-85d7-d4bf151d00b5"
+        },
+        {
+            "path": "Tasks/Tokenizer",
+            "id": "6D9895EB-8056-4111-B4B3-7B80FD383E44",
+            "beta-id": "d865ae36-7794-4a1f-a6bd-6d10043438db"
+        },
+        {
+            "path": "Tasks/VersionAssemblies",
+            "id": "5b4d14d0-3868-11e4-a31d-3f0a2d8202f4",
+            "beta-id": "ab6ca715-6f11-4f14-a578-12ca85409ea6"
+        }
+    ]
+}

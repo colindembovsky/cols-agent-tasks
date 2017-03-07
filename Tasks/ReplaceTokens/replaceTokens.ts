@@ -8,7 +8,12 @@ async function run() {
         tl.debug("Starting Replace Tokens task");
 
         // get the task vars
-        var sourcePath = tl.getPathInput("sourcePath", true, true);
+        var sourcePath = tl.getPathInput("sourcePath");
+        if (!sourcePath || sourcePath.length === 0) {
+            sourcePath = tl.getVariable("Build.SourcesDirectory");
+        }
+        tl.checkPath(sourcePath, "sourcePath");
+        
         // clear leading and trailing quotes for paths with spaces
         sourcePath = sourcePath.replace(/"/g, "");
 

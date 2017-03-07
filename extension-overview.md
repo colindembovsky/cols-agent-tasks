@@ -27,6 +27,10 @@ This extension contains helpful build and release Tasks.
 
 ## Release Notes
 
+### 1.1.86
+- Tokenizer now supports [tokenizing arrays](https://github.com/colindembovsky/cols-agent-tasks/pull/51) within a json file.
+- Great [contribution](https://github.com/colindembovsky/cols-agent-tasks/pull/52) adding examples of how to use VersionAssemblies for iOS and Windows packages to the [VersionAssemblies overview page](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/VersionAssemblies)
+
 ### 1.1.83
 - MAJOR CHANGE: VersionAssemblies
 	- improved UI for easier default settings.

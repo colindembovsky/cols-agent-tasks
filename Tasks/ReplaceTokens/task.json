@@ -42,6 +42,14 @@
       "required": true
     },
     {
+      "name": "useFindMethod",
+      "type": "boolean",
+      "label": "Search Dirs & SubDirs",
+      "defaultValue": "True",
+      "helpMarkDown": "Starts from 'Source Path' directory and find all files recursivelly. When files are collected these files are filtered and pattern is applied.",
+      "required": true
+    },
+    {
       "name": "tokenRegex",
       "type": "string",
       "label": "Token Regex",

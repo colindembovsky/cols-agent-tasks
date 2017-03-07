@@ -25,6 +25,7 @@ var paths = {
     jsPaths: [
         'Tasks/CoverageGate/*.js',
         'Tasks/ReplaceTokens/*.js',
+        'Tasks/ReplaceTokensInPaths/*.js',
         'Tasks/Tokenizer/*.js',
         'Tasks/VersionAssemblies/*.js'
     ],

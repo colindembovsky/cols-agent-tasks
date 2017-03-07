@@ -13,6 +13,10 @@ This extension contains helpful build and release Tasks.
 
 	This task replaces tokens in a file using Environment variables. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/ReplaceTokens)
 
+1. **Replace Tokens In Paths**
+
+	This task replaces tokens in a file in multiple paths using Environment variables. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/ReplaceTokensInPaths)
+
 1. **DacPac Change Report Task**
 
 	This task calculates the changes in an SSDT project between builds. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DacPacReport)

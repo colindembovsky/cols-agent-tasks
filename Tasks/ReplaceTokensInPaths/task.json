@@ -1,0 +1,69 @@
+{
+  "id": "b77a322e-e11a-441c-a6ac-6320fa700142",
+  "name": "ReplaceTokensInPaths",
+  "friendlyName": "Replace Tokens In Paths",
+  "description": "Replaces tokens in a file using RegEx, for multiple paths. Values come from any variable defined in the current Environment.",
+  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/ReplaceTokensInPaths)",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "version": {
+    "Major": "0",
+    "Minor": "0",
+    "Patch": "1"
+  },
+  "groups": [
+    {
+      "name": "advanced",
+      "displayName": "Advanced",
+      "isExpanded": false
+    }
+  ],
+  "minimumAgentVersion": "1.91.0",
+  "instanceNameFormat": "Replace tokens in $(sourcePaths)",
+  "inputs": [
+    {
+      "name": "sourcePaths",
+      "type": "filePath",
+      "label": "Source Path(s)",
+      "defaultValue": "",
+      "helpMarkDown": "Path(s) to the file(s) containing tokens. Leave empty to use the sources directory. NOTE: this is case sensitive for non-Windows systems. This should be a path containing the file, not the file itself.",
+      "required": false
+    },
+    {
+      "name": "filePattern",
+      "type": "string",
+      "label": "Target File Pattern",
+      "defaultValue": "*.config",
+      "helpMarkDown": "File pattern to find in source path. Supports minimatch. NOTE: this is case sensitive for non-Windows systems.",
+      "required": true
+    },
+    {
+      "name": "tokenRegex",
+      "type": "string",
+      "label": "Token Regex",
+      "defaultValue": "__(\\w+)__",
+      "helpMarkDown": "Regex to use for token replacement. Must include a group match.",
+      "required": true,
+      "groupName": "advanced"
+    },
+    {
+      "name": "secretTokens",
+      "type": "string",
+      "label": "Secret Tokens",
+      "defaultValue": "",
+      "helpMarkDown": "A configuration variable can be set as 'secret' in release definition to have its value hidden. For tokens need to be replaced with the value of secret configuration variables, they can be specified here using the following format: key1:$(secret1);key2:$(secret2). Non-secret configuration variable do not need to be specified explicitly here.",
+      "required": false,
+      "groupName": "advanced"
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "replaceTokensInPaths.js",
+      "argumentFormat": ""
+    }
+  }
+}

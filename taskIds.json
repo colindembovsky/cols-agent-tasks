@@ -26,6 +26,11 @@
             "beta-id": "1d7dea50-482b-4b76-85d7-d4bf151d00b5"
         },
         {
+            "path": "Tasks/ReplaceTokensInPaths",
+            "id": "b77a322e-e11a-441c-a6ac-6320fa700142",
+            "beta-id": "0cfe7264-c8c4-4eb2-ba85-802fc90abf6d"
+        },
+        {
             "path": "Tasks/Tokenizer",
             "id": "6D9895EB-8056-4111-B4B3-7B80FD383E44",
             "beta-id": "d865ae36-7794-4a1f-a6bd-6d10043438db"

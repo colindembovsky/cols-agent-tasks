@@ -35,6 +35,10 @@ The following tasks are available:
 
 	This task replaces tokens in a file using Environment variables. [More...](./Tasks/ReplaceTokens)
 
+1. **Replace Tokens In Paths**
+
+	This task replaces tokens in a file in multiple paths using Environment variables. [More...](./Tasks/ReplaceTokensInPaths)
+
 1. **DacPac Change Report Task**
 
 	This task calculates the changes in an SSDT project between builds. [More...](./Tasks/DacPacReport)

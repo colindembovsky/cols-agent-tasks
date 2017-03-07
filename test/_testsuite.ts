@@ -206,6 +206,10 @@ describe('versionAssemblies', function () {
         if (debug) {
             console.log(tr.stdout);
         }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
@@ -277,6 +281,10 @@ describe('tokenizer JSON', function () {
         if (debug) {
             console.log(tr.stdout);
         }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.succeeded, 'should have succeeded');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
@@ -295,11 +303,37 @@ describe('tokenizer JSON', function () {
         if (debug) {
             console.log(tr.stdout);
         }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
 
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have 1 error");
         assert.equal(tr.errorIssues[0], "You cannot specify includes and excludes - please specify one or the other");
+
+        done();
+    });
+
+    it('should succeed for array objects', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tokenizer', 'test-array.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have 0 errors");
 
         done();
     });

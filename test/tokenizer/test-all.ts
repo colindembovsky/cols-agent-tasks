@@ -71,7 +71,7 @@ var expected = `{
     "LogLevel": {
       "Default": "__Logging.LogLevel.Default__",
       "System": "__Logging.LogLevel.System__",
-      "Microsoft": ""__Logging.LogLevel.Microsoft__"
+      "Microsoft": "__Logging.LogLevel.Microsoft__"
     }
   }
 }`;

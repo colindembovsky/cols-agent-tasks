@@ -36,7 +36,15 @@ let _mockfs = mockfs.fs({
     {
       "type": "WebApi.Infrastucture.ContainerModules.MediatorModule, WebApi"
     }
-  ]
+  ],
+  "Auth": {
+    "ClientSecret": "",
+    "ValidAudiences": [
+      "",
+      ""
+    ],
+    "ConnectionStringKVSecretName": ""
+  }
 }
 `});
 tmr.registerMock('fs', _mockfs);
@@ -45,7 +53,7 @@ tmr.registerMock('fs', _mockfs);
 tmr.setInput('sourcePath', "working");
 tmr.setInput('filePattern', 'appsettings.json');
 tmr.setInput('tokenizeType', 'Json');
-tmr.setInput('includes', ''); 
+tmr.setInput('includes', '');
 tmr.setInput('excludes', '');
 
 tmr.run();
@@ -65,12 +73,20 @@ var expected = `{
     {
       "type": "__modules[1].type__"
     }
-  ]
+  ],
+  "Auth": {
+    "ClientSecret": "__Auth.ClientSecret__",
+    "ValidAudiences": [
+      "__Auth.ValidAudiences[0]__",
+      "__Auth.ValidAudiences[1]__"
+    ],
+    "ConnectionStringKVSecretName": "__Auth.ConnectionStringKVSecretName__"
+  }
 }`;
 
 if (actual !== expected) {
-  console.log(actual);
-  console.error("Tokenization failed.");
+    console.log(actual);
+    console.error("Tokenization failed.");
 } else {
-  console.log("Tokenization succeeded!")
+    console.log("Tokenization succeeded!")
 }

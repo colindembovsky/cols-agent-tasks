@@ -3,11 +3,17 @@ import * as sh from 'shelljs';
 import * as fs from 'fs';
 import * as os from 'os';
 
+function shouldReplaceProp(includeSet: Set<string>, excludeSet: Set<string>, propPath: string) {
+    return (!includeSet && !excludeSet) ||
+        (includeSet && includeSet.has(propPath)) ||
+        (excludeSet && !excludeSet.has(propPath));
+}
+
 function replaceProps(obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
-    for (let prop of Object.getOwnPropertyNames(obj)) {
+    for (let prop of Object.keys(obj)) {
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
         if (obj[prop] instanceof Array) {
-            obj[prop].forEach((arrayObj, position) => {
+            obj[prop].forEach((arrayObj, position, array) => {
                 // if we're already in an array, we need to update the index
                 var posOfBracket = propPath.indexOf("[");
                 if (posOfBracket > -1) {
@@ -15,15 +21,20 @@ function replaceProps(obj: any, parent: string, includeSet: Set<string>, exclude
                 }
                 // now append the index
                 propPath += `[${position}]`;
-                replaceProps(arrayObj, propPath, includeSet, excludeSet);
+
+                if (typeof arrayObj === "string") {
+                    if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
+                        console.info(`Tokenizing ${propPath}`);
+                        array[position] = `__${propPath}__`;
+                    }
+                } else {
+                    replaceProps(arrayObj, propPath, includeSet, excludeSet);
+                }
             });
         } else if (typeof (obj[prop]) === 'object') {
             replaceProps(obj[prop], propPath, includeSet, excludeSet);
         } else {
-            if ((!includeSet && !excludeSet) ||
-                (includeSet && includeSet.has(propPath)) ||
-                (excludeSet && !excludeSet.has(propPath))
-            ) {
+            if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
                 console.info(`Tokenizing ${propPath}`);
                 obj[prop] = `__${propPath}__`;
             }

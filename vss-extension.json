@@ -5,6 +5,10 @@
     "version": "1.0.36",
     "publisher": "colinsalmcorner",
     "public": true,
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/colindembovsky/cols-agent-tasks"
+    },
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"

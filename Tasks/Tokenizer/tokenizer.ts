@@ -74,16 +74,15 @@ async function run() {
         let separator = os.platform() === "win32" ? "\\" : "/";
 
         // create a glob removing any spurious quotes
-        let globPattern = `${sourcePath}${separator}${filePattern}`.replace(/\"/g, "");
         if (os.platform() !== "win32") {
             // replace \ with /
-            globPattern = globPattern.replace(/\\/g, "/");
+            filePattern = filePattern.replace(/\\/g, "/");
         }
 
         // get the files
-        let files = tl.find(globPattern);
+        let files = tl.findMatch(sourcePath, filePattern);
         if (!files || files.length === 0) {
-            let msg = `Could not find files with glob [${globPattern}].`;
+            let msg = `Could not find files with glob [${filePattern}].`;
             if (os.platform() !== "win32") {
                 tl.warning("No files found for pattern. Non-windows file systems are case sensitvive, so check the case of your path and file patterns.");
             }

@@ -19,8 +19,8 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     "checkPath": {
         "working": true
     },
-    "find": {
-        "working\\AndroidManifest.xml" : [ tmpFile ]
+    "findMatch": {
+        "AndroidManifest.xml" : [ tmpFile ]
     }
 };
 tmr.setAnswers(a);

@@ -19,8 +19,8 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     "checkPath": {
         "working": true
     },
-    "find": {
-        "working\\**\\AssemblyInfo.*" : [ tmpFile ]
+    "findMatch": {
+        "**\\AssemblyInfo.*" : [ tmpFile ]
     }
 };
 tmr.setAnswers(a);

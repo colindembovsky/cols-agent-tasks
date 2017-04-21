@@ -88,12 +88,11 @@ async function run() {
         if (!skip) {
             console.info(`Using prefix [${replacePrefix}] and version [${versionNum}] and postfix [${replacePostfix}] in folder [${sourcePath}]`);
             
-            let globPattern = `${sourcePath}${separator}${filePattern}`;
             if (os.platform() !== "win32") {
                 // replace \ with /
-                globPattern = globPattern.replace(/\\/g, "/");
+                filePattern = filePattern.replace(/\\/g, "/");
             }
-            let filesToReplace = tl.find(globPattern);
+            let filesToReplace = tl.findMatch(sourcePath, filePattern);
             
             if (!filesToReplace || filesToReplace.length === 0) {
                 tl.warning("No files found");

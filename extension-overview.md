@@ -29,8 +29,10 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
-### 1.1.116
-- No task updates, but lots of internal work
+### 1.1.117
+- No major task updates, but lots of internal work
+	- Updated to latest vsts-task-lib
+		- had to fix a breaking change (`tl.glob` function removed - had to use `tl.findMatch`)
 	- Updated manifest to include link to Github repo and build badge
 	- Updated node packages
 	- Refactored tests to remove mock-fs dependency

@@ -21,8 +21,8 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     "checkPath": {
         "working": true
     },
-    "find": {
-        "working\\*.config" : [ tmpFile ]
+    "findMatch": {
+        "*.config" : [ tmpFile ]
     }
 };
 tmr.setAnswers(a);

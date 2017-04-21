@@ -6,8 +6,8 @@ var istanbul = require('gulp-istanbul');
 var ts = require('gulp-typescript');
 
 function reportErr(err) {
-    console.log('##vso[task.logissue type=error]' + err.message);
-    console.log('##vso[task.complete result=failed]Failed');
+    //console.log('##vso[task.logissue type=error]' + err.message);
+    //console.log('##vso[task.complete result=failed]Failed');
 }
 
 var tsProject = ts.createProject('tsconfig.json');

@@ -39,7 +39,7 @@
       "type": "pickList",
       "label": "Tokenize Type",
       "defaultValue": "json",
-      "helpMarkDown": "Type of tokenization.",
+      "helpMarkDown": "Type of tokenization",
       "required": true,
       "options": {
           "Json": "Json"

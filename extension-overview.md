@@ -23,7 +23,7 @@ This extension contains helpful build and release Tasks.
 
 1. **Coverage Gate**
 
-	This task allows you to fail a release (or build) based of coverage delta. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/CoverateGate)
+	This task allows you to fail a release (or build) based of coverage delta. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/CoverageGate)
 
 ## Release Notes
 

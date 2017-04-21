@@ -51,7 +51,7 @@
         "variable": "Variable"
       },
       "required": true,
-      "helpMarkDown": "."
+      "helpMarkDown": "The source for the version number. Defaults to the build number, but can be a build variable."
     },
     {
       "name": "customNumberVariable",

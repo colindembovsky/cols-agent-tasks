@@ -26,7 +26,7 @@ mocks.MockWebApi.covData = {
       }
     ]
   };
-tmr.registerMock('vso-node-api/WebApi', mocks.MockWebApi);
+tmr.registerMock('vso-node-api/webApi', mocks.MockWebApi);
 
 // set variables
 process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";

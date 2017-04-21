@@ -1,6 +1,6 @@
 {
   "id": "0b6f0167-8389-4db8-89c6-4ae7688cd15a",
-  "name": "CoverateGate",
+  "name": "CoverageGate",
   "friendlyName": "Coverage Gate",
   "description": "Adds a coverage trend summary section to the build report.",
   "author": "Colin Dembovsky (colinsalmcorner.com)",

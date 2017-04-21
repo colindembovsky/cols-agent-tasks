@@ -1,6 +1,5 @@
 import path = require('path');
 import assert = require('assert');
-import fse = require('fs-extra');
 import ttm = require('vsts-task-lib/mock-test');
 
 const debug = false;
@@ -214,7 +213,10 @@ describe('versionAssemblies', function () {
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have 1 error");
-        assert.equal(tr.errorIssues[0], "No matches for regex [\\d+\\.\\d+\\.\\d+\\.\\d+] found in file working\\AssemblyInfo.cs");
+        if (!tr.errorIssues[0].startsWith("No matches for regex [\\d+\\.\\d+\\.\\d+\\.\\d+] found in file") ||
+            !tr.errorIssues[0].endsWith("working\\AssemblyInfo.cs")) {
+            done("Incorrect error message");
+        }        
 
         done();
     });

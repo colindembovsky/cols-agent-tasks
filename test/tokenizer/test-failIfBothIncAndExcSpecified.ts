@@ -1,30 +1,25 @@
 import ma = require('vsts-task-lib/mock-answer');
 import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
-import fse = require('fs-extra');
-import mockfs = require('mock-fs');
-import assert = require('assert');
 
 let rootDir = path.join(__dirname, '..', 'instrumented');
 let taskPath = path.join(rootDir, 'tokenizer.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+
+// set up a tmp file for the test
+var workingFolder = path.join(__dirname, "working");
+var tmpFile = path.join(workingFolder, "appsettings.json");
 
 // provide answers for task mock
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     "checkPath": {
         "working": true
     },
-    "glob": {
-        "working\\appsettings.json" : [ path.join("working", "appsettings.json") ]
+    "find": {
+        "working\\appsettings.json" : [ tmpFile ]
     }
 };
 tmr.setAnswers(a);
-
-// mock the fs
-let _mockfs = mockfs.fs({
-    "working/appsettings.json": `doesn't matter`
-});
-tmr.registerMock('fs', _mockfs);
 
 // set inputs
 tmr.setInput('sourcePath', "working");

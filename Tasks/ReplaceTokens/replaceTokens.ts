@@ -56,7 +56,7 @@ async function run() {
             globPattern = globPattern.replace(/\\/g, "/");
         }
 
-        var files = tl.glob(globPattern);
+        var files = tl.find(globPattern);
         if (!files || files.length === 0) {
             var msg = `Could not find files with glob [${globPattern}].`;
             if (os.platform() !== "win32") {

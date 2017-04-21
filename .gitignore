@@ -199,6 +199,7 @@ ModelManifest.xml
 
 Tasks/**/*.js
 test/**/*.js
+test/**/working
 
 coverage
 test/instrumented

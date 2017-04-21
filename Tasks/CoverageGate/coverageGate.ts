@@ -1,10 +1,10 @@
 import * as tl from 'vsts-task-lib/task';
 import * as vstsInterfaces from 'vso-node-api/interfaces/common/VsoBaseInterfaces';
-import * as webApi from 'vso-node-api/WebApi';
+import * as webApi from 'vso-node-api/webApi';
 
 async function run() {
     try {
-        tl.debug("Starting Coverate Gate task");
+        tl.debug("Starting Coverage Gate task");
 
         var tpcUri = tl.getVariable("System.TeamFoundationCollectionUri");
         var teamProject = tl.getVariable("System.TeamProject");

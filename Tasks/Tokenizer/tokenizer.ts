@@ -81,7 +81,7 @@ async function run() {
         }
 
         // get the files
-        let files = tl.glob(globPattern);
+        let files = tl.find(globPattern);
         if (!files || files.length === 0) {
             let msg = `Could not find files with glob [${globPattern}].`;
             if (os.platform() !== "win32") {

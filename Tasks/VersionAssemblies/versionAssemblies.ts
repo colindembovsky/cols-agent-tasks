@@ -93,7 +93,7 @@ async function run() {
                 // replace \ with /
                 globPattern = globPattern.replace(/\\/g, "/");
             }
-            let filesToReplace = tl.glob(globPattern);
+            let filesToReplace = tl.find(globPattern);
             
             if (!filesToReplace || filesToReplace.length === 0) {
                 tl.warning("No files found");

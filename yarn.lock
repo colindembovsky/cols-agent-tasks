@@ -633,6 +633,13 @@ gulp-mocha@^4.3.0:
     npm-run-path "^2.0.2"
     through2 "^2.0.3"
 
+gulp-sequence@^0.4.6:
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/gulp-sequence/-/gulp-sequence-0.4.6.tgz#e388d64311046e05547af43035352d9495501c50"
+  dependencies:
+    gulp-util ">=3.0.0"
+    thunks "^4.5.1"
+
 gulp-sourcemaps@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/gulp-sourcemaps/-/gulp-sourcemaps-1.6.0.tgz#b86ff349d801ceb56e1d9e7dc7bbcb4b7dee600c"
@@ -652,7 +659,7 @@ gulp-typescript@^3.1.6:
     through2 "~2.0.1"
     vinyl-fs "~2.4.3"
 
-gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@~3.0.7:
+gulp-util@>=3.0.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@~3.0.7:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -1658,6 +1665,10 @@ through2@^2.0.0, through2@^2.0.3, through2@~2.0.0, through2@~2.0.1:
   dependencies:
     readable-stream "^2.1.5"
     xtend "~4.0.1"
+
+thunks@^4.5.1:
+  version "4.7.6"
+  resolved "https://registry.yarnpkg.com/thunks/-/thunks-4.7.6.tgz#ca0c35221957d969e79bbcc718ac1ae119521a41"
 
 tildify@^1.0.0:
   version "1.2.0"

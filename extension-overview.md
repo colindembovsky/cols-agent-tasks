@@ -32,6 +32,8 @@ This extension contains helpful build and release Tasks.
 ### 1.1.89
 - No task updates
 - Updated manifest to include link to Github repo and build badge
+- Updated node packages
+- Refactored tests to remove mock-fs dependency
 
 ### 1.1.86
 - Tokenizer now supports [tokenizing arrays](https://github.com/colindembovsky/cols-agent-tasks/pull/51) within a json file.

@@ -29,14 +29,14 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
-### 1.1.115
+### 1.1.116
 - No task updates, but lots of internal work
 	- Updated manifest to include link to Github repo and build badge
 	- Updated node packages
 	- Refactored tests to remove mock-fs dependency
 	- Removed gulp and moved to npm (yarn) scripts
 	- Fixed test coverage reporting
-	- Bumped major version numbers for ReplaceTokens, Tokenizer and CoverageGate
+	- Bumped major/minor version numbers
 
 ### 1.1.86
 - Tokenizer now supports [tokenizing arrays](https://github.com/colindembovsky/cols-agent-tasks/pull/51) within a json file.

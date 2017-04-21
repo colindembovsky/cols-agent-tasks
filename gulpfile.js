@@ -2,9 +2,7 @@
 var gulp = require('gulp');
 var path = require('path');
 var mocha = require('gulp-mocha');
-var istanbul = require('gulp-istanbul');
 var ts = require('gulp-typescript');
-var gulpSequence = require('gulp-sequence');
 
 function reportErr(err) {
     console.log('##vso[task.logissue type=error]' + err.message);
@@ -22,36 +20,10 @@ var paths = {
     testPaths: [
         'test/instrumented/*.js',
         'test/_testsuite.js'
-    ],
-    jsPaths: [
-        'Tasks/CoverageGate/*.js',
-        'Tasks/ReplaceTokens/*.js',
-        'Tasks/Tokenizer/*.js',
-        'Tasks/VersionAssemblies/*.js'
-    ],
-
+    ]
 };
 
 var tfBuild = false;
-
-gulp.task('instrument', ['build'], function() {
-    return gulp.src(paths.jsPaths)
-        .pipe(istanbul())
-        .pipe(gulp.dest('./test/instrumented'))
-        .pipe(istanbul.hookRequire());
-});
-
-gulp.task('test-cover', ['instrument'], function() {
-    // invoke the tests
-    return gulp.src(paths.testPaths)
-        .pipe(mocha({ reporter: 'spec', ui: 'bdd', useColors: !tfBuild })
-            .on('error', reportErr))
-        .pipe(istanbul.writeReports({
-            includeAllSources: true,
-            reporters: [ 'html', 'cobertura' ]
-        }))
-        .on('error', reportErr);
-});
 
 gulp.task('test', ['build'], function() {
     return gulp.src(paths.testPaths)
@@ -63,8 +35,6 @@ gulp.task('test', ['build'], function() {
         })
         .on('error', reportErr));
 });
-
-gulp.task('test-all', gulpSequence('test', 'test-cover'));
 
 gulp.task('build', function() {
     var compiled = gulp.src(paths.tsFiles, { base: "." })

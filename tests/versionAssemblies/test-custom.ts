@@ -3,7 +3,7 @@ import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import fs = require('fs');
 
-let rootDir = path.join(__dirname, '..', 'instrumented');
+let rootDir = path.join(__dirname, '../../Tasks', 'VersionAssemblies');
 let taskPath = path.join(rootDir, 'versionAssemblies.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
@@ -39,17 +39,19 @@ fs.writeFile(tmpFile, `
     // set inputs
     tmr.setInput('sourcePath', "working");
     tmr.setInput('filePattern', '**\\AssemblyInfo.*');
-    tmr.setInput("versionSource", 'buildNumer');
-    tmr.setInput("versionFormat", 'fourParts');
+    tmr.setInput("versionSource", 'variable');
+    tmr.setInput("versionFormat", 'custom');
+    tmr.setInput("customNumberVariable", 'someVar');
+    tmr.setInput('customBuildRegex', '\\d+\\.\\d+\\.\\d+\\.\\d+');
     tmr.setInput("replaceVersionFormat", 'fourParts');
     tmr.setInput('buildRegexIndex', '0'); 
-    tmr.setInput('replaceRegex', ''); 
     tmr.setInput('replacePrefix', ''); 
     tmr.setInput('replacePostfix', ''); 
     tmr.setInput('failIfNoMatchFound', 'false'); 
 
     // set variables
-    process.env["Build_BuildNumber"] = "1.5.2.3";
+    process.env["Build_BuildNumber"] = "2.45.67.2";
+    process.env["SOMEVAR"] = "1.5.2.3";
 
     tmr.run();
 

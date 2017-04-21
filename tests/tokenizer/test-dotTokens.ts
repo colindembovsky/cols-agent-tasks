@@ -3,7 +3,7 @@ import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import fs = require('fs');
 
-let rootDir = path.join(__dirname, '..', 'instrumented');
+let rootDir = path.join(__dirname, '../../Tasks', 'Tokenizer');
 let taskPath = path.join(rootDir, 'replaceTokens.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
@@ -12,7 +12,7 @@ var workingFolder = path.join(__dirname, "working");
 if (!fs.existsSync(workingFolder)) {
   fs.mkdirSync(workingFolder);
 }
-var tmpFile = path.join(workingFolder, "appsettings.config");
+var tmpFile = path.join(workingFolder, "appsettings.json");
 
 // provide answers for task mock
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
@@ -59,32 +59,32 @@ fs.writeFile(tmpFile, `
   tmr.run();
 
   // validate the replacement
-  let actual = fs.readFileSync(tmpFile, 'utf-8');
+  let actual = fs.readFileSync('working/appsettings.json', 'utf-8');
 
   var expected = `
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "testing"
-  },
-  "Tricky": {
-    "Gollum": "Gollum2",
-    "Hobbit": "Sam"
-  },
-  "Logging": {
-    "IncludeScopes": false,
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
+  {
+    "ConnectionStrings": {
+      "DefaultConnection": "testing"
+    },
+    "Tricky": {
+      "Gollum": "Gollum2",
+      "Hobbit": "Sam"
+    },
+    "Logging": {
+      "IncludeScopes": false,
+      "LogLevel": {
+        "Default": "Debug",
+        "System": "Information",
+        "Microsoft": "Information"
+      }
     }
   }
-}
   `;
 
   if (actual.trim() !== expected.trim()) {
-    console.log(actual);
-    console.error("Replacement failed.");
+      console.log(actual);
+      console.error("Replacement failed.");
   } else {
-    console.log("Replacement succeeded!")
+      console.log("Replacement succeeded!")
   }
 });

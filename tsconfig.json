@@ -2,9 +2,13 @@
 	"compilerOptions": {
 		"module": "commonjs",
 		"target": "ES6",
-		"sourceMap": false
+		"sourceMap": true
 	},
 	"exclude": [
-		"node_modules"
+		"node_modules",
+		"Tasks/VersionAssemblies/node_modules",
+		"Tasks/Tokenizer/node_modules",
+		"Tasks/ReplaceTokens/node_modules",
+		"Tasks/CoverageGate/node_modules"
 	]
 }

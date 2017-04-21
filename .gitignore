@@ -198,10 +198,10 @@ ModelManifest.xml
 **/*.tar.gz
 
 Tasks/**/*.js
-test/**/*.js
-test/**/working
+tests/**/*.js
+tests/**/working
 
 coverage
-test/instrumented
 test-results.xml
 .taskkey
+.\nyc_output

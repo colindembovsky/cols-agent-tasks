@@ -3,7 +3,18 @@
   "version": "0.1.1",
   "description": "Custom build tasks for TFS or VSO",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "install-libs-cov-gate": "cd Tasks/CoverageGate && yarn install",
+    "install-libs-rep-tokens": "cd Tasks/ReplaceTokens && yarn install",
+    "install-libs-ver-asms": "cd Tasks/VersionAssemblies && yarn install",
+    "install-libs-tokenizer": "cd Tasks/Tokenizer && yarn install",
+    "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer",
+    "build": "tsc",
+    "build-prod": "yarn install-libs && tsc",
+    "junittest": "yarn build && cross-env NODE_ENV=test mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter mocha-junit-reporter",
+    "test": "yarn build && cross-env NODE_ENV=test mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter spec",
+    "debugtest": "yarn build && cross-env NODE_ENV=debugtest mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail",
+    "cover": "nyc yarn junittest",
+    "prod": "yarn install-libs && yarn cover"
   },
   "repository": {
     "type": "git",
@@ -28,15 +39,16 @@
     "@types/q": "^1.0.0",
     "@types/shelljs": "^0.7.0",
     "assert": "^1.4.1",
-    "gulp": "^3.9.1",
-    "gulp-mocha": "^4.3.0",
-    "gulp-typescript": "^3.1.6",
+    "cross-env": "^4.0.0",
+    "istanbul": "^0.4.5",
     "minimatch": "^3.0.3",
     "mocha": "^3.2.0",
     "mocha-junit-reporter": "^1.13.0",
     "mockery": "^2.0.0",
+    "nyc": "^10.2.0",
     "path": "^0.12.7",
     "shelljs": "^0.7.7",
+    "ts-node": "^3.0.2",
     "typescript": "^2.2.2"
   },
   "main": "index.js",
@@ -45,5 +57,28 @@
     "q": "^1.5.0",
     "vso-node-api": "6.2.2-preview",
     "vsts-task-lib": "^2.0.2-preview"
+  },
+  "nyc": {
+    "instrument": true,
+    "include": [
+      "Tasks/VersionAssemblies/*.js",
+      "Tasks/ReplaceTokens/*.js",
+      "Tasks/Tokenizer/*.js",
+      "Tasks/CoverageGate/*.js",
+      "test/**/*.ts"
+    ],
+    "extension": [
+      ".ts",
+      "*.js"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text",
+      "cobertura",
+      "html"
+    ],
+    "all": true
   }
 }

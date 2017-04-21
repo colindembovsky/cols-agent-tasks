@@ -3,7 +3,7 @@ import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import fs = require('fs');
 
-let rootDir = path.join(__dirname, '..', 'instrumented');
+let rootDir = path.join(__dirname, '../../Tasks', 'Tokenizer');
 let taskPath = path.join(rootDir, 'tokenizer.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 

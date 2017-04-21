@@ -2,7 +2,10 @@ import path = require('path');
 import assert = require('assert');
 import ttm = require('vsts-task-lib/mock-test');
 
-const debug = false;
+const debug = process.env["NODE_ENV"] === "debugtest";
+if (debug) {
+    console.log("------ RUNNING IN DEBUG ------------");
+}
 
 describe('replaceTokens', function () {
     before(() => {

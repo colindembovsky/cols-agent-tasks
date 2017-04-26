@@ -29,7 +29,7 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
-### 1.1.118
+### 1.1.119
 - VersionAssemblies
 	- Replacing sh.sed with `string.replace()` due to breaking change in `sh.sed` (see [this issue](https://github.com/colindembovsky/cols-agent-tasks/issues/57))
 

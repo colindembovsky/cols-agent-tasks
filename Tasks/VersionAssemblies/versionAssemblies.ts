@@ -113,10 +113,12 @@ async function run() {
                     } else {
                         console.info(`${checkMatches.length} matches for regex [${replaceRegex}] found in file ${file}`);
                         
+                        let replaceVal = replacePrefix + versionNum + replacePostfix;
+                        let result = contents.replace(new RegExp(replaceRegex, "g"), replaceVal);
+                        
                         // make the file writable
                         sh.chmod(666, file);
-                        // replace all occurrences by adding g to the pattern
-                        sh.sed("-i", new RegExp(replaceRegex, "g"), replacePrefix + versionNum + replacePostfix, file);
+                        fs.writeFileSync(file, result, 'utf8');
                     }
                 }
                 console.info(`Processed ${filesToReplace.length} files`);

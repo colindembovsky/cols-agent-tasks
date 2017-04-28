@@ -7,7 +7,7 @@ if (debug) {
     console.log("------ RUNNING IN DEBUG ------------");
 }
 
-describe('replaceTokens', function () {
+xdescribe('replaceTokens', function () {
     before(() => {
     });
 
@@ -103,7 +103,7 @@ describe('replaceTokens', function () {
     });
 });
 
-describe('versionAssemblies', function () {
+xdescribe('versionAssemblies', function () {
     before(() => {
     });
 
@@ -247,7 +247,7 @@ describe('versionAssemblies', function () {
     }); 
 });
 
-describe('tokenizer JSON', function () {
+xdescribe('tokenizer JSON', function () {
     before(() => {
     });
 
@@ -366,7 +366,7 @@ describe('tokenizer JSON', function () {
     });
 });
 
-describe('coverageGate', function () {
+xdescribe('coverageGate', function () {
     before(() => {
     });
 
@@ -561,7 +561,7 @@ describe('tagBuild', function () {
     after(() => {
     });
 
-    it('should succeed with single tag', (done: MochaDone) => {
+    xit('should succeed with single tag', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-singleTag-succeeds.js');
@@ -583,7 +583,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with multiple tags', (done: MochaDone) => {
+    xit('should succeed with multiple tags', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-multiTag-succeeds.js');
@@ -605,7 +605,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=release in release', (done: MochaDone) => {
+    xit('should succeed with type=release in release', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagRelease-succeeds.js');
@@ -627,7 +627,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=build in release', (done: MochaDone) => {
+    xit('should succeed with type=build in release', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildFromRelease-succeeds.js');
@@ -649,7 +649,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with no auth', (done: MochaDone) => {
+    xit('should fail with no auth', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-noauth-fails.js');
@@ -695,7 +695,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with type=release and no releaseId', (done: MochaDone) => {
+    xit('should fail with type=release and no releaseId', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-release-noReleaseId-fails.js');

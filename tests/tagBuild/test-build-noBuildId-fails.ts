@@ -13,6 +13,7 @@ tmr.registerMock('vso-node-api/webApi', mocks.MockWebApi);
 // set variables
 process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";
 process.env["SYSTEM_TEAMPROJECT"] = "demo";
+process.env["BUILD_BUILDID"] = "-1"; // fake this since it's in the env from the 'real' build
 
 // set inputs
 tmr.setInput('tags', `tag1

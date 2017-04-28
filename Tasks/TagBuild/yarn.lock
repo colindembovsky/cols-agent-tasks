@@ -27,7 +27,7 @@ mockery@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/mockery/-/mockery-1.7.0.tgz#f4ede0d8750c1c9727c272ea2c60629e2c9a1c4f"
 
-q@^1.1.2:
+q@^1.0.1, q@^1.1.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
 
@@ -39,9 +39,33 @@ shelljs@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.3.0.tgz#3596e6307a781544f591f37da618360f31db57b1"
 
+tunnel@0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.4.tgz#2d3785a158c174c9a16dc2c046ec5fc5f1742213"
+
+typed-rest-client@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/typed-rest-client/-/typed-rest-client-0.10.0.tgz#5e13b88ff84302f94da61feb42c5a8f581788f17"
+  dependencies:
+    tunnel "0.0.4"
+    underscore "1.8.3"
+
+underscore@1.8.3, underscore@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+
 uuid@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
+
+vso-node-api@^6.2.2-preview:
+  version "6.2.2-preview"
+  resolved "https://registry.yarnpkg.com/vso-node-api/-/vso-node-api-6.2.2-preview.tgz#70c3912b080f4afb188b4b421bbd1f01b94c56f6"
+  dependencies:
+    q "^1.0.1"
+    tunnel "0.0.4"
+    typed-rest-client "^0.10.0"
+    underscore "^1.8.3"
 
 vsts-task-lib@^2.0.2-preview:
   version "2.0.5"

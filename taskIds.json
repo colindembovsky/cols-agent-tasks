@@ -34,6 +34,11 @@
             "path": "Tasks/VersionAssemblies",
             "id": "5b4d14d0-3868-11e4-a31d-3f0a2d8202f4",
             "beta-id": "ab6ca715-6f11-4f14-a578-12ca85409ea6"
+        },
+        {
+            "path": "Tasks/TagBuild",
+            "id": "5d741236-331c-4461-82a2-9d55eb91bb91",
+            "beta-id": "655a1b4d-2572-45f4-9e0a-4acfb6be8daf"
         }
     ]
 }

@@ -553,3 +553,78 @@ describe('coverageGate', function () {
         done();
     });
 });
+
+describe('tagBuild', function () {
+    before(() => {
+    });
+
+    after(() => {
+    });
+
+    it('should succeed with single tag', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tagBuild', 'test-singleTag-succeeds.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should succeed with multiple tags', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tagBuild', 'test-multiTag-succeeds.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should fail with no auth', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tagBuild', 'test-noauth-fails.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have failed");
+        assert.equal(tr.errorIssues[0], "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options.");
+
+        done();
+    });
+});

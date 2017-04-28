@@ -1,8 +1,8 @@
 {
   "id": "5d741236-331c-4461-82a2-9d55eb91bb91",
   "name": "JSONTokenizer",
-  "friendlyName": "Tag Build",
-  "description": "Adds tags to a build",
+  "friendlyName": "Tag Build or Release",
+  "description": "Adds tags to a build or release",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild)",
   "category": "Utility",
@@ -16,14 +16,26 @@
     "Patch": "0"
   },
   "minimumAgentVersion": "1.91.0",
-  "instanceNameFormat": "Tag Build",
+  "instanceNameFormat": "Tag $(type)",
   "inputs": [
+    {
+      "name": "type",
+      "type": "picklist",
+      "label": "Type",
+      "defaultValue": "Build",
+      "helpMarkDown": "Type of entity to tag. Set to build to let the build tag itself. Set to release to let the release tag itself. Set to build in a release to tag the primary build for the release.",
+      "required": true,
+      "options":{
+        "Build": "Build",
+        "Release": "Release"
+      }
+    },
     {
       "name": "tags",
       "type": "multiLine",
       "label": "Tags",
       "defaultValue": "",
-      "helpMarkDown": "Tags to tag the build with. Use multiple lines to specify multiple tags.",
+      "helpMarkDown": "Tags to tag the build/release with. Use multiple lines to specify multiple tags.",
       "required": true
     }
   ],

@@ -8,31 +8,62 @@ async function run() {
 
         let tpcUri = tl.getVariable("System.TeamFoundationCollectionUri");
         let teamProject = tl.getVariable("System.TeamProject");
-        let buildId = parseInt(tl.getVariable("Build.BuildId"));
+        let type = tl.getInput("type", true);
         let tags = tl.getDelimitedInput("tags", '\n', true);
 
-        tl.debug(`tags: [${tags.join(',')}]`);
+        let buildId = -1;
+        let bId = tl.getVariable("Build.BuildId");
+        if (bId) {
+            buildId = parseInt(bId);
+            tl.debug(`Build ID = ${buildId}`);
+        }else {
+            if (type === "Build") {
+                tl.setResult(tl.TaskResult.Failed, "No build ID found - perhaps Type should be 'Release' not 'Build'?");
+                tl.debug("Leaving Tag Build task");
+                return;
+            } 
+        }
 
+        let releaseId = -1;
+        let rId = tl.getVariable("Release.ReleaseId");
+        if (rId) {
+            releaseId = parseInt(rId);
+            tl.debug(`Release ID = ${releaseId}`);
+        } else {
+            if (type === "Release") {
+                tl.setResult(tl.TaskResult.Failed, "No release ID found - perhaps Type should be 'Build' not 'Release'?");
+                tl.debug("Leaving Tag Build task");
+                return;
+            } 
+        }
+        
         // handle creds
-        var credOk = true;
-        var credHandler: vstsInterfaces.IRequestHandler;
-        var accessToken = tl.getVariable("System.AccessToken");
+        let credHandler: vstsInterfaces.IRequestHandler;
+        let accessToken = tl.getVariable("System.AccessToken");
         if (!accessToken || accessToken.length === 0) {
             tl.setResult(tl.TaskResult.Failed, "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options.");
-            credOk = false;
+            tl.debug("Leaving Tag Build task");
+            return;
         } else {
             tl.debug("Detected token: creating bearer cred handler");
             credHandler = webApi.getBearerHandler(accessToken);
         }
 
-        if (credOk) {
-            var vsts = new webApi.WebApi(tpcUri, credHandler);
-            
+        let vsts = new webApi.WebApi(tpcUri, credHandler);
+        
+        if (type === "Build") {
             tl.debug("Getting build api client");
-            var buildApi = vsts.getBuildApi();
+            let buildApi = vsts.getBuildApi();
             
             console.info(`Setting tags on build [${buildId}]`);
             buildApi.addBuildTags(tags, teamProject, buildId);
+        } else {
+            if (releaseId)
+            tl.debug("Getting release api client");
+            let releaseApi = vsts.getReleaseApi();
+            
+            console.info(`Setting tags on release [${releaseId}]`);
+            releaseApi.addReleaseTags(tags, teamProject, releaseId);
         }
 
         tl.setResult(tl.TaskResult.Succeeded, `Successfully added tags to the build`);

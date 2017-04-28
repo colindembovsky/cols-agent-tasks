@@ -33,7 +33,7 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
-### 1.1.128
+### 1.1.130
 - Added new TagBuild task
 
 ### 1.1.119

@@ -18,11 +18,13 @@ process.env["SYSTEM_ACCESSTOKEN"] = "faketoken";
 
 // set inputs
 tmr.setInput('tags', 'tag1');
+tmr.setInput('type', 'Build');
 
 tmr.run();
 
 if ("demo" !== mocks.MockWebApi.taggerCall.project ||
-    1 !== mocks.MockWebApi.taggerCall.buildId ||
+    "Build" !== mocks.MockWebApi.taggerCall.callType ||
+    1 !== mocks.MockWebApi.taggerCall.id ||
     !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag1") || 
     mocks.MockWebApi.taggerCall.tags.length !== 1) {
     console.log(mocks.MockWebApi.taggerCall);

@@ -18,5 +18,6 @@ process.env["BUILD_BUILDID"] = "1";
 // set inputs
 tmr.setInput('tags', `tag1
 tag2`);
+tmr.setInput('type', 'Build');
 
 tmr.run();

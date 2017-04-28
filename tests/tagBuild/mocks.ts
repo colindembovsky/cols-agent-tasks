@@ -1,8 +1,9 @@
 export module MockWebApi {
     export var calledBearer = false;
     export var taggerCall = {
+        callType: '',
         tags: <string[]>[],
-        buildId: 0,
+        id: 0,
         project: ''
     }
 
@@ -25,9 +26,21 @@ export module MockWebApi {
         getBuildApi() {
             return {
                 addBuildTags(tags: string[], teamProject: string, buildId: number) {
+                    taggerCall.callType = 'Build';
                     taggerCall.tags = tags;
                     taggerCall.project = teamProject;
-                    taggerCall.buildId = buildId;
+                    taggerCall.id = buildId;
+                }
+            };
+        }
+
+        getReleaseApi() {
+            return {
+                addReleaseTags(tags: string[], teamProject: string, releaseId: number) {
+                    taggerCall.callType = 'Release';
+                    taggerCall.tags = tags;
+                    taggerCall.project = teamProject;
+                    taggerCall.id = releaseId;
                 }
             };
         }

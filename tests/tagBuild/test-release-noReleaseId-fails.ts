@@ -14,23 +14,10 @@ tmr.registerMock('vso-node-api/webApi', mocks.MockWebApi);
 process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";
 process.env["SYSTEM_TEAMPROJECT"] = "demo";
 process.env["BUILD_BUILDID"] = "1";
-process.env["SYSTEM_ACCESSTOKEN"] = "faketoken";
 
 // set inputs
 tmr.setInput('tags', `tag1
 tag2`);
-tmr.setInput('type', 'Build');
+tmr.setInput('type', 'Release');
 
 tmr.run();
-
-if ("demo" !== mocks.MockWebApi.taggerCall.project ||
-    "Build" !== mocks.MockWebApi.taggerCall.callType ||
-    1 !== mocks.MockWebApi.taggerCall.id ||
-    !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag1") || 
-    !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag2") || 
-    mocks.MockWebApi.taggerCall.tags.length !== 2) {
-    console.log(mocks.MockWebApi.taggerCall);
-    console.error("Tagging failed."); 
-} else {
-    console.log("Tagging successful!");
-}

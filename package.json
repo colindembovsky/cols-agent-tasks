@@ -7,14 +7,15 @@
     "install-libs-rep-tokens": "cd Tasks/ReplaceTokens && yarn install",
     "install-libs-ver-asms": "cd Tasks/VersionAssemblies && yarn install",
     "install-libs-tokenizer": "cd Tasks/Tokenizer && yarn install",
-    "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer",
+    "install-libs-tagBuild": "cd Tasks/TagBuild && yarn install",
+    "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer && yarn install-libs-tagBuild",
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
     "junittest": "yarn build && cross-env NODE_ENV=test mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter mocha-junit-reporter",
     "test": "yarn build && cross-env NODE_ENV=test mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter spec",
     "debugtest": "yarn build && cross-env NODE_ENV=debugtest mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail",
     "cover": "nyc yarn junittest",
-    "prepextension": "yarn install-libs && yarn cover"
+    "prepextension": "yarn install && yarn install-libs && yarn cover"
   },
   "repository": {
     "type": "git",
@@ -65,6 +66,7 @@
       "Tasks/ReplaceTokens/*.js",
       "Tasks/Tokenizer/*.js",
       "Tasks/CoverageGate/*.js",
+      "Tasks/TagBuild/*.js",
       "test/**/*.ts"
     ],
     "extension": [

@@ -30,6 +30,7 @@ export module MockWebApi {
                     taggerCall.tags = tags;
                     taggerCall.project = teamProject;
                     taggerCall.id = buildId;
+                    return Promise.resolve(tags);
                 }
             };
         }
@@ -41,6 +42,7 @@ export module MockWebApi {
                     taggerCall.tags = tags;
                     taggerCall.project = teamProject;
                     taggerCall.id = releaseId;
+                    return Promise.resolve(tags);
                 }
             };
         }

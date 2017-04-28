@@ -4,7 +4,7 @@ import * as webApi from 'vso-node-api/webApi';
 
 async function run() {
     try {
-        tl.debug("Starting Tag Build task");
+        tl.debug("Starting Tag Build/Release task");
 
         let tpcUri = tl.getVariable("System.TeamFoundationCollectionUri");
         let teamProject = tl.getVariable("System.TeamProject");
@@ -64,17 +64,18 @@ async function run() {
                     let buildApi = vsts.getBuildApi();
                     
                     console.info(`Setting tags on build [${buildId}]`);
-                    buildApi.addBuildTags(tags, teamProject, buildId);
+                    buildApi.addBuildTags(tags, teamProject, buildId)
+                        .catch(e => { throw e; });
                 } else {
-                    if (releaseId)
                     tl.debug("Getting release api client");
                     let releaseApi = vsts.getReleaseApi();
                     
                     console.info(`Setting tags on release [${releaseId}]`);
-                    releaseApi.addReleaseTags(tags, teamProject, releaseId);
+                    releaseApi.addReleaseTags(tags, teamProject, releaseId)
+                        .catch(e => { throw e; });
                 }
 
-                tl.setResult(tl.TaskResult.Succeeded, `Successfully added tags to the build`);
+                tl.setResult(tl.TaskResult.Succeeded, `Successfully added tags to the ${type}`);
             }
         }
     }
@@ -86,7 +87,7 @@ async function run() {
         tl.setResult(tl.TaskResult.Failed, msg);
     }
 
-    tl.debug("Leaving Tag Build task");
+    tl.debug("Leaving Tag Build/Release task");
 }
 
 run();

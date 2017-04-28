@@ -24,7 +24,7 @@
         "replacement",
         "tokens", "tokenize",
         "dacpac", "SSDT",
-        "coverage"
+        "coverage", "tag"
     ],
     "screenshots": [
         {
@@ -81,6 +81,9 @@
         },
         {
             "path": "Tasks/CoverageGate"
+        },
+        {
+            "path": "Tasks/TagBuild"
         },
         {
             "path": "Tasks/AzureWebDeploy"
@@ -141,6 +144,16 @@
             ],
             "properties": {
                 "name": "Tasks/CoverageGate"
+            }
+        },
+        {
+            "id": "tag-build-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/TagBuild"
             }
         },
         {

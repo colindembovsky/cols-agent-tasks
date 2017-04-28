@@ -25,9 +25,16 @@ This extension contains helpful build and release Tasks.
 
 	This task allows you to fail a release (or build) based of coverage delta. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/CoverageGate)
 
+1. **Tag Build**
+
+	This task allows you to add tags to a build. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild)
+
 ## Release Notes
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
+
+### 1.1.121
+- Added new TagBuild task
 
 ### 1.1.119
 - VersionAssemblies

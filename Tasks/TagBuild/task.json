@@ -1,10 +1,10 @@
 {
   "id": "5d741236-331c-4461-82a2-9d55eb91bb91",
   "name": "JSONTokenizer",
-  "friendlyName": "Tokenize File",
-  "description": "Tokenizes a file.",
+  "friendlyName": "Tag Build",
+  "description": "Adds tags to a build",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
-  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/Tokenizer)",
+  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild)",
   "category": "Utility",
   "visibility": [
     "Build",

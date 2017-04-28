@@ -20,7 +20,7 @@
   "inputs": [
     {
       "name": "type",
-      "type": "picklist",
+      "type": "pickList",
       "label": "Type",
       "defaultValue": "Build",
       "helpMarkDown": "Type of entity to tag. Set to build to let the build tag itself. Set to release to let the release tag itself. Set to build in a release to tag the primary build for the release.",

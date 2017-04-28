@@ -15,7 +15,7 @@
     "junittest-nobuild": "mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter mocha-junit-reporter",
     "test": "yarn build && cross-env NODE_ENV=test mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter spec",
     "debugtest": "yarn build && cross-env NODE_ENV=debugtest mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail",
-    "cover": "nyc yarn junittest",
+    "cover": "nyc yarn junittest-nobuild",
     "prepextension": "yarn install-libs && yarn cover"
   },
   "repository": {

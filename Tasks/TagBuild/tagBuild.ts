@@ -65,13 +65,15 @@ async function run() {
                     
                     console.info(`Setting tags on build [${buildId}]`);
                     buildApi.addBuildTags(tags, teamProject, buildId)
+                        .then(s => console.info(`Success!`))
                         .catch(e => { throw e; });
                 } else {
                     tl.debug("Getting release api client");
                     let releaseApi = vsts.getReleaseApi();
-                    
+
                     console.info(`Setting tags on release [${releaseId}]`);
                     releaseApi.addReleaseTags(tags, teamProject, releaseId)
+                        .then(s => console.info(`Success!`))
                         .catch(e => { throw e; });
                 }
 

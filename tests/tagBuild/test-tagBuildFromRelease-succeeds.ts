@@ -2,7 +2,7 @@ import ma = require('vsts-task-lib/mock-answer');
 import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import assert = require('assert');
-import mocks = require('./mocks');
+import mocks = require('./mockWebApi');
 
 let rootDir = path.join(__dirname, '../../Tasks', 'TagBuild');
 let taskPath = path.join(rootDir, 'tagBuild.js');

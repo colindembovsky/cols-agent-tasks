@@ -717,4 +717,50 @@ describe('tagBuild', function () {
 
         done();
     });
+
+    it('should handle failed call to releaseApi', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tagBuild', 'test-tagReleaseHandlesFailedCall.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have failed");
+        assert.equal(tr.errorIssues[0], "Something went wrong with release api call");
+
+        done();
+    });
+
+    it('should handle failed call to releaseApi', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildHandlesFailedCall.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have failed");
+        assert.equal(tr.errorIssues[0], "Something went wrong with build api call");
+
+        done();
+    });
 });

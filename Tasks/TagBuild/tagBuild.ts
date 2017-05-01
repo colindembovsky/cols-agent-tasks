@@ -64,17 +64,15 @@ async function run() {
                     let buildApi = vsts.getBuildApi();
                     
                     console.info(`Setting tags on build [${buildId}]`);
-                    buildApi.addBuildTags(tags, teamProject, buildId)
-                        .then(s => console.info(`Success!`))
-                        .catch(e => { throw e; });
+                    await buildApi.addBuildTags(tags, teamProject, buildId);
+                    console.info(`Success!`);
                 } else {
                     tl.debug("Getting release api client");
                     let releaseApi = vsts.getReleaseApi();
 
                     console.info(`Setting tags on release [${releaseId}]`);
-                    releaseApi.addReleaseTags(tags, teamProject, releaseId)
-                        .then(s => console.info(`Success!`))
-                        .catch(e => { throw e; });
+                    var res = await releaseApi.addReleaseTags(tags, teamProject, releaseId);
+                    console.info(`Success!`);
                 }
 
                 tl.setResult(tl.TaskResult.Succeeded, `Successfully added tags to the ${type}`);

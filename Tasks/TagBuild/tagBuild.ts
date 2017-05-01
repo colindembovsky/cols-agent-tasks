@@ -71,7 +71,7 @@ async function run() {
                     let releaseApi = vsts.getReleaseApi();
 
                     console.info(`Setting tags on release [${releaseId}]`);
-                    var res = await releaseApi.addReleaseTags(tags, teamProject, releaseId);
+                    await releaseApi.addReleaseTags(tags, teamProject, releaseId);
                     console.info(`Success!`);
                 }
 

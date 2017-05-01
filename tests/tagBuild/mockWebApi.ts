@@ -23,9 +23,20 @@ export module MockWebApi {
         constructor(tpcUri, credHandler) {
         }
 
+        getLocationsApi() {
+            return {
+                getResourceArea(areaId: string) {
+                    return Promise.resolve({
+                        locationUrl: "theUrl"
+                    });
+                }
+            };
+        }
+
         getBuildApi() {
             return {
                 addBuildTags(tags: string[], teamProject: string, buildId: number) {
+                    console.log("--- MOCK: calling buildAPI.addBuildTags");
                     taggerCall.callType = 'Build';
                     taggerCall.tags = tags;
                     taggerCall.project = teamProject;
@@ -35,9 +46,10 @@ export module MockWebApi {
             };
         }
 
-        getReleaseApi() {
+        getReleaseApi(resourceUrl?: string) {
             return {
                 addReleaseTags(tags: string[], teamProject: string, releaseId: number) {
+                    console.log("--- MOCK: calling releaseAPI.addReleaseTags");
                     taggerCall.callType = 'Release';
                     taggerCall.tags = tags;
                     taggerCall.project = teamProject;

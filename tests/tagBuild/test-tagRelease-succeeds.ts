@@ -22,13 +22,17 @@ tmr.setInput('type', 'Release');
 
 tmr.run();
 
-if ("demo" !== mocks.MockWebApi.taggerCall.project ||
-    "Release" !== mocks.MockWebApi.taggerCall.callType ||
-    21 !== mocks.MockWebApi.taggerCall.id ||
-    !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag1") || 
-    mocks.MockWebApi.taggerCall.tags.length !== 1) {
-    console.log(mocks.MockWebApi.taggerCall);
-    console.error("Tagging failed."); 
-} else {
-    console.log("Tagging successful!");
-}
+// hack since testrunner returns void but tasks can be Promise<void>
+setTimeout(t => {
+    if ("demo" !== mocks.MockWebApi.taggerCall.project ||
+        "Release" !== mocks.MockWebApi.taggerCall.callType ||
+        21 !== mocks.MockWebApi.taggerCall.id ||
+        !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag1") || 
+        mocks.MockWebApi.taggerCall.tags.length !== 1) {
+        console.log(mocks.MockWebApi.taggerCall);
+        console.error("Tagging failed."); 
+    } else {
+        console.log("Tagging successful!");
+    }
+    console.log("=============== FIN");
+}, 10);

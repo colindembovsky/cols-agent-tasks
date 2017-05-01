@@ -605,7 +605,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=release in release', (done: MochaDone) => {
+    it('should succeed with type=release in release', async (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagRelease-succeeds.js');
@@ -741,7 +741,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should handle failed call to releaseApi', (done: MochaDone) => {
+    it('should handle failed call to buildApi', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildHandlesFailedCall.js');

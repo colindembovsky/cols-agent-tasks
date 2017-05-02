@@ -69,7 +69,7 @@ async function run() {
         let buildApi = vsts.getBuildApi();
         
         console.info(`Setting tags on build [${buildId}]`);
-        return await buildApi.addBuildTags(tags, teamProject, buildId)
+        await buildApi.addBuildTags(tags, teamProject, buildId)
             .then(tags => {
                 tl.debug(`New tags: ${tags.join(',')}`);
                 return completeTask(true, `Successfully added tags to the ${type}`);
@@ -96,5 +96,4 @@ async function run() {
     }
 }
 
-run()
-    .then(() => console.log("-------------- run DONE"));
+run();

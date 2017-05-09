@@ -21,6 +21,7 @@ export interface IResponse {
 }
 
 export interface ICall {
+    method: string,
     url: string,
     data: any,
     headers: any
@@ -32,9 +33,20 @@ export module TestHttpClient {
 
     export function HttpClient(agent) { 
         console.log("--- MOCK: creating mock httpClient");
+
         return {
             post: (url: string, data: string, headers) => {
                 calls.push({
+                    method: "push",
+                    url: url,
+                    data: data,
+                    headers: headers
+                });
+                return Promise.resolve(responses.find(r => r.url === url).response);
+            },
+            put: (url: string, data: string, headers) => {
+                calls.push({
+                    method: "put",
                     url: url,
                     data: data,
                     headers: headers

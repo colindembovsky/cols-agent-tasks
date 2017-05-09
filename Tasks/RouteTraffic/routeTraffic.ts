@@ -54,6 +54,7 @@ async function applyRoutingRule(endpoint: IEndpoint,
     webAppName: string, resourceGroupName: string, slotName: string, percentage: number) {
     let deferred = Q.defer<any>();
     let accessToken = await getAuthorizationToken(endpoint);
+    tl.debug("Successfully got token");
     let headers = {
         authorization: 'Bearer '+ accessToken
     };
@@ -72,9 +73,11 @@ async function applyRoutingRule(endpoint: IEndpoint,
     };
 
     tl.debug(`Configuring rule for experimenting on ${configUrl}`);
-    tl.debug(`ConfigData = ${configData}`);
+    let configDataStr = JSON.stringify(configData);
+    tl.debug(`ConfigData = ${configDataStr}`);
+
     try {
-        let res = await httpObj.post(configUrl, JSON.stringify(configData), headers);
+        let res = await httpObj.put(configUrl, configDataStr, headers);
         if (res.message.statusCode === 200)
         {
             deferred.resolve(`Successfully configured experiment directing ${percentage}% traffic to ${slotName} on ${webAppName}`);

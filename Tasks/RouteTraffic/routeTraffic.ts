@@ -86,7 +86,7 @@ async function applyRoutingRule(endpoint: IEndpoint,
             try {
                 var body = await res.readBody();
                 var retConfig = JSON.parse(body);
-                var exp = retConfig.properties.experiments.rampupRules[0];
+                var exp = retConfig.properties.experiments.rampUpRules[0];
                 tl.debug(`Call success: ${JSON.stringify(exp)}`);
             } catch (e) {
                 tl.warning(`Could not deserialize return packet from experiment update: ${e}`);

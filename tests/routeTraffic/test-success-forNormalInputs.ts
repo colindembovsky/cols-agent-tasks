@@ -27,7 +27,7 @@ mocks.TestHttpClient.responses = [
             body: JSON.stringify({
                 properties: {
                     experiments: {
-                        rampupRules: [
+                        rampUpRules: [
                             {
                                 name: "blue",
                                 actionHostName: "myapp-slot.azurewebsites.net",

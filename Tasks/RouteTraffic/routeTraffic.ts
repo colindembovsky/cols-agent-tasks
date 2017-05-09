@@ -63,13 +63,15 @@ async function applyRoutingRule(endpoint: IEndpoint,
     let configUrl = `${endpoint.url}subscriptions/${endpoint.subscriptionID}/resourceGroups/${resourceGroupName}/providers/Microsoft.Web/sites/${webAppName}/config/web?${azureApiVersion}`;
     let configData = {
         properties: {
-            rampUpRules: [
-                {
-                    name: slotName,
-                    actionHostName: `${webAppName}-${slotName}.azurewebsites.net`,
-                    reroutePercentage : percentage,
-                }
-            ],
+            experiments: {
+                rampUpRules: [
+                    {
+                        name: slotName,
+                        actionHostName: `${webAppName}-${slotName}.azurewebsites.net`,
+                        reroutePercentage : percentage,
+                    }
+                ]
+            }
         }
     };
 
@@ -81,6 +83,15 @@ async function applyRoutingRule(endpoint: IEndpoint,
         let res = await httpObj.put(configUrl, configDataStr, headers);
         if (res.message.statusCode === 200)
         {
+            try {
+                var body = await res.readBody();
+                var retConfig = JSON.parse(body);
+                var exp = retConfig.properties.experiments.rampupRules[0];
+                tl.debug(`Call success: ${JSON.stringify(exp)}`);
+            } catch (e) {
+                tl.warning(`Could not deserialize return packet from experiment update: ${e}`);
+            }
+        
             deferred.resolve(`Successfully configured experiment directing ${percentage}% traffic to ${slotName} on ${webAppName}`);
         } else {
             deferred.reject(`Could not configure app settings experiment: [${res.message.statusCode}] ${res.message.statusMessage}`);

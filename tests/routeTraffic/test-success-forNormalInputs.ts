@@ -24,7 +24,19 @@ mocks.TestHttpClient.responses = [
         response: Promise.resolve(new mocks.HttpClientResponse({
             statusCode: 200,
             statusMessage: "ok",
-            body: ""
+            body: JSON.stringify({
+                properties: {
+                    experiments: {
+                        rampupRules: [
+                            {
+                                name: "blue",
+                                actionHostName: "myapp-slot.azurewebsites.net",
+                                reroutePercentage: 22.345
+                            }
+                        ]
+                    }
+                }
+            })
         }))
     }
 ];

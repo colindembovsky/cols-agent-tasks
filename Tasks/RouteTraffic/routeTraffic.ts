@@ -56,7 +56,8 @@ async function applyRoutingRule(endpoint: IEndpoint,
     let accessToken = await getAuthorizationToken(endpoint);
     tl.debug("Successfully got token");
     let headers = {
-        authorization: 'Bearer '+ accessToken
+        authorization: 'Bearer '+ accessToken,
+        'Content-Type': 'application/json'
     };
 
     let configUrl = `${endpoint.url}subscriptions/${endpoint.subscriptionID}/resourceGroups/${resourceGroupName}/providers/Microsoft.Web/sites/${webAppName}/config/web?${azureApiVersion}`;

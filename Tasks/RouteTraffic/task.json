@@ -5,7 +5,7 @@
   "description": "Routes traffic of a Web App to an App Slot by the specified percentage",
   "author": "Colin Dembovsky (colinsalmcorner.com)",
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic)",
-  "category": "Utility",
+  "category": "Deploy",
   "visibility": [
     "Build",
     "Release"
@@ -16,7 +16,7 @@
     "Patch": "0"
   },
   "minimumAgentVersion": "1.102.0",
-  "instanceNameFormat": "Route Traffic: $(percentTraffic) to $(Slot)",
+  "instanceNameFormat": "Route Traffic: $(percentTraffic)% to $(Slot) on $(WebAppName)",
   "inputs": [
     {
         "name": "ConnectedServiceName",

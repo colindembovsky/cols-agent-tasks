@@ -85,6 +85,7 @@ async function applyRoutingRule(endpoint: IEndpoint,
         {
             try {
                 var body = await res.readBody();
+                tl.debug(body);
                 var retConfig = JSON.parse(body);
                 var exp = retConfig.properties.experiments.rampUpRules[0];
                 tl.debug(`Call success: ${JSON.stringify(exp)}`);

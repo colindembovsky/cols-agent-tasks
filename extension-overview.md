@@ -29,13 +29,16 @@ This extension contains helpful build and release Tasks.
 
 	This task allows you to add tags to a build or release. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild)
 
-1. **Site Experiment**
+1. **Route Traffic**
 
-	This task allows you to route a percentage of traffic to an Azure Web App to a slot. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/SiteExperiment)
+	This task allows you to route a percentage of traffic to an Azure Web App to a slot. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic)
 
 ## Release Notes
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
+
+### 1.1.154
+- Added new [Route Traffic task]((https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic))
 
 ### 1.1.154
 - Added new [Tag Build/Release task]((https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild))

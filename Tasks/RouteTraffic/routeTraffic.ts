@@ -1,5 +1,4 @@
 import * as tl from 'vsts-task-lib/task';
-import * as webApi from 'vso-node-api/webApi';
 import * as Q from 'q';
 import * as querystring from 'querystring';
 import * as httpClient from 'typed-rest-client/HttpClient';
@@ -18,7 +17,7 @@ interface IEndpoint {
     subscriptionID: string
 }
 
-// unashamedly copied from AzureManageWebApp task from vsts-task repo :-)
+// unashamedly pilfered from AzureManageWebApp task from vsts-task repo :-)
 async function getAuthorizationToken(endPoint: IEndpoint)  {
     var deferred = Q.defer<string>();
     var envAuthUrl = (endPoint.envAuthUrl) ? (endPoint.envAuthUrl) : defaultAuthUrl;
@@ -107,23 +106,20 @@ async function run() {
     tl.debug("Starting SiteExperiment task");
 
     let connectedServiceName = tl.getInput('ConnectedServiceName', true);
-    let endPointAuthCreds = tl.getEndpointAuthorization(connectedServiceName, true);
-    let subscriptionId = tl.getEndpointDataParameter(connectedServiceName, 'subscriptionid', true);
 
     let endPoint = <IEndpoint>{
         servicePrincipalClientID: tl.getEndpointAuthorizationParameter(connectedServiceName, 'serviceprincipalid', true),
         servicePrincipalKey: tl.getEndpointAuthorizationParameter(connectedServiceName, 'serviceprincipalkey', true),
         tenantID: tl.getEndpointAuthorizationParameter(connectedServiceName, 'tenantid', true),
-        subscriptionId: tl.getEndpointDataParameter(connectedServiceName, 'subscriptionid', true),
+        subscriptionID: tl.getEndpointDataParameter(connectedServiceName, 'subscriptionid', true),
         envAuthUrl: tl.getEndpointDataParameter(connectedServiceName, 'environmentAuthorityUrl', true),
         url: tl.getEndpointUrl(connectedServiceName, true),
-        subscriptionID: subscriptionId
     };
 
     let slotName = tl.getInput("Slot", true);
     let webAppName = tl.getInput("WebAppName", true);
     let rgName = tl.getInput("ResourceGroupName", true);
-    let percentTraffic = parseInt(tl.getInput("percentTraffic", true));
+    let percentTraffic = parseFloat(tl.getInput("percentTraffic", true));
 
     try {
         await applyRoutingRule(endPoint, webAppName, rgName, slotName, percentTraffic);

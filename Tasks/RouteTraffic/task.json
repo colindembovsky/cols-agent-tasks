@@ -61,7 +61,7 @@
     },
     {
       "name": "percentTraffic",
-      "type": "number",
+      "type": "string",
       "label": "Percentage to Route",
       "defaultValue": "",
       "helpMarkDown": "The percentage of traffic to route to the non-production slot",

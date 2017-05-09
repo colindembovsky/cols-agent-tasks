@@ -58,7 +58,7 @@ async function applyRoutingRule(endpoint: IEndpoint,
         authorization: 'Bearer '+ accessToken
     };
 
-    let configUrl = `${endpoint.url}/subscriptions/${endpoint.subscriptionID}/resourceGroups/${resourceGroupName}/providers/Microsoft.Web/sites/${webAppName}/config/web?${azureApiVersion}`;
+    let configUrl = `${endpoint.url}subscriptions/${endpoint.subscriptionID}/resourceGroups/${resourceGroupName}/providers/Microsoft.Web/sites/${webAppName}/config/web?${azureApiVersion}`;
     let configData = {
         properties: {
             rampUpRules: [
@@ -79,7 +79,7 @@ async function applyRoutingRule(endpoint: IEndpoint,
         {
             deferred.resolve(`Successfully configured experiment directing ${percentage}% traffic to ${slotName} on ${webAppName}`);
         } else {
-            deferred.reject(`Could not get Auth Token: [${res.message.statusCode}] ${res.message.statusMessage}`);
+            deferred.reject(`Could not configure app settings experiment: [${res.message.statusCode}] ${res.message.statusMessage}`);
         }
     }
     catch (ex) {
@@ -121,12 +121,9 @@ async function run() {
     let rgName = tl.getInput("ResourceGroupName", true);
     let percentTraffic = parseFloat(tl.getInput("percentTraffic", true));
 
-    try {
-        await applyRoutingRule(endPoint, webAppName, rgName, slotName, percentTraffic);
-        completeTask(true, "Successfully applied experiment rule");
-    } catch(ex) {
-        completeTask(false, ex);
-    }
+    await applyRoutingRule(endPoint, webAppName, rgName, slotName, percentTraffic)
+        .then(() => completeTask(true, "Successfully applied experiment rule"))
+        .catch(err => completeTask(false, err));
 }
 
 run();

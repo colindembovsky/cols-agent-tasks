@@ -21,17 +21,25 @@ export interface IResponse {
 }
 
 export interface ICall {
-    url: string
+    url: string,
+    data: any,
+    headers: any
 }
 
 export module TestHttpClient {
     export var responses = <IResponse[]>{};
+    export var calls = <ICall[]>[];
 
     export function HttpClient(agent) { 
         console.log("--- MOCK: creating mock httpClient");
         return {
             post: (url: string, data: string, headers) => {
-                return responses.find(r => r.url === url);
+                calls.push({
+                    url: url,
+                    data: data,
+                    headers: headers
+                });
+                return Promise.resolve(responses.find(r => r.url === url).response);
             }
         };
     }
@@ -45,7 +53,7 @@ let endPointParameters = {
 
 let endPointData = {
     subscriptionid: "subId",
-    environmentAuthorityUrl: null
+    environmentAuthorityUrl: "https://manage.me.fake/"
 }
 
 export function getEndpointAuthorizationParameter(name: string, key: string, required: boolean) {

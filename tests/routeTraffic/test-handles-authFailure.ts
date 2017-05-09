@@ -4,8 +4,20 @@ import path = require('path');
 import mocks = require('./mocks');
 
 let rootDir = path.join(__dirname, '../../Tasks', 'RouteTraffic');
-let taskPath = path.join(rootDir, 'coverageGate.js');
+let taskPath = path.join(rootDir, 'routeTraffic.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+
+// provide fake responses
+mocks.TestHttpClient.responses = [
+    {
+        url: "https://manage.me.fake/tenantId/oauth2/token/",
+        response: Promise.resolve(new mocks.HttpClientResponse({
+            statusCode: 401,
+            statusMessage: "access denied",
+            body: null
+        }))
+    }
+];
 
 // provide mocks
 tmr.registerMock('typed-rest-client/HttpClient', mocks.TestHttpClient);
@@ -14,10 +26,7 @@ tmr.registerMockExport('getEndpointDataParameter', mocks.getEndpointDataParamete
 tmr.registerMockExport('getEndpointUrl', mocks.getEndpointUrl);
 
 // set variables
-process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";
-process.env["SYSTEM_TEAMPROJECT"] = "demo";
-process.env["BUILD_BUILDID"] = "1";
-process.env["SYSTEM_ACCESSTOKEN"] = "faketoken";
+process.env["AZURE_HTTP_USER_AGENT"] = "mock-user-agent";
 
 // set inputs
 tmr.setInput('ConnectedServiceName', "MyAzureEndpoint");

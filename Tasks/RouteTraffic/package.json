@@ -1,0 +1,29 @@
+{
+  "name": "colinsalmcornerbuildtasksroutetraffic",
+  "version": "0.0.3",
+  "description": "Route Traffic for Web App",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/colindembovsky/cols-agent-tasks"
+  },
+  "keywords": [
+    "VSO",
+    "build",
+    "tasks"
+  ],
+  "author": "Colin Dembovsky (ColinsALMCorner.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/colindembovsky/cols-agent-tasks/issues"
+  },
+  "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
+  "devDependencies": {
+    "vsts-task-lib": "^2.0.2-preview",
+    "q": "^1.5.0",
+    "vso-node-api": "^6.2.2-preview",
+    "xml2js": "^0.4.17"
+  }
+}

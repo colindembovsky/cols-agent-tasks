@@ -92,6 +92,9 @@
             "path": "Tasks/Tokenizer"
         },
         {
+            "path": "Tasks/RouteTraffic"
+        },
+        {
             "path": "Tasks/DockerPublish"
         }
     ],
@@ -174,6 +177,16 @@
             ],
             "properties": {
                 "name": "Tasks/DockerPublish"
+            }
+        },
+        {
+            "id": "route-traffic-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "Tasks/RouteTraffic"
             }
         }
     ]

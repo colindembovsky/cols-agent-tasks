@@ -8,7 +8,8 @@
     "install-libs-ver-asms": "cd Tasks/VersionAssemblies && yarn install",
     "install-libs-tokenizer": "cd Tasks/Tokenizer && yarn install",
     "install-libs-tagBuild": "cd Tasks/TagBuild && yarn install",
-    "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer && yarn install-libs-tagBuild",
+    "install-libs-routeTraffic": "cd Tasks/RouteTraffic && yarn install",
+    "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer && yarn install-libs-tagBuild && yarn install-libs-routeTraffic",
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
     "junittest": "yarn build && cross-env NODE_ENV=test mocha tests/_testsuite.ts --compilers ts:ts-node/register --bail --reporter mocha-junit-reporter",
@@ -67,6 +68,7 @@
       "Tasks/Tokenizer/*.js",
       "Tasks/CoverageGate/*.js",
       "Tasks/TagBuild/*.js",
+      "Tasks/RouteTraffic/*.js",
       "test/**/*.ts"
     ],
     "extension": [

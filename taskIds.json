@@ -39,6 +39,11 @@
             "path": "Tasks/TagBuild",
             "id": "5d741236-331c-4461-82a2-9d55eb91bb91",
             "beta-id": "655a1b4d-2572-45f4-9e0a-4acfb6be8daf"
+        },
+        {
+            "path": "Tasks/RouteTraffic",
+            "id": "aafd0d72-ff21-4439-b282-44be5e9d4d90",
+            "beta-id": "fb05e250-c1fd-4428-b1fb-2813686bc1b8"
         }
     ]
 }

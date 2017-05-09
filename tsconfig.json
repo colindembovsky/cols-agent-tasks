@@ -10,6 +10,7 @@
 		"Tasks/Tokenizer/node_modules",
 		"Tasks/ReplaceTokens/node_modules",
 		"Tasks/CoverageGate/node_modules",
-		"Tasks/TagBuild/node_modules"
+		"Tasks/TagBuild/node_modules",
+		"Tasks/SiteExtensions/node_modules"
 	]
 }

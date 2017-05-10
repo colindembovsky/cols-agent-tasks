@@ -13,3 +13,6 @@ The task requires the following settings:
 1. **Resource group**: The resource group that contains the App Service.
 1. **Experiment slot**: The slot to direct a percentage of traffic to.
 1. **Percentage to Route**: Tags to add to the build. Can be multi-line for multiple tags.
+
+## Using this task for Hypothesis-driven Development
+You can see an example of how to use this task at this [blog post](http://bit.ly/routetraf).

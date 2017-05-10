@@ -38,10 +38,10 @@ This extension contains helpful build and release Tasks.
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
 ### 1.1.168
-- Added new [Route Traffic task]((https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic))
+- Added new [Route Traffic task](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic)
 
 ### 1.1.154
-- Added new [Tag Build/Release task]((https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild))
+- Added new [Tag Build/Release task](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/TagBuild)
 
 ### 1.1.119
 - VersionAssemblies

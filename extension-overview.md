@@ -39,6 +39,7 @@ This extension contains helpful build and release Tasks.
 
 ### 1.1.169
 - Fixed [file encoding issue](https://github.com/colindembovsky/cols-agent-tasks/issues/59)
+- Fixed [trailing slash issue](https://github.com/colindembovsky/cols-agent-tasks/issues/60)
 
 ### 1.1.168
 - Added new [Route Traffic task](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic)

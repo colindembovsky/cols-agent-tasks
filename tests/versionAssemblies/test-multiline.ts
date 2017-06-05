@@ -67,7 +67,7 @@ fs.writeFile(tmpFile, `
   tmr.run();
 
   // validate the replacement
-  let actual = fs.readFileSync(tmpFile, 'utf-8');
+  let actual = fs.readFileSync(tmpFile).toString();
   var expected = `
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

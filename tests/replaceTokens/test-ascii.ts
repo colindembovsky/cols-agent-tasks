@@ -1,7 +1,6 @@
 import ma = require('vsts-task-lib/mock-answer');
 import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
-import assert = require('assert');
 import fs = require('fs');
 
 let rootDir = path.join(__dirname, '../../Tasks', 'ReplaceTokens');
@@ -16,7 +15,6 @@ if (!fs.existsSync(workingFolder)) {
 var tmpFile = path.join(workingFolder, "file.config");
 
 // provide answers for task mock
-console.log("----------------- " + workingFolder)
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     "checkPath": {
         "working": true
@@ -28,7 +26,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
 tmr.setAnswers(a);
 
 fs.writeFile(tmpFile, `
-<configuration>
+<configuration ascii="Versão">
   <appSettings>
     <add key="CoolKey" value="__CoolKey__" />
     <add key="Secret1" value="__Secret1__" />
@@ -38,19 +36,20 @@ fs.writeFile(tmpFile, `
   (err) => {
 
   // set inputs
+  tmr.setInput('sourcePath', "working");
   tmr.setInput('filePattern', '*.config');
   tmr.setInput('tokenRegex', '__(\\w+)__'); 
 
   // set variables
   process.env["CoolKey"] = "MyCoolKey";
   process.env["SECRET_Secret1"] = "supersecret1";
-  process.env["BUILD_SOURCESDIRECTORY"] = "working";
+
   tmr.run();
 
   // validate the replacement
   let actual = fs.readFileSync(tmpFile).toString();
   var expected = `
-<configuration>
+<configuration ascii="Versão">
   <appSettings>
     <add key="CoolKey" value="MyCoolKey" />
     <add key="Secret1" value="supersecret1" />

@@ -12,10 +12,17 @@ async function run() {
         if (!sourcePath || sourcePath.length === 0) {
             sourcePath = tl.getVariable("Build.SourcesDirectory");
         }
-        tl.checkPath(sourcePath, "sourcePath");
-        
+
         // clear leading and trailing quotes for paths with spaces
         sourcePath = sourcePath.replace(/"/g, "");
+
+        // remove trailing slash
+        if (sourcePath.endsWith("\\") || sourcePath.endsWith("/")) {
+            tl.debug("Trimming separator off sourcePath");
+            sourcePath = sourcePath.substr(0, sourcePath.length - 1);
+        }
+        
+        tl.checkPath(sourcePath, "sourcePath");
 
         var filePattern = tl.getInput("filePattern", true);
         var tokenRegex = tl.getInput("tokenRegex", true);
@@ -47,8 +54,6 @@ async function run() {
         }
         tl.debug(`Using [${filePattern}] as filePattern`);
 
-        var separator = os.platform() === "win32" ? "\\" : "/";
-
         // create a glob removing any spurious quotes
         if (os.platform() !== "win32") {
             // replace \ with /
@@ -67,7 +72,7 @@ async function run() {
             var file = files[i];
             console.info(`Starting regex replacement in [${file}]`);
             
-            var contents = fs.readFileSync(file, 'utf8').toString();
+            var contents = fs.readFileSync(file).toString();
             var reg = new RegExp(tokenRegex, "g");
                     
             // loop through each match

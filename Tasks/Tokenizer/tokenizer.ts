@@ -40,9 +40,16 @@ async function run() {
         if (!sourcePath || sourcePath.length === 0) {
             sourcePath = tl.getVariable("Build.SourcesDirectory");
         }
-        tl.checkPath(sourcePath, "sourcePath");
         // clear leading and trailing quotes for paths with spaces
         sourcePath = sourcePath.replace(/"/g, "");
+
+        // remove trailing slash
+        if (sourcePath.endsWith("\\") || sourcePath.endsWith("/")) {
+            tl.debug("Trimming separator off sourcePath");
+            sourcePath = sourcePath.substr(0, sourcePath.length - 1);
+        }
+
+        tl.checkPath(sourcePath, "sourcePath");
 
         let filePattern = tl.getInput("filePattern", true);
         let tokenizeType = tl.getInput("tokenizeType", true);
@@ -70,8 +77,6 @@ async function run() {
             filePattern = "*.*";
         }
         tl.debug(`Using [${filePattern}] as filePattern`);
-
-        let separator = os.platform() === "win32" ? "\\" : "/";
 
         // create a glob removing any spurious quotes
         if (os.platform() !== "win32") {
@@ -104,7 +109,7 @@ async function run() {
             let file = files[i];
             console.info(`Starting tokenization in [${file}]`);
 
-            let contents = fs.readFileSync(file, 'utf8').toString();
+            let contents = fs.readFileSync(file).toString();
             // remove BOM if present
             contents = contents.replace(String.fromCharCode(65279), '');
             let json = JSON.parse(contents);

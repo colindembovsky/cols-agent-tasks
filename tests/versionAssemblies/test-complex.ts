@@ -52,7 +52,7 @@ fs.writeFile(tmpFile, `
   tmr.run();
 
   // validate the replacement
-  let actual = fs.readFileSync(tmpFile, 'utf-8');
+  let actual = fs.readFileSync(tmpFile).toString();
   var expected = `
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="myHealth.Client.Droid" android:versionCode="43-alpha" android:versionName="5.2" android:installLocation="auto">

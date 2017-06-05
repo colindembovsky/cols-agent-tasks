@@ -56,7 +56,7 @@ fs.writeFile(tmpFile, `
   tmr.run();
 
   // validate the replacement
-  let actual = fs.readFileSync(tmpFile, 'utf-8');
+  let actual = fs.readFileSync(tmpFile).toString();
   var expected = `{
   "ConnectionStrings": {
     "DefaultConnection": "__ConnectionStrings.DefaultConnection__"

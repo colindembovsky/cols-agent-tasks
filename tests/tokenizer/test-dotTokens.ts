@@ -59,7 +59,7 @@ fs.writeFile(tmpFile, `
   tmr.run();
 
   // validate the replacement
-  let actual = fs.readFileSync('working/appsettings.json', 'utf-8');
+  let actual = fs.readFileSync('working/appsettings.json').toString();
 
   var expected = `
   {

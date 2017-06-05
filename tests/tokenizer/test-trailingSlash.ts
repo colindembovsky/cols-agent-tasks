@@ -27,48 +27,55 @@ tmr.setAnswers(a);
 
 fs.writeFile(tmpFile, `
 {
-  "defaultAssembly": "WebApi",
-  "modules": [
-    {
-      "type": "WebApi.Infrastucture.ContainerModules.DataModule, WebApi",
-      "parameters": {
-        "connectionString": "",
-        "defaultSchema": ""
-      }
-    },
-    {
-      "type": "WebApi.Infrastucture.ContainerModules.MediatorModule, WebApi"
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\\\mssqllocaldb;Database=aspnet-WebApplication1-26e8893e-d7c0-4fc6-8aab-29b59971d622;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "Tricky": {
+    "Tricky": "Tricky",
+    "Tricky1": {
+        "Tricky2": "Tricky"
     }
-  ]
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
 }
 `, (err) => {
 
   // set inputs
-  tmr.setInput('sourcePath', "working");
+  tmr.setInput('sourcePath', "working/");
   tmr.setInput('filePattern', 'appsettings.json');
   tmr.setInput('tokenizeType', 'Json');
-  tmr.setInput('includes', ''); 
+  tmr.setInput('includes', 'ConnectionStrings.DefaultConnection,Logging.LogLevel.Default'); 
   tmr.setInput('excludes', '');
 
   tmr.run();
 
   // validate the replacement
   let actual = fs.readFileSync(tmpFile).toString();
-  var expected = `
-{
-  "defaultAssembly": "__defaultAssembly__",
-  "modules": [
-    {
-      "type": "__modules[0].type__",
-      "parameters": {
-        "connectionString": "__modules[0].parameters.connectionString__",
-        "defaultSchema": "__modules[0].parameters.defaultSchema__"
-      }
-    },
-    {
-      "type": "__modules[1].type__"
+  var expected = `{
+  "ConnectionStrings": {
+    "DefaultConnection": "__ConnectionStrings.DefaultConnection__"
+  },
+  "Tricky": {
+    "Tricky": "Tricky",
+    "Tricky1": {
+      "Tricky2": "Tricky"
     }
-  ]
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "__Logging.LogLevel.Default__",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
 }`;
 
   if (actual.trim() !== expected.trim()) {

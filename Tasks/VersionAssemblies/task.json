@@ -136,6 +136,15 @@
       "groupName": "advanced"
     },
     {
+        "name": "dontShowWarningIfNoMatchFound",
+        "type": "boolean",
+        "label": "Don't Show Warning If No Target Match Found",
+        "defaultValue": "false",
+        "required": false,
+        "helpMarkDown": "Don't show warnings if no match is found for the replace regex in the target file(s).",
+        "groupName": "advanced"
+    },
+    {
         "name": "failIfNoMatchFound",
         "type": "boolean",
         "label": "Fail If No Target Match Found",

@@ -18,6 +18,7 @@ async function run() {
         let customReplaceRegex = tl.getInput("customReplaceRegex", false);
         let replacePrefix = tl.getInput("replacePrefix", false);
         let replacePostfix = tl.getInput("replacePostfix", false);
+        let dontShowWarningIfNoMatchFound = tl.getInput("dontShowWarningIfNoMatchFound", false);
         let failIfNoMatchFound = tl.getBoolInput("failIfNoMatchFound", false);
 
         let sourcePath = tl.getPathInput("sourcePath");
@@ -107,7 +108,7 @@ async function run() {
                         if (failIfNoMatchFound) {
                             tl.setResult(tl.TaskResult.Failed, `No matches for regex [${replaceRegex}] found in file ${file}`);
                             process.exit(1);
-                        } else {
+                        } else if (!dontShowWarningIfNoMatchFound) {
                             tl.warning(`No matches for regex [${replaceRegex}] found in file ${file}`);
                         }
                     } else {

@@ -139,12 +139,24 @@ The beginning of the `Package.appxmanifest` file might look like this:
 	<!-- ... further contents omitted ... -->
 ```
 
+UWP Requires that the final version part to be ".0", because it is reserved for store use, as explained in the [Package Version Numbering|https://docs.microsoft.com/en-us/windows/uwp/publish/package-version-numbering] article.
+
+In order to replace the version value for UWP, you should use the following settings:
+
+1. **File Pattern**: `**\Package.appxmanifest` - Example file pattern to match all Package.appxmanifest files
+1. **Version Extract Pattern**: `1.0.0` - This extracts the first three parts of the version number, ignoring any fourth part.
+1. **Replace Pattern**: `Custom Regex`
+1. **Custom Regex Replace Pattern** = `(\s)Version="\d+\.\d+\.\d+\.\d+"` - Matches the version property. **Note** that the matching leading whitespace and captial V are required to avoid matching other cases, such as the xml declaration tag version property (lowercase) or the MinVersion property present in some delcarations!
+1. **Build Regex Group Index**: `0` - selects the entire match
+1. **Prefix for Replacements**: `$1Version="` - reinserts the correct prefix during the replacement, including leading whitespace match.
+1. **Postfix for Replacements** `.0"` - reinserts a final ".0" for store requirements, and closing quote postfix durring the replacement
+
 In order to replace the version value correctly, you should use the following settings:
 
 1. **File Pattern**: `**\Package.appxmanifest` - Example file pattern to match all Package.appxmanifest files
 1. **Version Extract Pattern**: `1.0.0.0` - This extracts a full four part version number.
 1. **Replace Pattern**: `Custom Regex`
-1. **Custom Regex Replace Pattern** = `(\s)Version="[^"]*"` - Matches the version property. **Note** that the matching leading whitespace and captial V are required to avoid matching other cases, such as the xml declaration tag version property (lowercase) or the MinVersion property present in some delcarations!
+1. **Custom Regex Replace Pattern** = `(\s)Version="\d+\.\d+\.\d+\.\d+"` - Matches the version property. **Note** that the matching leading whitespace and captial V are required to avoid matching other cases, such as the xml declaration tag version property (lowercase) or the MinVersion property present in some delcarations!
 1. **Build Regex Group Index**: `0` - selects the entire match
 1. **Prefix for Replacements**: `$1Version="` - reinserts the correct prefix during the replacement, including leading whitespace match.
 1. **Postfix for Replacements** `"` - reinserts the closing quote postfix durring the replacement

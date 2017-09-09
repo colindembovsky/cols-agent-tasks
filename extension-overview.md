@@ -37,6 +37,11 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
+### 1.1.171
+- No task updates - just docs
+	- PR updating [minimatch documentation](https://github.com/colindembovsky/cols-agent-tasks/pull/70)
+	- PR updating [UWP examples](https://github.com/colindembovsky/cols-agent-tasks/pull/69)
+
 ### 1.1.169
 - Fixed [file encoding issue](https://github.com/colindembovsky/cols-agent-tasks/issues/59)
 - Fixed [trailing slash issue](https://github.com/colindembovsky/cols-agent-tasks/issues/60)

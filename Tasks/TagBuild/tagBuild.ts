@@ -2,6 +2,7 @@ import * as tl from 'vsts-task-lib/task';
 import * as vstsInterfaces from 'vso-node-api/interfaces/common/VsoBaseInterfaces';
 import * as webApi from 'vso-node-api/webApi';
 import * as locationsInterfaces from 'vso-node-api/interfaces/LocationsInterfaces';
+import * as relInterfaces from 'vso-node-api/ReleaseApi';
 
 function completeTask(sucess: boolean, message?: any) {
     if (sucess) {
@@ -78,13 +79,14 @@ async function run() {
     } else {
         tl.debug("Getting release api client");
 
-        // hack to get correct resource area (provided by Will Smythe) - should not be necessary soon
-        let locationClient = vsts.getLocationsApi();
-        let releaseResourceArea = await locationClient.getResourceArea("efc2f575-36ef-48e9-b672-0c6fb4a48ac5");
-        let releaseApi = vsts.getReleaseApi(releaseResourceArea.locationUrl);
-
-        // without hack
-        // let releaseApi = vsts.getReleaseApi();
+        let releaseResourceArea;
+        try {
+            let locationClient = vsts.getLocationsApi();
+            releaseResourceArea = await locationClient.getResourceArea("efc2f575-36ef-48e9-b672-0c6fb4a48ac5");
+        } catch (e) {
+            console.warn("Could not get releaseResourceArea resource area: this may cause the task to fail.");
+        }
+        let releaseApi = vsts.getReleaseApi(releaseResourceArea ? releaseResourceArea.locationUrl : null);
 
         console.info(`Setting tags on release [${releaseId}]`);
         await releaseApi.addReleaseTags(tags, teamProject, releaseId)

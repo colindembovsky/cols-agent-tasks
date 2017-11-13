@@ -13,6 +13,7 @@
   "demands": [
     "azureps"
   ],
+  "deprecated": true,
   "version": {
     "Major": "0",
     "Minor": "1",

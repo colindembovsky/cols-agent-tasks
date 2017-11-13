@@ -11,6 +11,7 @@
     "Release"
   ],
   "demands": [],
+  "deprecated": true,
   "version": {
     "Major": "0",
     "Minor": "1",

@@ -9,7 +9,8 @@ Trace-VstsEnteringInvocation $MyInvocation
 $dropName = Get-VstsInput -Name "dropName" -Require
 $targetDacpacPath = Get-VstsInput -Name "targetDacpacPath" -Require
 $dacpacName = Get-VstsInput -Name "dacpacName" -Require
-$extraArgs = GEt-VstsInput -Name "extraArgs"
+$extraArgs = Get-VstsInput -Name "extraArgs"
+$reverse = Get-VstsInput -Name "reverse"
 
 function Get-LatestBuild {
     param(
@@ -234,7 +235,11 @@ if ($compareBuild -ne $null) {
         if ($targetDacpac -ne $null) {
             Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
-            New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
+            if ($reverse) {
+                New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
+            } else {
+                New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
+            }
 
             $reportPath = ".\SchemaCompare\SchemaCompare.xml"
             Convert-Report

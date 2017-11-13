@@ -60,7 +60,17 @@
       "required": false,
       "helpMarkDown": "Extra args to use for running the SQLPackage.exe schema compare command.",
       "groupName": "advanced"
+    },
+    {
+      "name": "reverse",
+      "type": "boolean",
+      "label": "Reverse Comparison",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Check this to reverse the source and target.",
+      "groupName": "advanced"
     }
+
   ],
   "execution": {
     "PowerShell3": {

@@ -118,7 +118,7 @@ async function run() {
                         
                         // make the file writable
                         sh.chmod(666, file);
-                        fs.writeFileSync(file, result, 'utf8');
+                        fs.writeFileSync(file, result, { encoding: 'utf8' });
                     }
                 }
                 console.info(`Processed ${filesToReplace.length} files`);

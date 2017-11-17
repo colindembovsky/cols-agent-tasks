@@ -37,6 +37,9 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
+### 1.1.177
+- Fixing [cannot find module 'vso-node-api/webApi' bug](https://github.com/colindembovsky/cols-agent-tasks/issues/77) in TagBuild task
+
 ### 1.1.176
 - Updating dependencies to latest versions
 - Added `reverse` switch to DacPacReport task

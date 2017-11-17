@@ -1,6 +1,6 @@
 import * as tl from 'vsts-task-lib/task';
 import * as vstsInterfaces from 'vso-node-api/interfaces/common/VsoBaseInterfaces';
-import * as webApi from 'vso-node-api/webApi';
+import * as webApi from 'vso-node-api/WebApi';
 import * as locationsInterfaces from 'vso-node-api/interfaces/LocationsInterfaces';
 import * as relInterfaces from 'vso-node-api/ReleaseApi';
 

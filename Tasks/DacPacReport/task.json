@@ -1,9 +1,9 @@
 {
-  "id": "1EBF2967-63B3-4372-89F7-6799108A22F0",
-  "name": "DacPacReport",
-  "friendlyName": "DacPac Schema Compare",
-  "description": "Provides a report on database model changes since the last build",
-  "author": "Colin Dembovsky (colinsalmcorner.com)",
+  "id": "81b5871d-8bda-4fc4-b70f-9b88e7bd2162",
+  "name": "MMCDACCompare",
+  "friendlyName": "Compare Two DacPac",
+  "description": "Compare Two DacPac",
+  "author": "BBAKER",
   "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DacPacReport)",
   "category": "Build",
   "visibility": [
@@ -15,8 +15,8 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "2",
-    "Patch": "31"
+    "Minor": "0",
+    "Patch": "14"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "DacPac Schema Compare $(dacpacName).dacpac",
@@ -24,33 +24,25 @@
     {
       "name": "advanced",
       "displayName": "Advanced",
-      "isExpanded": false
+      "isExpanded": true
     }
   ],
   "inputs": [
-    {
-      "name": "dropName",
+	{
+      "name": "sourceDacpac",
       "type": "string",
-      "label": "Drop Name",
-      "defaultValue": "drop",
-      "required": true,
-      "helpMarkDown": "Name of the drop in which to find previous build dacpac file." 
+      "label": "Source DACPAC",
+      "defaultValue": "$(System.DefaultWorkingDirectory)/<BUILDNAME>/drop/src/MMC.RDW/bin/Output/<>.dacpac",
+      "required": false,
+      "helpMarkDown": "This DACPAC is the source.  Include full path, name and extension."
     },
-    {
-      "name": "dacpacName",
+	{
+      "name": "targetDacpac",
       "type": "string",
-      "label": "DacPac Name",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Name of the dacpac (without .dacpac extension) to run the schema compare on."
-    },
-    {
-      "name": "targetDacPacPath",
-      "type": "filePath",
-      "label": "Compiled DacPac Path",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Path to find the target dacpac (typically the artifact staging path where the dacpac will be uploaded from)."
+      "label": "Target DACPAC",
+      "defaultValue": "$(System.DefaultWorkingDirectory)/<BUILDNAME>/drop/src/MMC.RDW/bin/Output/Compare/<>.dacpac",
+      "required": false,
+      "helpMarkDown": "This DACPAC is the target.  Include full path, name and extension."
     },
     {
       "name": "extraArgs",
@@ -69,25 +61,7 @@
       "required": false,
       "helpMarkDown": "Check this to reverse the source and target.",
       "groupName": "advanced"
-    },
-	{
-      "name": "sourceOverrideDacpac",
-      "type": "string",
-      "label": "Source Override DACPAC",
-      "defaultValue": false,
-      "required": false,
-      "helpMarkDown": "Override to use this DACPAC as the source.  Include full path, name and extension.",
-      "groupName": "advanced"
-    },
-	{
-      "name": "targetOverrideDacpac",
-      "type": "string",
-      "label": "Target Override DACPAC",
-      "defaultValue": false,
-      "required": false,
-      "helpMarkDown": "Override to use this DACPAC as the target.  Include full path, name and extension.",
-      "groupName": "advanced"
-    }
+    }	
   ],
   "execution": {
     "PowerShell3": {

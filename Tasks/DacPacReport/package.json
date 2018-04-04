@@ -25,5 +25,8 @@
     "shelljs": "^0.5.3",
     "vsts-task-lib": "^0.9.6",
     "libxslt": "^0.6.3"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
   }
 }

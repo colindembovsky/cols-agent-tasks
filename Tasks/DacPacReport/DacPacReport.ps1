@@ -11,6 +11,8 @@ $targetDacpacPath = Get-VstsInput -Name "targetDacpacPath" -Require
 $dacpacName = Get-VstsInput -Name "dacpacName" -Require
 $extraArgs = Get-VstsInput -Name "extraArgs"
 $reverse = Get-VstsInput -Name "reverse"
+$sourceOverride = Get-VstsInput -Name "sourceOverrideDacpac"
+$targetOverride = Get-VstsInput -Name "targetOverrideDacpac"
 
 function Get-LatestBuild {
     param(
@@ -145,6 +147,16 @@ function New-Report {
 
     $SourceDacpac = Resolve-Path -Path $SourceDacpac
     $TargetDacpac = Resolve-Path -Path $TargetDacpac
+
+    if (-not ([string]::IsNullOrEmpty($targetOverride)))
+    {
+        $TargetDacpac = Resolve-Path -Path $targetOverride
+    }
+
+    if (-not ([string]::IsNullOrEmpty($sourceOverride)))
+    {
+        $SourceDacpac = Resolve-Path -Path $sourceOverride
+    }
 
     Write-Verbose "Generating report: source = $SourceDacpac, target = $TargetDacpac"
     $commandArgs = "/a:{0} /sf:`"$SourceDacpac`" /tf:`"$TargetDacpac`" /tdn:Test /op:`"{1}`" {2}"

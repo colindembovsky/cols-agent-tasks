@@ -69,8 +69,25 @@
       "required": false,
       "helpMarkDown": "Check this to reverse the source and target.",
       "groupName": "advanced"
+    },
+	{
+      "name": "sourceOverrideDacpac",
+      "type": "string",
+      "label": "Source Override DACPAC",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Override to use this DACPAC as the source.  Include full path, name and extension.",
+      "groupName": "advanced"
+    },
+	{
+      "name": "targetOverrideDacpac",
+      "type": "string",
+      "label": "Target Override DACPAC",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Override to use this DACPAC as the target.  Include full path, name and extension.",
+      "groupName": "advanced"
     }
-
   ],
   "execution": {
     "PowerShell3": {

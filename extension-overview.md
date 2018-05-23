@@ -37,6 +37,9 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
+### 1.2.14
+- Fixing [error when build is in a different team project to release](https://github.com/colindembovsky/cols-agent-tasks/issues/88) in DacPacCompare task
+
 ### 1.2.12
 - Fixing [cannot find SqlPackage.exe in Hosted 2017 agent bug](https://github.com/colindembovsky/cols-agent-tasks/issues/75) in DacPacCompare task
 - Bumped minor version to match catalog

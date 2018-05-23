@@ -21,7 +21,12 @@ async function run() {
     tl.debug("Starting Tag Build/Release task");
 
     let tpcUri = tl.getVariable("System.TeamFoundationCollectionUri");
-    let teamProject = tl.getVariable("System.TeamProject");
+    // try to get the build team project, in case it's different from the release team project
+    let teamProject = tl.getVariable("Build.ProjectName");
+    if (!teamProject || teamProject.length === 0) {
+        // fall back on the release team project
+        teamProject = tl.getVariable("System.TeamProject");
+    }
     let type = tl.getInput("type", true);
     let tags = tl.getDelimitedInput("tags", '\n', true);
 

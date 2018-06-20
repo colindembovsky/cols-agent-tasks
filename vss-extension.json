@@ -14,7 +14,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Build extensions from Colin's ALM Corner to make life easier!",
+    "description": "Build extensions from Colin's ALM Corner to make life easier! Replace tokens, tag builds, version assemblies, compare dacpacs, coverage gate and more.",
     "categories": [
         "Build and release"
     ],
@@ -22,7 +22,9 @@
         "version", "versioning",
         "build",
         "replacement",
-        "tokens", "tokenize",
+        "replace",
+        "tokens",
+        "tokenize",
         "dacpac", "SSDT",
         "coverage", "tag"
     ],

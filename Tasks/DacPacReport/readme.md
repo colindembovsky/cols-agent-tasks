@@ -12,7 +12,7 @@ The task requires the following settings:
 
 1. **Drop Name**: The drop name of the build that contains the dacpac file. You must publish the dacpac for this task to work.
 1. **DacPac Name**: Name of the DacPac to analyze (without .dacpac extension).
-1. **Comopiled DacPac Path**: Path to the DacPac file that this build will produce. Typically the `bin\$(BuildConfiguration)` path of the SSDT project.
+1. **Compiled DacPac Path**: Path to the DacPac file that this build will produce. Typically the `bin\$(BuildConfiguration)` path of the SSDT project.
 
 ## OAuth Token
 You must enable `Allow Scripts to Access OAuth Token` on the build Options. If you do not, you will see 403 errors.

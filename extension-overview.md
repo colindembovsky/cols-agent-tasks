@@ -37,6 +37,9 @@ This extension contains helpful build and release Tasks.
 
 ![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
 
+### 1.3.16
+- Update ReplaceTokens Secrets description.
+
 ### 1.3.15
 - Update tags and short description to improve search.
 

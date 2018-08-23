@@ -53,7 +53,7 @@
     {
       "name": "secretTokens",
       "type": "string",
-      "label": "Secret Tokens",
+      "label": "Secret Tokens (only for TFS 2015)",
       "defaultValue": "",
       "helpMarkDown": "A configuration variable can be set as 'secret' in release definition to have its value hidden. For tokens need to be replaced with the value of secret configuration variables, they can be specified here using the following format: key1:$(secret1);key2:$(secret2). Non-secret configuration variable do not need to be specified explicitly here.",
       "required": false,

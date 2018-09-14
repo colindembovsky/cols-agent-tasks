@@ -2,6 +2,19 @@
 
 ![DacPac Change Report Task](../../images/ss_DacPacChangeReport.png)
 
+## YAML
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.dacpac-report-task.DacPacReport@1
+  displayName: 'DacPac Schema Compare MyDBProject.dacpac'
+  inputs:
+    # dropName: drop  # name of the published artifact that contains the dacpac for the build: the dacpac is downloaded from this drop.
+    dacpacName: MyDBProject  # name of the dacpac (without extension) to compare
+    targetDacPacPath: MyDBProject\bin\$(BuildConfiguration)  # Path to dacpac in this build (to compare to output of previous build)
+    # extraArgs: '/Variables myvar=myvalue'  # extra args for the compare - use to supply SQLCMD variables, for example.
+    # reverse: false  # set to true to reverse source and target for compare
+```
+
 ## Overview
 This task shows the schema changes of a DacPac between builds. The task adds two sections to the build summary:
 1. **Schema Change Summary**: A summary of changes from the last build.

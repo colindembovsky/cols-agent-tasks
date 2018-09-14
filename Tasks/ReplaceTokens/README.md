@@ -5,6 +5,18 @@
 ## Overview
 This task invokes replaces tokens in a file with values from the matching variables set in the Environment.
 
+## YAML
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.replace-tokens-task.ReplaceTokens@1
+  displayName: 'Replace tokens in MyPath.'
+  inputs:
+    sourcePath: MyPath  # Root path to find files in.
+    filePattern: **\*.release.config  # file pattern (glob) to search within root path. All matching files will be updated.
+    # tokenRegex: '__(\w+)__'  # regex pattern to use to find tokens
+    # secretTokens: df  # DO NOT USE UNLESS YOU'RE ON TFS 2015. Specify the secret values here
+```
+
 ## Settings
 The task requires the following settings:
 

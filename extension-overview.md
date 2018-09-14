@@ -5,6 +5,8 @@ This extension contains helpful build and release Tasks.
 
 > As [Scott Hanselman](http://www.hanselman.com/) says, "donations pay for tacos" (or low carb equivalent).
 
+Click on the 'More...' link for each task to see how yaml references.
+
 1. **Version Assemblies**
 
 	This task versions assemblies according to the build number. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/VersionAssemblies)

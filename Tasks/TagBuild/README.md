@@ -5,6 +5,19 @@
 ## Overview
 This task tags a build/release with the tags specified.
 
+## YAML
+
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.tag-build-task.tagBuildOrRelease@0
+  displayName: 'Tag Build'
+  type: Build  # Build or Release - specify which artifact to tag (default is Build)
+  inputs:
+    tags: |
+     tag1
+     tag2
+```
+
 ## Settings
 The task requires the following settings:
 

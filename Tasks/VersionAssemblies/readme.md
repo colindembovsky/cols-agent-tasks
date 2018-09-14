@@ -5,6 +5,24 @@
 ## Overview
 This task versions assemblies so that the assembly version matches the version portion of the build number.
 
+## YAML
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.version-assemblies-task.VersionAssemblies@2
+  displayName: 'Version Assemblies using **\AssemblyInfo.*'
+  inputs:
+    sourcePath: MyApp  # Path to search for files
+    # filePattern: '**\AssemblyInfo.*'  # File pattern (glob) to search for within the source path.
+    # versionFormat: fourParts  # Extract pattern to use against build number: 'fourParts' (e.g. 1.0.0.0), 'threeParts' (e.g. 1.0.0) or 'custom' (specify a regex)
+    # customBuildRegex: '\d+\.\d+\.\d+\.\d+'  # custom extract regex if versionFormat is set to 'custom'
+    # replaceVersionFormat: fourParts  # regex replace pattern:  'fourParts' (e.g. 1.0.0.0), 'threeParts' (e.g. 1.0.0) or 'custom' (specify a regex)
+    # customReplaceRegex: '(\d+\.\d+\.\d+)(?:\.\d+)'  # custom replace regex if replaceVersionFormat is set to 'custom'
+    # buildRegexIndex: 1  # regex group to replace when there are multiple groups in the regex find pattern
+    # replacePrefix: <key>CFBundleShortVersionString</key><string>  # use to add a replacement prefix
+    # replacePostfix: </string>  # use to add a replacement postfix
+    # failIfNoMatchFound: false  # set to true to fail if no match pattern is found
+```
+
 ## Settings
 The task requires the following settings:
 

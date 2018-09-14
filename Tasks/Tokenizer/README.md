@@ -6,6 +6,19 @@
 This task injects tokens into a file. For now, only JSON files are supported. The tokens are prefixed and postfixed with `__` (double underscore).
 They use the full path of the value as the token name - see the example below for more detail.
 
+## YAML
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.tokenizer-task.JSONTokenizer@1
+  displayName: 'Tokenize file(s)'
+  inputs:
+    sourcePath: src/MyProject/  # source path to search
+    filePattern: '**/appsettings.json'  # file pattern (glob) to match in source path
+    tokenizeType: Json  # only type available currently
+    includes: 'ConnectionStrings.DefaultConnection'  # comma-separated list of values to tokenize
+    # excludes: 'values,to,exclude'    # comma-separated list of values to NOT tokenize
+```
+
 ## Settings
 The task requires the following settings:
 
@@ -13,7 +26,7 @@ The task requires the following settings:
 1. **File Pattern**: minimatch supported filter for file(s).
 1. **Tokenize Type**: JSON is the only supported type currently.
 1. **Includes**: Comma-separated list of properties to include. Use this to only tokenize a small number of values.
-1. **Excludes**: Comma-separated list of properties to exclusd. Use this to excluse a small number of values.
+1. **Excludes**: Comma-separated list of properties to exclude. Use this to excluse a small number of values.
 
 ## Includes and Excludes
 If both Includes and Excludes is empty, then all values will be tokenized. If you wish to only tokenize a small subset of values,

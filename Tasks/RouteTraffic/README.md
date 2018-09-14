@@ -5,6 +5,19 @@
 ## Overview
 This task routes a specified percentage of traffic to an Azure Web App Slot.
 
+## YAML
+```yaml
+steps:
+- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.route-traffic-task.azureWebAppRouteTraffic@0
+  displayName: 'Route Traffic: 20% to staging on MySite'
+  inputs:
+    ConnectedServiceName: MyAzureEndpoint  # Name of Azure ARM service endpoint
+    WebAppName: MySite  # Name of Azure Web App
+    ResourceGroupName: 'My-RG'  # Name of Web App resource group
+    Slot: staging  # slot to route % of traffic to (remainder goes to 'production' slot)
+    percentTraffic: 20  # percentage of traffic to route to experimental slot
+```
+
 ## Settings
 The task requires the following settings:
 

@@ -2,7 +2,7 @@ name: 1.4$(Rev:.r)
 resources:
 - repo: self
 queue:
-  name: Hosted 2017
+  name: Hosted VS2017
   demands: 
   - npm
   - DotNetFramework

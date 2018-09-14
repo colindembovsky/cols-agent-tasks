@@ -1,16 +1,76 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-pool:
-  vmImage: 'Ubuntu 16.04'
+resources:
+- repo: self
+queue:
+  name: Hosted Ubuntu 1604
+  demands: 
+  - npm
+  - DotNetFramework
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@2
+  displayName: 'Use Yarn 1.x'
+  inputs:
+    checkLatest: true
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: CmdLine@1
+  displayName: 'Run yarn install'
+  inputs:
+    filename: yarn
+    arguments: install
+
+- task: CmdLine@1
+  displayName: 'Run yarn prepextension'
+  inputs:
+    filename: yarn
+    arguments: prepextension
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results test-results.xml'
+  inputs:
+    testResultsFiles: 'test-results.xml'
+    testRunTitle: 'Mocha Tests'
+  condition: succeededOrFailed()
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(Build.SourcesDirectory)/coverage'
+
+- task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
+  displayName: 'Package real Extension '
+  inputs:
+    rootFolder: '$(Build.SourcesDirectory)'
+    outputPath: '$(Build.ArtifactStagingDirectory)\colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
+    publisherId: colinsalmcorner
+    extensionId: 'colinsalmcorner-buildtasks'
+    extensionVersion: '$(Build.BuildNumber)'
+    updateTasksVersion: true
+    updateTasksVersionType: patch
+    cwd: '$(Build.SourcesDirectory)'
+
+- task: PowerShell@1
+  displayName: 'PowerShell Script'
+  inputs:
+    scriptName: 'Update-TaskIDs.ps1'
+    arguments: '-Beta'
+
+- task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
+  displayName: 'Package beta Extension '
+  inputs:
+    outputPath: '$(Build.ArtifactStagingDirectory)\colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
+    publisherId: colinsalmcorner
+    extensionId: 'colinsalmcorner-buildtasks'
+    extensionTag: beta
+    extensionVersion: '$(Build.BuildNumber)'
+    updateTasksVersion: true
+    updateTasksVersionType: patch
+    extensionVisibility: private
+    extensionPricing: free
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: vsix'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: vsix

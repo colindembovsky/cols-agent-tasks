@@ -20,7 +20,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
         "working": true
     },
     "findMatch": {
-        "**\\AssemblyInfo.*" : [ tmpFile ]
+        "**/AssemblyInfo.*" : [ tmpFile ]
     }
 };
 tmr.setAnswers(a);
@@ -38,7 +38,7 @@ fs.writeFile(tmpFile, `
 
     // set inputs
     tmr.setInput('sourcePath', "working");
-    tmr.setInput('filePattern', '**\\AssemblyInfo.*');
+    tmr.setInput('filePattern', '**/AssemblyInfo.*');
     tmr.setInput("versionSource", 'variable');
     tmr.setInput("versionFormat", 'custom');
     tmr.setInput("customNumberVariable", 'someVar');
@@ -50,7 +50,7 @@ fs.writeFile(tmpFile, `
     tmr.setInput('failIfNoMatchFound', 'false'); 
 
     // set variables
-    process.env["Build_BuildNumber"] = "2.45.67.2";
+    process.env["BUILD_BUILDNUMBER"] = "2.45.67.2";
     process.env["SOMEVAR"] = "1.5.2.3";
 
     tmr.run();

@@ -47,7 +47,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('failIfNoMatchFound', 'false'); 
 
   // set variables
-  process.env["Build_BuildNumber"] = "5.2.43";
+  process.env["BUILD_BUILDNUMBER"] = "5.2.43";
 
   tmr.run();
 

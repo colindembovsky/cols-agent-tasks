@@ -41,7 +41,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('tokenRegex', '__(\\w+)__'); 
 
   // set variables
-  process.env["CoolKey"] = "MyCoolKey";
+  process.env["COOLKEY"] = "MyCoolKey";
   process.env["SECRET_Secret1"] = "supersecret1";
 
   tmr.run();

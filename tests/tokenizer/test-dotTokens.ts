@@ -52,9 +52,9 @@ fs.writeFile(tmpFile, `
   tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]*)__'); 
 
   // set variables
-  process.env["ConnectionStrings_DefaultConnection"] = "testing";
-  process.env["Tricky_Gollum"] = "Gollum2";
-  process.env["Tricky_Hobbit"] = "Sam";
+  process.env["CONNECTIONSTRINGS_DEFAULTCONNECTION"] = "testing";
+  process.env["TRICKY_GOLLUM"] = "Gollum2";
+  process.env["TRICKY_HOBBIT"] = "Sam";
 
   tmr.run();
 

@@ -226,7 +226,7 @@ describe('versionAssemblies', function () {
         let tp = path.join(__dirname, 'versionAssemblies', 'test-failIfNotFound.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-        let x = tr.run();
+        tr.run();
         if (debug) {
             console.log(tr.stdout);
         }
@@ -239,7 +239,7 @@ describe('versionAssemblies', function () {
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have 1 error");
         if (!tr.errorIssues[0].startsWith("No matches for regex [\\d+\\.\\d+\\.\\d+\\.\\d+] found in file") ||
-            !tr.errorIssues[0].endsWith("working\\AssemblyInfo.cs")) {
+            !tr.errorIssues[0].endsWith("AssemblyInfo.cs")) {
             done("Incorrect error message");
         }        
 

@@ -37,7 +37,7 @@
       "name": "filePattern",
       "type": "string",
       "label": "File Pattern",
-      "defaultValue": "**\\AssemblyInfo.*",
+      "defaultValue": "**/AssemblyInfo.*",
       "required": true,
       "helpMarkDown": "File filter to replace version info. The version number pattern should exist somewhere in the file(s). Supports minimatch. NOTE: this is case sensitive for non-Windows systems."
     },

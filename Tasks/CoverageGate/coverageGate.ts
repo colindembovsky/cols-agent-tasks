@@ -1,6 +1,6 @@
 import * as tl from 'vsts-task-lib/task';
-import * as vstsInterfaces from 'vso-node-api/interfaces/common/VsoBaseInterfaces';
-import * as webApi from 'vso-node-api/WebApi';
+import * as vstsInterfaces from 'azure-devops-node-api/interfaces/common/VsoBaseInterfaces';
+import * as webApi from 'azure-devops-node-api/WebApi';
 
 async function run() {
     try {
@@ -39,7 +39,7 @@ async function run() {
 
             // get previous successful builds
             tl.debug("Connecting to test API");
-            var testApi = vsts.getTestApi();
+            var testApi = await vsts.getTestApi();
 
             tl.debug("Getting coverage data");
             // 1 = modules, 2 = function, 4 = block

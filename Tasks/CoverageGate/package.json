@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "dependencies": {
-    "vso-node-api": "^6.2.8-preview",
-    "vsts-task-lib": "^2.1.0"
+    "azure-devops-node-api": "^6.6.0",
+    "vsts-task-lib": "2.6.1"
   }
 }

@@ -1,8 +1,8 @@
 import * as tl from 'vsts-task-lib/task';
-import * as vstsInterfaces from 'vso-node-api/interfaces/common/VsoBaseInterfaces';
-import * as webApi from 'vso-node-api/WebApi';
-import * as locationsInterfaces from 'vso-node-api/interfaces/LocationsInterfaces';
-import * as relInterfaces from 'vso-node-api/ReleaseApi';
+import * as vstsInterfaces from 'azure-devops-node-api/interfaces/common/VsoBaseInterfaces';
+import * as webApi from 'azure-devops-node-api/WebApi';
+import * as locationsInterfaces from 'azure-devops-node-api/interfaces/LocationsInterfaces';
+import * as relInterfaces from 'azure-devops-node-api/ReleaseApi';
 
 function completeTask(sucess: boolean, message?: any) {
     if (sucess) {
@@ -72,7 +72,7 @@ async function run() {
     
     if (type === "Build") {
         tl.debug("Getting build api client");
-        let buildApi = vsts.getBuildApi();
+        let buildApi = await vsts.getBuildApi();
         
         console.info(`Setting tags on build [${buildId}]`);
         await buildApi.addBuildTags(tags, teamProject, buildId)
@@ -86,12 +86,12 @@ async function run() {
 
         let releaseResourceArea;
         try {
-            let locationClient = vsts.getLocationsApi();
+            let locationClient = await vsts.getLocationsApi();
             releaseResourceArea = await locationClient.getResourceArea("efc2f575-36ef-48e9-b672-0c6fb4a48ac5");
         } catch (e) {
             console.warn("Could not get releaseResourceArea resource area: this may cause the task to fail.");
         }
-        let releaseApi = vsts.getReleaseApi(releaseResourceArea ? releaseResourceArea.locationUrl : null);
+        let releaseApi = await vsts.getReleaseApi(releaseResourceArea ? releaseResourceArea.locationUrl : null);
 
         console.info(`Setting tags on release [${releaseId}]`);
         await releaseApi.addReleaseTags(tags, teamProject, releaseId)

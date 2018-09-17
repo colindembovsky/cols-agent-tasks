@@ -9,7 +9,7 @@ let taskPath = path.join(rootDir, 'coverageGate.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // provide mocks
-tmr.registerMock('vso-node-api/WebApi', mocks.MockWebApi);
+tmr.registerMock('azure-devops-node-api/WebApi', mocks.MockWebApi);
 
 // set variables
 process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";

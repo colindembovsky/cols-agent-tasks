@@ -8,7 +8,7 @@ let rootDir = path.join(__dirname, '../../Tasks', 'TagBuild');
 let taskPath = path.join(rootDir, 'tagBuild.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
-tmr.registerMock('vso-node-api/WebApi', mocks.MockWebApi);
+tmr.registerMock('azure-devops-node-api/WebApi', mocks.MockWebApi);
 
 // set variables
 process.env["SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"] = "http://localhost:8080/tfs/defaultcollection";

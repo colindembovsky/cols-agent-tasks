@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+azure-devops-node-api@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/azure-devops-node-api/-/azure-devops-node-api-6.6.0.tgz#6fb34b282f62c9c29719eea57c49d10b62258f53"
+  dependencies:
+    tunnel "0.0.4"
+    typed-rest-client "1.0.9"
+    underscore "1.8.3"
+
 balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
@@ -17,7 +25,7 @@ concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
-minimatch@^3.0.0:
+minimatch@3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
@@ -51,14 +59,14 @@ tunnel@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.4.tgz#2d3785a158c174c9a16dc2c046ec5fc5f1742213"
 
-typed-rest-client@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/typed-rest-client/-/typed-rest-client-0.12.0.tgz#6376f5527f427da121dcafdfd7e41e1321e0720c"
+typed-rest-client@1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/typed-rest-client/-/typed-rest-client-1.0.9.tgz#5317b607c9c8ee425b64260c9249d400d0a6bf1a"
   dependencies:
     tunnel "0.0.4"
     underscore "1.8.3"
 
-underscore@1.8.3, underscore@^1.8.3:
+underscore@1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
@@ -66,19 +74,11 @@ uuid@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
-vso-node-api@^6.2.8-preview:
-  version "6.2.8-preview"
-  resolved "https://registry.yarnpkg.com/vso-node-api/-/vso-node-api-6.2.8-preview.tgz#99902e626c408716ab90b042705452c88ec1c2f0"
+vsts-task-lib@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/vsts-task-lib/-/vsts-task-lib-2.6.1.tgz#f8a27e1b941d06a3e7198fbe7fb313c337b37031"
   dependencies:
-    tunnel "0.0.4"
-    typed-rest-client "^0.12.0"
-    underscore "^1.8.3"
-
-vsts-task-lib@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vsts-task-lib/-/vsts-task-lib-2.1.0.tgz#c371aeff2a8d98438865235dc9fc94701c404c84"
-  dependencies:
-    minimatch "^3.0.0"
+    minimatch "3.0.4"
     mockery "^1.7.0"
     q "^1.1.2"
     semver "^5.1.0"

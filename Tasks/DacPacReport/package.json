@@ -21,9 +21,9 @@
   },
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "devDependencies": {
-    "minimatch": "^2.0.10",
-    "shelljs": "^0.5.3",
-    "vsts-task-lib": "^0.9.6",
-    "libxslt": "^0.6.3"
+    "minimatch": "^3.0.4",
+    "shelljs": "^0.8.2",
+    "vsts-task-lib": "^2.6.1",
+    "libxslt": "^0.7.0"
   }
 }

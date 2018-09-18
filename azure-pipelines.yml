@@ -52,10 +52,18 @@ steps:
     cwd: '$(Build.SourcesDirectory)'
 
 - task: PowerShell@1
-  displayName: 'PowerShell Script'
+  displayName: 'PowerShell Update beta ids'
+  condition: eq(variables['Agent.OS'], 'Windows_NT')
   inputs:
     scriptName: 'Update-TaskIDs.ps1'
     arguments: '-Beta'
+
+steps:
+  displayName: 'Bash Update beta ids'
+  condition: ne(variables['Agent.OS'], 'Windows_NT')
+- bash: ./ 'update-taskIds.sh' 
+  arguments: beta
+  failOnStderr: true
 
 - task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
   displayName: 'Package beta Extension '

@@ -50,7 +50,7 @@ steps:
   condition: eq(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true
 
-- bash: './update-taskIds.sh beta' 
+- bash: './update-taskids.sh beta' 
   displayName: 'Bash Update beta ids'
   condition: ne(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true

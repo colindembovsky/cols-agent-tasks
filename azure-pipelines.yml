@@ -50,7 +50,7 @@ steps:
   condition: eq(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true
 
-- bash: './update-taskids.sh beta' 
+- bash: 'sh update-taskids.sh beta' 
   workingDirectory: '$(Build.SourcesDirectory)'
   displayName: 'Bash Update beta ids'
   condition: ne(variables['Agent.OS'], 'Windows_NT')

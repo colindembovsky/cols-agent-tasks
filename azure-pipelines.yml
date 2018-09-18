@@ -47,11 +47,13 @@ steps:
 
 - powershell: ./ 'Update-TaskIDs.ps1'
   arguments: '-Beta'
+
   displayName: 'PowerShell Update beta ids'
   condition: eq(variables['Agent.OS'], 'Windows_NT')
 
 - bash: ./ 'update-taskIds.sh' 
-  arguments: beta
+  arguments: 'beta'
+
   displayName: 'Bash Update beta ids'
   condition: ne(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true

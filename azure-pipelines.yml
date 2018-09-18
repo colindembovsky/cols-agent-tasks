@@ -46,12 +46,11 @@ steps:
     cwd: '$(Build.SourcesDirectory)'
 
 - powershell: ./ 'Update-TaskIDs.ps1 -Beta'
-
   displayName: 'PowerShell Update beta ids'
   condition: eq(variables['Agent.OS'], 'Windows_NT')
+  failOnStderr: true
 
 - bash: ./ 'update-taskIds.sh beta' 
-
   displayName: 'Bash Update beta ids'
   condition: ne(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true

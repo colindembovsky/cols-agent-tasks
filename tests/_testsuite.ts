@@ -7,7 +7,7 @@ if (debug) {
     console.log("------ RUNNING IN DEBUG ------------");
 }
 
-xdescribe('replaceTokens', function () {
+describe('replaceTokens', function () {
     before(() => {
     });
 
@@ -125,7 +125,7 @@ xdescribe('replaceTokens', function () {
     });
 });
 
-xdescribe('versionAssemblies', function () {
+describe('versionAssemblies', function () {
     before(() => {
     });
 
@@ -269,7 +269,7 @@ xdescribe('versionAssemblies', function () {
     }); 
 });
 
-xdescribe('tokenizer JSON', function () {
+describe('tokenizer JSON', function () {
     before(() => {
     });
 
@@ -410,7 +410,7 @@ xdescribe('tokenizer JSON', function () {
     });
 });
 
-xdescribe('coverageGate', function () {
+describe('coverageGate', function () {
     before(() => {
     });
 

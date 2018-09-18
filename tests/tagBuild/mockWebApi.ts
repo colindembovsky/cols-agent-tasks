@@ -11,16 +11,6 @@ export module MockWebApi {
         project: ''
     }
 
-    var state = {
-        calledBearer: false,
-        taggerCall: {
-            callType: '',
-            tags: <string[]>[],
-            id: 0,
-            project: ''
-        }
-    };
-
     var mockCredHandler = { // a mock IRequestHandler
         prepareRequest: (options: any) => { },
         canHandleAuthentication: (res) => true,
@@ -29,7 +19,7 @@ export module MockWebApi {
 
     export function getBearerHandler(token) { 
         console.log("--- MOCK: return fake bearer handler");
-        state.calledBearer = true;
+        calledBearer = true;
         return mockCredHandler; 
     }
 
@@ -51,10 +41,10 @@ export module MockWebApi {
             return Promise.resolve(<IBuildApi>{
                 addBuildTags(tags: string[], teamProject: string, buildId: number) {
                     console.log("--- MOCK: calling buildAPI.addBuildTags");
-                    state.taggerCall.callType = 'Build';
-                    state.taggerCall.tags = tags;
-                    state.taggerCall.project = teamProject;
-                    state.taggerCall.id = buildId;
+                    taggerCall.callType = 'Build';
+                    taggerCall.tags = tags;
+                    taggerCall.project = teamProject;
+                    taggerCall.id = buildId;
                     return Promise.resolve(tags);
                 }
             });
@@ -64,17 +54,13 @@ export module MockWebApi {
             return Promise.resolve(<IReleaseApi>{
                 addReleaseTags(tags: string[], teamProject: string, releaseId: number) {
                     console.log("--- MOCK: calling releaseAPI.addReleaseTags");
-                    state.taggerCall.callType = 'Release';
-                    state.taggerCall.tags = tags;
-                    state.taggerCall.project = teamProject;
-                    state.taggerCall.id = releaseId;
+                    taggerCall.callType = 'Release';
+                    taggerCall.tags = tags;
+                    taggerCall.project = teamProject;
+                    taggerCall.id = releaseId;
                     return Promise.resolve(tags);
                 }
             });
         }
-    }
-
-    export function getState() {
-        return state;
     }
 }

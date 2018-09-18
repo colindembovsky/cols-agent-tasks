@@ -43,7 +43,6 @@
     "@types/node": "^10.9.4",
     "@types/q": "^1.5.1",
     "@types/shelljs": "^0.8.0",
-    "@types/sinon": "^5.0.2",
     "assert": "^1.4.1",
     "cross-env": "^5.2.0",
     "istanbul": "^0.4.5",
@@ -56,9 +55,7 @@
     "shelljs": "^0.8.2",
     "ts-node": "^7.0.1",
     "source-map-support": "^0.5.9",
-    "typescript": "^3.0.3",
-    "should": "^13.2.3",
-    "sinon": "^6.3.3"  
+    "typescript": "^3.0.3"
   },
   "main": "index.js",
   "dependencies": {

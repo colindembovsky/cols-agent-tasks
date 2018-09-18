@@ -23,13 +23,16 @@ tmr.setInput('type', 'Build');
 
 tmr.run();
 
-if ("demo" !== mocks.MockWebApi.taggerCall.project ||
-    "Build" !== mocks.MockWebApi.taggerCall.callType ||
-    1 !== mocks.MockWebApi.taggerCall.id ||
-    !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag1") || 
-    mocks.MockWebApi.taggerCall.tags.length !== 1) {
-    console.log(mocks.MockWebApi.taggerCall);
-    console.error("Tagging failed."); 
-} else {
-    console.log("Tagging successful!");
-}
+// need setTimeout because of async methods
+setTimeout(() => {
+    if ("demo" !== mocks.MockWebApi.taggerCall.project ||
+        "Build" !== mocks.MockWebApi.taggerCall.callType ||
+        1 !== mocks.MockWebApi.taggerCall.id ||
+        !mocks.MockWebApi.taggerCall.tags.some(t => t === "tag1") || 
+        mocks.MockWebApi.taggerCall.tags.length !== 1) {
+        console.log(mocks.MockWebApi.taggerCall);
+        console.error("Tagging failed."); 
+    } else {
+        console.log("Tagging successful!");
+    }
+}, 100);

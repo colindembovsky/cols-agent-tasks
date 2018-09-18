@@ -34,5 +34,4 @@ setTimeout(t => {
     } else {
         console.log("Tagging successful!");
     }
-    console.log("=============== FIN");
-}, 10);
+}, 50);

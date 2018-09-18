@@ -43,7 +43,7 @@ steps:
   displayName: 'Package real Extension '
   inputs:
     rootFolder: '$(Build.SourcesDirectory)'
-    outputPath: '$(Build.ArtifactStagingDirectory)\colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
+    outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
     publisherId: colinsalmcorner
     extensionId: 'colinsalmcorner-buildtasks'
     extensionVersion: '$(Build.BuildNumber)'
@@ -60,7 +60,7 @@ steps:
 - task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
   displayName: 'Package beta Extension '
   inputs:
-    outputPath: '$(Build.ArtifactStagingDirectory)\colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
+    outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
     publisherId: colinsalmcorner
     extensionId: 'colinsalmcorner-buildtasks'
     extensionTag: beta

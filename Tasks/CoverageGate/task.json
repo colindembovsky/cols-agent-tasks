@@ -41,8 +41,8 @@
       "helpMarkDown": "Operator to apply. Either < or <=",
       "required": true,
       "options": {
-          "le": "<=",
-          "lt": "<"
+        "le": "<=",
+        "lt": "<"
       }
     },
     {

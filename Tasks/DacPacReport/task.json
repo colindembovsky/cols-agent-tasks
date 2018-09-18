@@ -34,7 +34,7 @@
       "label": "Drop Name",
       "defaultValue": "drop",
       "required": true,
-      "helpMarkDown": "Name of the drop in which to find previous build dacpac file." 
+      "helpMarkDown": "Name of the drop in which to find previous build dacpac file."
     },
     {
       "name": "dacpacName",
@@ -70,7 +70,6 @@
       "helpMarkDown": "Check this to reverse the source and target.",
       "groupName": "advanced"
     }
-
   ],
   "execution": {
     "PowerShell3": {

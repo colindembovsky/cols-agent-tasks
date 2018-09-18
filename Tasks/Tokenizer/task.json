@@ -42,7 +42,7 @@
       "helpMarkDown": "Type of tokenization",
       "required": true,
       "options": {
-          "Json": "Json"
+        "Json": "Json"
       }
     },
     {

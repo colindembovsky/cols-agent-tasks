@@ -76,7 +76,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Name for the Docker image. Leave blank to take pubxml value.",
-      "groupName": "build" 
+      "groupName": "build"
     },
     {
       "name": "buildOnly",
@@ -103,7 +103,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Port to open on the container. Leave blank to take pubxml value.",
-      "groupName": "publish" 
+      "groupName": "publish"
     },
     {
       "name": "runOptions",
@@ -112,7 +112,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Specify run options. Leave blank to take pubxml value.",
-      "groupName": "publish" 
+      "groupName": "publish"
     },
     {
       "name": "appType",
@@ -121,7 +121,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Set to Web if this is an ASP.NET web app (sets environment options for kestrel). Leave blank to take pubxml value.",
-      "groupName": "publish" 
+      "groupName": "publish"
     },
     {
       "name": "isWindowsContainer",
@@ -130,7 +130,7 @@
       "defaultValue": "false",
       "required": false,
       "helpMarkDown": "Set to true if this is a Windows Container. Leave blank to take pubxml value.",
-      "groupName": "publish" 
+      "groupName": "publish"
     },
     {
       "name": "authOptions",
@@ -139,7 +139,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Use to specify auth options for your Docker server. Leave blank to take pubxml value.",
-      "groupName": "advanced" 
+      "groupName": "advanced"
     },
     {
       "name": "removeConflictingContainers",
@@ -148,7 +148,7 @@
       "defaultValue": "",
       "required": false,
       "helpMarkDown": "Remove conflicting containers. Leave blank to take pubxml value.",
-      "groupName": "advanced" 
+      "groupName": "advanced"
     }
   ],
   "execution": {

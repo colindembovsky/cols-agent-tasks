@@ -19,45 +19,45 @@
   "instanceNameFormat": "Route Traffic: $(percentTraffic)% to $(Slot) on $(WebAppName)",
   "inputs": [
     {
-        "name": "ConnectedServiceName",
-        "type": "connectedService:AzureRM",
-        "label": "Azure subscription",
-        "defaultValue": "",
-        "required": true,
-        "helpMarkDown": "Select the Azure Resource Manager subscription"
+      "name": "ConnectedServiceName",
+      "type": "connectedService:AzureRM",
+      "label": "Azure subscription",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "Select the Azure Resource Manager subscription"
     },
     {
-        "name": "WebAppName",
-        "type": "pickList",
-        "label": "App Service name",
-        "defaultValue": "",
-        "required": true,
-        "properties": {
-            "EditableOptions": "True"
-        },
-        "helpMarkDown": "Enter or select the name of an existing Azure App Service"
+      "name": "WebAppName",
+      "type": "pickList",
+      "label": "App Service name",
+      "defaultValue": "",
+      "required": true,
+      "properties": {
+        "EditableOptions": "True"
+      },
+      "helpMarkDown": "Enter or select the name of an existing Azure App Service"
     },
     {
-        "name": "ResourceGroupName",
-        "type": "pickList",
-        "label": "Resource group",
-        "defaultValue": "",
-        "required": true,
-        "properties": {
-            "EditableOptions": "True"
-        },
-        "helpMarkDown": "Enter or Select the Azure Resource Group that contains the Azure App Service specified above"
+      "name": "ResourceGroupName",
+      "type": "pickList",
+      "label": "Resource group",
+      "defaultValue": "",
+      "required": true,
+      "properties": {
+        "EditableOptions": "True"
+      },
+      "helpMarkDown": "Enter or Select the Azure Resource Group that contains the Azure App Service specified above"
     },
     {
-        "name": "Slot",
-        "type": "pickList",
-        "label": "Experiment slot",
-        "defaultValue": "",
-        "required": true,
-        "properties": {
-            "EditableOptions": "True"
-        },
-        "helpMarkDown": "The slot to direct the percentage of traffic to. The remainder is routed to Production"
+      "name": "Slot",
+      "type": "pickList",
+      "label": "Experiment slot",
+      "defaultValue": "",
+      "required": true,
+      "properties": {
+        "EditableOptions": "True"
+      },
+      "helpMarkDown": "The slot to direct the percentage of traffic to. The remainder is routed to Production"
     },
     {
       "name": "percentTraffic",
@@ -70,27 +70,27 @@
   ],
   "dataSourceBindings": [
     {
-        "target": "WebAppName",
-        "endpointId": "$(ConnectedServiceName)",
-        "dataSourceName": "AzureRMWebAppNames"
+      "target": "WebAppName",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureRMWebAppNames"
     },
     {
-        "target": "ResourceGroupName",
-        "endpointId": "$(ConnectedServiceName)",
-        "dataSourceName": "AzureRMWebAppResourceGroup",
-        "parameters": {
-            "WebAppName": "$(WebAppName)"
-        }
+      "target": "ResourceGroupName",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureRMWebAppResourceGroup",
+      "parameters": {
+        "WebAppName": "$(WebAppName)"
+      }
     },
     {
-        "target": "Slot",
-        "endpointId": "$(ConnectedServiceName)",
-        "dataSourceName": "AzureRMWebAppSlotsId",
-        "parameters": {
-            "WebAppName": "$(WebAppName)",
-            "ResourceGroupName": "$(ResourceGroupName)"
-        },
-        "resultTemplate": "{\"Value\":\"{{{ #extractResource slots}}}\",\"DisplayValue\":\"{{{ #extractResource slots}}}\"}"
+      "target": "Slot",
+      "endpointId": "$(ConnectedServiceName)",
+      "dataSourceName": "AzureRMWebAppSlotsId",
+      "parameters": {
+        "WebAppName": "$(WebAppName)",
+        "ResourceGroupName": "$(ResourceGroupName)"
+      },
+      "resultTemplate": "{\"Value\":\"{{{ #extractResource slots}}}\",\"DisplayValue\":\"{{{ #extractResource slots}}}\"}"
     }
   ],
   "execution": {

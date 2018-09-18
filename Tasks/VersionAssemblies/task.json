@@ -31,7 +31,7 @@
       "label": "Source Path",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). Leave empty to use the sources directory. NOTE: this is case sensitive for non-Windows systems." 
+      "helpMarkDown": "Path in which to search for version files (like AssemblyInfo.* files). Leave empty to use the sources directory. NOTE: this is case sensitive for non-Windows systems."
     },
     {
       "name": "filePattern",
@@ -46,7 +46,7 @@
       "type": "pickList",
       "label": "Version Source",
       "defaultValue": "buildNumber",
-      "options":{
+      "options": {
         "buildNumber": "Build Number",
         "variable": "Variable"
       },
@@ -67,7 +67,7 @@
       "type": "pickList",
       "label": "Version Extract Pattern",
       "defaultValue": "fourParts",
-      "options":{
+      "options": {
         "fourParts": "1.0.0.0",
         "threeParts": "1.0.0",
         "custom": "Custom Regex"
@@ -89,7 +89,7 @@
       "type": "pickList",
       "label": "Replace Pattern",
       "defaultValue": "fourParts",
-      "options":{
+      "options": {
         "fourParts": "1.0.0.0",
         "threeParts": "1.0.0",
         "custom": "Custom Regex"
@@ -136,13 +136,13 @@
       "groupName": "advanced"
     },
     {
-        "name": "failIfNoMatchFound",
-        "type": "boolean",
-        "label": "Fail If No Target Match Found",
-        "defaultValue": "false",
-        "required": false,
-        "helpMarkDown": "Fail the build if no match is found for the replace regex in the target file(s).",
-        "groupName": "advanced"
+      "name": "failIfNoMatchFound",
+      "type": "boolean",
+      "label": "Fail If No Target Match Found",
+      "defaultValue": "false",
+      "required": false,
+      "helpMarkDown": "Fail the build if no match is found for the replace regex in the target file(s).",
+      "groupName": "advanced"
     }
   ],
   "execution": {

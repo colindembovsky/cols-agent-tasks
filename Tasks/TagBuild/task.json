@@ -25,7 +25,7 @@
       "defaultValue": "Build",
       "helpMarkDown": "Type of entity to tag. Set to build to let the build tag itself. Set to release to let the release tag itself. Set to build in a release to tag the _primary build_ for the release.",
       "required": true,
-      "options":{
+      "options": {
         "Build": "Build",
         "Release": "Release"
       }

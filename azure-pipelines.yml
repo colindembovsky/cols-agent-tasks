@@ -51,7 +51,7 @@ steps:
   failOnStderr: true
 
 - bash: './update-taskids.sh beta' 
-  workingDirectory: /
+  workingDirectory: '$(Build.SourcesDirectory)'
   displayName: 'Bash Update beta ids'
   condition: ne(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true

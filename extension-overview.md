@@ -49,7 +49,7 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
-### 1.4.41
+### 1.4.43
 - No functional changes
 - Update badges on README
 - Update to [Azure DevOps Node API](https://www.npmjs.com/package/azure-devops-node-api) libs

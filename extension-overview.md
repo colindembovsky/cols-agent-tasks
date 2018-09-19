@@ -1,9 +1,11 @@
 # Colin's ALM Corner Custom Build Tasks
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/colindembovsky/cols-agent-tasks/blob/master/LICENSE.txt)
+
 This extension contains helpful build and release Tasks.
 
 [![Donate](https://raw.githubusercontent.com/colindembovsky/cols-agent-tasks/master/images/donate.png)](https://www.paypal.me/ColinDembovsky/5)
 
-> As [Scott Hanselman](http://www.hanselman.com/) says, "donations pay for tacos" (or low carb equivalent).
+> As [Scott Hanselman](http://www.hanselman.com/) says, "Donations pay for tacos" (or low carb equivalent).
 
 Click on the 'More...' link for each task to see how yaml references.
 
@@ -35,9 +37,23 @@ Click on the 'More...' link for each task to see how yaml references.
 
 	This task allows you to route a percentage of traffic to an Azure Web App to a slot. [More...](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/RouteTraffic)
 
+## Status
+
+
+|Stage|Status|
+|---|---|
+|Build|[![Build Status](https://colinsalmcorner.visualstudio.com/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline)](https://colinsalmcorner.visualstudio.com/MarketPlace/_build/latest?definitionId=33)|
+|Beta|[![Release Status](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/4)](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/4)|
+|Production|[![Release Status](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/5)](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/5)|
+
+
 ## Release Notes
 
-![Build Status](https://colinsalmcorner.visualstudio.com/_apis/public/build/definitions/34532943-412e-4dac-b314-a87833e22dd8/22/badge)
+### 1.4.41
+- No functional changes
+- Update badges on README
+- Update to [Azure DevOps Node API](https://www.npmjs.com/package/azure-devops-node-api) libs
+- Change build process to [yaml file](https://github.com/colindembovsky/cols-agent-tasks/blob/master/azure-pipelines.yml) running on Ubuntu Hosted image
 
 ### 1.3.16
 - Update ReplaceTokens Secrets description.

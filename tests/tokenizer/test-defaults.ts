@@ -53,6 +53,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('tokenizeType', 'Json');
   tmr.setInput('includes', 'ConnectionStrings.DefaultConnection,Logging.LogLevel.Default'); 
   tmr.setInput('excludes', '');
+  tmr.setInput('nullBehavior', 'warning');
 
   tmr.run();
 

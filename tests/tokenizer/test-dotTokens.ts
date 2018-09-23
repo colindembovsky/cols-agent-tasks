@@ -50,6 +50,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('sourcePath', "working");
   tmr.setInput('filePattern', 'appsettings.json');
   tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]*)__'); 
+  tmr.setInput('nullBehavior', 'warning');
 
   // set variables
   process.env["CONNECTIONSTRINGS_DEFAULTCONNECTION"] = "testing";

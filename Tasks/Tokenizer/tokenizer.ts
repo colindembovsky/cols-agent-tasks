@@ -3,13 +3,22 @@ import * as sh from 'shelljs';
 import * as fs from 'fs';
 import * as os from 'os';
 
-function replaceProps(obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
+function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
+    let success = true;
     for (let prop of Object.getOwnPropertyNames(obj)) {
+        let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
+
         if (obj[prop] == null) {
+            let msg = `Property ${propPath} is null`;
+            if (nullBehavior === "warning") {
+                tl.warning(msg);
+            } else {
+                tl.error(msg);
+                success = false;
+            }
             continue;
         }
 
-        let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
         if (obj[prop] instanceof Array) {
             obj[prop].forEach((arrayObj, position) => {
                 // if we're already in an array, we need to update the index
@@ -19,10 +28,10 @@ function replaceProps(obj: any, parent: string, includeSet: Set<string>, exclude
                 }
                 // now append the index
                 propPath += `[${position}]`;
-                replaceProps(arrayObj, propPath, includeSet, excludeSet);
+                success = success && replaceProps(nullBehavior, arrayObj, propPath, includeSet, excludeSet);
             });
         } else if (typeof (obj[prop]) === 'object') {
-            replaceProps(obj[prop], propPath, includeSet, excludeSet);
+            success = success && replaceProps(nullBehavior, obj[prop], propPath, includeSet, excludeSet);
         } else {
             if ((!includeSet && !excludeSet) ||
                 (includeSet && includeSet.has(propPath)) ||
@@ -33,6 +42,7 @@ function replaceProps(obj: any, parent: string, includeSet: Set<string>, exclude
             }
         }
     }
+    return success;
 }
 
 async function run() {
@@ -65,12 +75,14 @@ async function run() {
         if (!excludes) {
             excludes = '';
         }
+        let nullBehavior = tl.getInput("nullBehavior", true);
 
         tl.debug(`sourcePath: [${sourcePath}]`);
         tl.debug(`filePattern: [${filePattern}]`);
         tl.debug(`tokenizeType: [${tokenizeType}]`);
         tl.debug(`includes: [${includes}]`);
         tl.debug(`excludes: [${excludes}]`);
+        tl.debug(`nullBehavior: [${nullBehavior}]`);
 
         // only one or the other can be specified
         if (includes && includes.length > 0 && excludes && excludes.length > 0) {
@@ -119,7 +131,10 @@ async function run() {
             let json = JSON.parse(contents);
 
             // find the include properties recursively
-            replaceProps(json, '', includeSet, excludeSet);
+            let success = replaceProps(nullBehavior, json, '', includeSet, excludeSet);
+            if (!success) {
+                throw "Tokenization failed - please check previous logs.";
+            }
 
             tl.debug("Writing new values to file...");
             // make the file writable

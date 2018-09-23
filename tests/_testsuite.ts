@@ -408,6 +408,53 @@ describe('tokenizer JSON', function () {
 
         done();
     });
+
+    it('should warn when nullBehavior is warning', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tokenizer', 'test-writesWarningForNullWhenNullBehaviorIsWarn.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+        assert.equal(tr.warningIssues.length, 1, "should have warnings");
+        assert.equal(tr.warningIssues[0], "Property Tricky.Tricky is null");
+
+        done();
+    });
+
+    it('should fail if nullBehavior is set to null', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tokenizer', 'test-failsWhenNullBehaviorIsError.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.failed, 'should have failed');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 2, "should have 2 errors");
+        assert.equal(tr.errorIssues[0], "Property Tricky.Tricky is null");
+        assert.equal(tr.errorIssues[1], "Tokenization failed - please check previous logs.");
+        
+        done();
+    });
 });
 
 describe('coverageGate', function () {

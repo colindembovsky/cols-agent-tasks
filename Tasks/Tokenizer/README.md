@@ -17,6 +17,7 @@ steps:
     tokenizeType: Json  # only type available currently
     includes: 'ConnectionStrings.DefaultConnection'  # comma-separated list of values to tokenize
     # excludes: 'values,to,exclude'    # comma-separated list of values to NOT tokenize
+    # nullBehavior: warning   # 'warning' or 'error' for null properties
 ```
 
 ## Settings

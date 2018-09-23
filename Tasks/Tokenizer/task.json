@@ -60,6 +60,18 @@
       "defaultValue": "LogLevel",
       "helpMarkDown": "Comma-separated list of keys NOT to tokenize. You should not specify both include and exclude.",
       "required": false
+    },
+    {
+      "name": "nullBehavior",
+      "type": "pickList",
+      "label": "Null Behavior",
+      "defaultValue": "warning",
+      "helpMarkDown": "Action to take when properties are null: write warning or throw error.",
+      "required": false,
+      "options": {
+        "warning": "Warning",
+        "error": "Error"
+      }
     }
   ],
   "execution": {

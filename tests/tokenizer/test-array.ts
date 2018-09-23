@@ -49,6 +49,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('tokenizeType', 'Json');
   tmr.setInput('includes', ''); 
   tmr.setInput('excludes', '');
+  tmr.setInput('nullBehavior', 'warning');
 
   tmr.run();
 

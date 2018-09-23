@@ -49,6 +49,11 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
+### 1.4.54
+- Updated build/test instructions in README
+- Tokenizer
+	- Fixed [null issue](https://github.com/colindembovsky/cols-agent-tasks/issues/90) with some additional code on top of [this PR](https://github.com/colindembovsky/cols-agent-tasks/pull/93)
+
 ### 1.4.43
 - No functional changes
 - Update badges on README

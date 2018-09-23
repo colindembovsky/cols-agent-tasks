@@ -21,6 +21,7 @@ steps:
 The task requires the following settings:
 
 1. **Target File**: path to the file that contains the tokens.
+    - `Target File` is a glob expression - so you can target multiple files using expressions like `*.+(config|nuspec)` to match `.config` and `.nuspec` files.
 1. **Token Regex**: a RegEx to find the tokens. Must include a group selector. This defaults to `__(\w+)__`. This
 will match tokens that have double-underscore `__` prefix and postfix (e.g. `__MyVar__`).
 

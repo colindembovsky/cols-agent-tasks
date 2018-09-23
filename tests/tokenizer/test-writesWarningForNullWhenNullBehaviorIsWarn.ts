@@ -31,7 +31,7 @@ fs.writeFile(tmpFile, `
     "DefaultConnection": "Server=(localdb)\\\\mssqllocaldb;Database=aspnet-WebApplication1-26e8893e-d7c0-4fc6-8aab-29b59971d622;Trusted_Connection=True;MultipleActiveResultSets=true"
   },
   "Tricky": {
-    "Tricky": "Tricky",
+    "Tricky": null,
     "Tricky1": {
         "Tricky2": "Tricky"
     }
@@ -48,7 +48,7 @@ fs.writeFile(tmpFile, `
 `, (err) => {
 
   // set inputs
-  tmr.setInput('sourcePath', "working/");
+  tmr.setInput('sourcePath', "working");
   tmr.setInput('filePattern', 'appsettings.json');
   tmr.setInput('tokenizeType', 'Json');
   tmr.setInput('includes', 'ConnectionStrings.DefaultConnection,Logging.LogLevel.Default'); 
@@ -56,7 +56,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('nullBehavior', 'warning');
 
   tmr.run();
-
+  
   // validate the replacement
   let actual = fs.readFileSync(tmpFile).toString();
   var expected = `{
@@ -64,7 +64,7 @@ fs.writeFile(tmpFile, `
     "DefaultConnection": "__ConnectionStrings.DefaultConnection__"
   },
   "Tricky": {
-    "Tricky": "Tricky",
+    "Tricky": null,
     "Tricky1": {
       "Tricky2": "Tricky"
     }

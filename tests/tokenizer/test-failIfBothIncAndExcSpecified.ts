@@ -27,6 +27,7 @@ tmr.setInput('filePattern', 'appsettings.json');
 tmr.setInput('tokenizeType', 'Json');
 tmr.setInput('includes', 'blah'); 
 tmr.setInput('excludes', 'foo');
+tmr.setInput('nullBehavior', 'warning');
 
 tmr.run();
 

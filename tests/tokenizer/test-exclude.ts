@@ -52,6 +52,7 @@ fs.writeFile(tmpFile, `
   tmr.setInput('tokenizeType', 'Json');
   tmr.setInput('includes', ''); 
   tmr.setInput('excludes', 'Logging.IncludeScopes');
+  tmr.setInput('nullBehavior', 'warning');
 
   tmr.run();
 

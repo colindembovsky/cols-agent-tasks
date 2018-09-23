@@ -9,20 +9,15 @@
 ## Overview
 This repo contains custom tasks that meant to be used with Visual Studio Online and Team Foundation Server.
 
-## Uploading Tasks
-You need to upload these tasks to your TFS / VSTS server.
+## Build and Test
+Use `yarn` to build and test these extensions. All `yarn` scripts are specified in the `package.json` file. Run `yarn run` to get a prompt of all the targets. The most important are:
 
-1. Clone the repo
-1. Install [tfx-cli] (https://github.com/Microsoft/tfs-cli)
-1. Run `yarn install` in the root folder.
-1. Run `yarn install` in each Task folder.
-1. Run `gulp build` to transpile.
-1. Run `gulp test-cover` to run tests.
-1. Run `tfx login` to login to your server.
-1. Run `tfx build tasks upload --task-path <path to task folder>` to upload a task, where <path to task folder> is the path 
-to the Task folder of the task you want to upload
-
-The task should now be available on your TFS / VSO.
+1. `install`: install dependencies in root folder.
+1. `install-libs` install dependencies in each Task folder (required since each task has to be self-contained).
+1. `test` to run tests.
+1. `debugtest` to run tests with verbose logging.
+1. `cover` to run tests with code coverage.
+1. `prepextension` to run `install` and `coverage` (used to package the extension in the build).
 
 ## Tasks
 The following tasks are available:

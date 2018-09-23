@@ -5,6 +5,10 @@ import * as os from 'os';
 
 function replaceProps(obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
     for (let prop of Object.getOwnPropertyNames(obj)) {
+        if (obj[prop] == null) {
+            continue;
+        }
+
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
         if (obj[prop] instanceof Array) {
             obj[prop].forEach((arrayObj, position) => {

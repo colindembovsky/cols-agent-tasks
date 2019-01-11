@@ -92,7 +92,11 @@ async function run() {
                     if (typeof vValue === 'undefined') {
                         tl.warning(`Token [${vName}] does not have an environment value`);
                     } else {
-                        newContents = newContents.replace(match[0], vValue);
+                        if (vName.endsWith("[]")){
+                            newContents = newContents.replace(match[0], vValue.replace(/,/g, "\",\""));
+                        } else {
+                            newContents = newContents.replace(match[0], vValue);
+                        }
                         console.info(`Replaced token [${vName }]`);
                     }           
                 }

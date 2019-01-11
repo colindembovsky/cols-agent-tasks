@@ -34,6 +34,9 @@ fs.writeFile(tmpFile, `
     "Gollum": "__Tricky.Gollum__",
     "Hobbit": "__Tricky.Hobbit__"
   },
+  "CorsOrigins": [
+    "__CorsOrigins[]__"
+  ],
   "Logging": {
     "IncludeScopes": false,
     "LogLevel": {
@@ -49,12 +52,13 @@ fs.writeFile(tmpFile, `
   // set inputs
   tmr.setInput('sourcePath', "working");
   tmr.setInput('filePattern', 'appsettings.json');
-  tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]*)__'); 
+  tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]*\\[?\\]?)__'); 
 
   // set variables
   process.env["CONNECTIONSTRINGS_DEFAULTCONNECTION"] = "testing";
   process.env["TRICKY_GOLLUM"] = "Gollum2";
   process.env["TRICKY_HOBBIT"] = "Sam";
+  process.env["CORSORIGINS[]"] = "https://*.somesite,https://*.somesite.com,https://*.somesite.net";
 
   tmr.run();
 
@@ -70,6 +74,9 @@ fs.writeFile(tmpFile, `
     "Gollum": "Gollum2",
     "Hobbit": "Sam"
   },
+  "CorsOrigins": [
+    "https://*.somesite","https://*.somesite.com","https://*.somesite.net"
+  ],
   "Logging": {
     "IncludeScopes": false,
     "LogLevel": {

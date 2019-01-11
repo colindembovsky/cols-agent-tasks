@@ -13,7 +13,7 @@
   "version": {
     "Major": "1",
     "Minor": "2",
-    "Patch": "28"
+    "Patch": "29"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Tokenize file(s)",

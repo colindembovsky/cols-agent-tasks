@@ -8,6 +8,17 @@ function shouldReplaceProp(includeSet: Set<string>, excludeSet: Set<string>, pro
         (includeSet && includeSet.has(propPath)) ||
         (excludeSet && !excludeSet.has(propPath));
 }
+
+function arrayIsPrimitiveArray(item: any[]) {
+    // if `i === Object(i)` then i is a primitive
+    return item.every(p => { 
+        console.info(`-----> Checking ${p}`); 
+        let isPrimitive = p !== Object(p);
+        console.info(`-----> isPrim? ${isPrimitive}`); 
+        return isPrimitive;
+    });
+}
+
 function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
     let success = true;
     for (let prop of Object.keys(obj)) {
@@ -27,15 +38,19 @@ function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet
         let propType = typeof (obj[prop])
         console.info(`${propPath} has typeof ${propType}`)
         if (obj[prop] instanceof Array) {
-            if (obj[prop].every(function(i){ return typeof i === "string" })) {
+            if (arrayIsPrimitiveArray(obj[prop])) {
+                console.info(`${propPath} is a primitive array`);
                 if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
-                    console.info(`${propPath} is string array`);
                     console.info(`Tokenizing ${propPath}`);
-                    obj[prop] = [`__${propPath}[]__`];
+                    obj[prop] = [`__${propPath}__`];
+                } else {
+                    console.info(`Skipping ${propPath}`);
                 }
             }
-            else{
+            else {
+                console.info(`${propPath} is a complex array`);
                 obj[prop].forEach((arrayObj, position) => {
+                    console.info(`-----> processing ${arrayObj} pos ${position}`);
                     // if we're already in an array, we need to update the index
                     var posOfBracket = propPath.indexOf("[");
                     if (posOfBracket > -1) {

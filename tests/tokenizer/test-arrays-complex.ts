@@ -43,7 +43,10 @@ fs.writeFile(tmpFile, `
   "Auth": {
     "ClientSecret": "",
     "ValidAudiences": [
-      ""
+      {
+        "foo": "bar",
+        "zoo": "zar"
+      }
     ],
     "ConnectionStringKVSecretName": ""
   }
@@ -80,7 +83,10 @@ fs.writeFile(tmpFile, `
   "Auth": {
     "ClientSecret": "__Auth.ClientSecret__",
     "ValidAudiences": [
-      "__Auth.ValidAudiences[]__"
+      {
+        "foo": "__Auth.ValidAudiences[0].foo__",
+        "zoo": "__Auth.ValidAudiences[0].zoo__"
+      }
     ],
     "ConnectionStringKVSecretName": "__Auth.ConnectionStringKVSecretName__"
   }

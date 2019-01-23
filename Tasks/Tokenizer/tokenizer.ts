@@ -42,7 +42,7 @@ function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet
                 console.info(`${propPath} is a primitive array`);
                 if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
                     console.info(`Tokenizing ${propPath}`);
-                    obj[prop] = [`__${propPath}__`];
+                    obj[prop] = [`__${propPath}[]__`];
                 } else {
                     console.info(`Skipping ${propPath}`);
                 }
@@ -50,7 +50,6 @@ function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet
             else {
                 console.info(`${propPath} is a complex array`);
                 obj[prop].forEach((arrayObj, position) => {
-                    console.info(`-----> processing ${arrayObj} pos ${position}`);
                     // if we're already in an array, we need to update the index
                     var posOfBracket = propPath.indexOf("[");
                     if (posOfBracket > -1) {

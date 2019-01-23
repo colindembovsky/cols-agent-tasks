@@ -80,7 +80,7 @@ fs.writeFile(tmpFile, `
   "Auth": {
     "ClientSecret": "__Auth.ClientSecret__",
     "ValidAudiences": [
-      "__Auth.ValidAudiences__"
+      "__Auth.ValidAudiences[]__"
     ],
     "ConnectionStringKVSecretName": "__Auth.ConnectionStringKVSecretName__"
   }

@@ -49,9 +49,9 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
-### <Update Version part of pull request>
+### 1.4.71
 - Tokenizer & ReplaceTokens
-	- Fixed [arrays of type string tokenization](https://github.com/colindembovsky/cols-agent-tasks/issues/43) from  [this PR](https://github.com/colindembovsky/cols-agent-tasks/pull/111)
+	- Fixed [arrays tokenization](https://github.com/colindembovsky/cols-agent-tasks/issues/43) from [this PR](https://github.com/colindembovsky/cols-agent-tasks/pull/112) - thanks to [@RunnX](https://github.com/RunnX) for contributions!
 	
 ### 1.4.56
 - Updated build/test instructions in README

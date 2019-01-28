@@ -26,6 +26,9 @@ steps:
     testRunTitle: 'Publish test results'
   condition: succeededOrFailed()
 
+- script: 'cat $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml' 
+  displayName: 'Check coverage file'
+
 - task: PublishCodeCoverageResults@1
   displayName: 'Publish Code Coverage Results $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
   inputs:

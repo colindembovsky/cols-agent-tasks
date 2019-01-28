@@ -39,7 +39,17 @@ fs.writeFile(tmpFile, `
     {
       "type": "WebApi.Infrastucture.ContainerModules.MediatorModule, WebApi"
     }
-  ]
+  ],
+  "Auth": {
+    "ClientSecret": "",
+    "ValidAudiences": [
+      {
+        "foo": "bar",
+        "zoo": "zar"
+      }
+    ],
+    "ConnectionStringKVSecretName": ""
+  }
 }
 `, (err) => {
 
@@ -69,7 +79,17 @@ fs.writeFile(tmpFile, `
     {
       "type": "__modules[1].type__"
     }
-  ]
+  ],
+  "Auth": {
+    "ClientSecret": "__Auth.ClientSecret__",
+    "ValidAudiences": [
+      {
+        "foo": "__Auth.ValidAudiences[0].foo__",
+        "zoo": "__Auth.ValidAudiences[0].zoo__"
+      }
+    ],
+    "ConnectionStringKVSecretName": "__Auth.ConnectionStringKVSecretName__"
+  }
 }`;
 
   if (actual.trim() !== expected.trim()) {

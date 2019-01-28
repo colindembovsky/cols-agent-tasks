@@ -123,6 +123,28 @@ describe('replaceTokens', function () {
 
         done();
     });
+
+    it('should succeed with arrays', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'replaceTokens', 'test-arrays.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
 });
 
 describe('versionAssemblies', function () {
@@ -387,10 +409,32 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed for array objects', (done: MochaDone) => {
+    it('should succeed for primitive array objects', (done: MochaDone) => {
         // this.timeout(1000);
 
-        let tp = path.join(__dirname, 'tokenizer', 'test-array.js');
+        let tp = path.join(__dirname, 'tokenizer', 'test-arrays-primitive.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert(tr.succeeded, 'should have succeeded');
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 0, "should have 0 errors");
+
+        done();
+    });
+
+    it('should succeed for complex array objects', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'tokenizer', 'test-arrays-complex.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         let x = tr.run();

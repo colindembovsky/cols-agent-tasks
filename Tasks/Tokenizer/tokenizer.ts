@@ -3,9 +3,25 @@ import * as sh from 'shelljs';
 import * as fs from 'fs';
 import * as os from 'os';
 
+function shouldReplaceProp(includeSet: Set<string>, excludeSet: Set<string>, propPath: string) {
+    return (!includeSet && !excludeSet) ||
+        (includeSet && includeSet.has(propPath)) ||
+        (excludeSet && !excludeSet.has(propPath));
+}
+
+function arrayIsPrimitiveArray(item: any[]) {
+    // if `i === Object(i)` then i is a primitive
+    return item.every(p => { 
+        console.info(`-----> Checking ${p}`); 
+        let isPrimitive = p !== Object(p);
+        console.info(`-----> isPrim? ${isPrimitive}`); 
+        return isPrimitive;
+    });
+}
+
 function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet: Set<string>, excludeSet: Set<string>) {
     let success = true;
-    for (let prop of Object.getOwnPropertyNames(obj)) {
+    for (let prop of Object.keys(obj)) {
         let propPath = parent === '' ? `${prop}` : `${parent}.${prop}`;
 
         if (obj[prop] == null) {
@@ -19,24 +35,36 @@ function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet
             continue;
         }
 
+        let propType = typeof (obj[prop])
+        console.info(`${propPath} has typeof ${propType}`)
         if (obj[prop] instanceof Array) {
-            obj[prop].forEach((arrayObj, position) => {
-                // if we're already in an array, we need to update the index
-                var posOfBracket = propPath.indexOf("[");
-                if (posOfBracket > -1) {
-                    propPath = propPath.substr(0, posOfBracket);
+            if (arrayIsPrimitiveArray(obj[prop])) {
+                console.info(`${propPath} is a primitive array`);
+                if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
+                    console.info(`Tokenizing ${propPath}`);
+                    obj[prop] = [`__${propPath}[]__`];
+                } else {
+                    console.info(`Skipping ${propPath}`);
                 }
-                // now append the index
-                propPath += `[${position}]`;
-                success = success && replaceProps(nullBehavior, arrayObj, propPath, includeSet, excludeSet);
-            });
+            }
+            else {
+                console.info(`${propPath} is a complex array`);
+                obj[prop].forEach((arrayObj, position) => {
+                    // if we're already in an array, we need to update the index
+                    var posOfBracket = propPath.indexOf("[");
+                    if (posOfBracket > -1) {
+                        propPath = propPath.substr(0, posOfBracket);
+                    }
+                    
+                    // now append the index
+                    propPath += `[${position}]`;
+                    success = success && replaceProps(nullBehavior, arrayObj, propPath, includeSet, excludeSet);
+                });
+            }
         } else if (typeof (obj[prop]) === 'object') {
             success = success && replaceProps(nullBehavior, obj[prop], propPath, includeSet, excludeSet);
         } else {
-            if ((!includeSet && !excludeSet) ||
-                (includeSet && includeSet.has(propPath)) ||
-                (excludeSet && !excludeSet.has(propPath))
-            ) {
+            if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
                 console.info(`Tokenizing ${propPath}`);
                 obj[prop] = `__${propPath}__`;
             }
@@ -123,7 +151,7 @@ async function run() {
 
         for (var i = 0; i < files.length; i++) {
             let file = files[i];
-            console.info(`Starting tokenization in [${file}]`);
+            console.info(`Starting tokenization in [${file}]!`);
 
             let contents = fs.readFileSync(file).toString();
             // remove BOM if present

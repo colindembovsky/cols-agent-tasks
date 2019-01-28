@@ -12,7 +12,7 @@ var workingFolder = path.join(__dirname, "working");
 if (!fs.existsSync(workingFolder)) {
   fs.mkdirSync(workingFolder);
 }
-var tmpFile = path.join(workingFolder, "appsettings.config");
+var tmpFile = path.join(workingFolder, "file.json");
 
 // provide answers for task mock
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
@@ -20,66 +20,48 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
         "working": true
     },
     "findMatch": {
-        "appsettings.json" : [ tmpFile ]
+        "*.json" : [ tmpFile ]
     }
 };
 tmr.setAnswers(a);
 
 fs.writeFile(tmpFile, `
 {
-  "ConnectionStrings": {
-    "DefaultConnection": "__ConnectionStrings.DefaultConnection__"
-  },
-  "Tricky": {
-    "Gollum": "__Tricky.Gollum__",
-    "Hobbit": "__Tricky.Hobbit__"
-  },
-  "Logging": {
-    "IncludeScopes": false,
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
-    }
+  "Auth": {
+    "ClientSecret": "Secret",
+    "ValidAudiences": [
+      "__Auth.ValidAudiences[]__"
+    ],
+    "ConnectionStringKVSecretName": "__Auth.CS__"
   }
 }
-`,
+`, 
   (err) => {
 
   // set inputs
   tmr.setInput('sourcePath', "working");
-  tmr.setInput('filePattern', 'appsettings.json');
-  tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]*\\[?\\]?)__'); 
+  tmr.setInput('filePattern', '*.json');
+  tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]+(\\[\\])?)__'); 
 
   // set variables
-  process.env["CONNECTIONSTRINGS_DEFAULTCONNECTION"] = "testing";
-  process.env["TRICKY_GOLLUM"] = "Gollum2";
-  process.env["TRICKY_HOBBIT"] = "Sam";
+  process.env["AUTH_VALIDAUDIENCES"] = "a,b,c";
+  process.env["AUTH_CS"] = "someval";
 
   tmr.run();
 
   // validate the replacement
   let actual = fs.readFileSync(tmpFile).toString();
-
   var expected = `
 {
-  "ConnectionStrings": {
-    "DefaultConnection": "testing"
-  },
-  "Tricky": {
-    "Gollum": "Gollum2",
-    "Hobbit": "Sam"
-  },
-  "Logging": {
-    "IncludeScopes": false,
-    "LogLevel": {
-      "Default": "Debug",
-      "System": "Information",
-      "Microsoft": "Information"
-    }
+  "Auth": {
+    "ClientSecret": "Secret",
+    "ValidAudiences": [
+      "a","b","c"
+    ],
+    "ConnectionStringKVSecretName": "someval"
   }
 }
-  `;
+`;
 
   if (actual.trim() !== expected.trim()) {
     console.log(actual);

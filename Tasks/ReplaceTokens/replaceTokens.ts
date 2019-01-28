@@ -82,6 +82,11 @@ async function run() {
             var newContents = contents;
             while((match = reg.exec(contents)) !== null) {
                 var vName = match[1];
+                var vIsArray = vName.endsWith("[]");
+                if (vIsArray) {
+                    vName = vName.substring(0, vName.length - 2);
+                    console.info(`Detected that ${vName} is an array token`);
+                }
                 if (typeof secretTokens[vName.toLowerCase()] !== 'undefined') {
                     // try find the variable in secret tokens input first
                     newContents = newContents.replace(match[0], secretTokens[vName.toLowerCase()]);
@@ -89,10 +94,15 @@ async function run() {
                 } else {
                     // find the variable value in the environment
                     var vValue = tl.getVariable(vName);
+
                     if (typeof vValue === 'undefined') {
                         tl.warning(`Token [${vName}] does not have an environment value`);
                     } else {
-                        newContents = newContents.replace(match[0], vValue);
+                        if (vIsArray) {
+                            newContents = newContents.replace(match[0], vValue.replace(/,/g, "\",\""));
+                        } else {
+                            newContents = newContents.replace(match[0], vValue);
+                        }
                         console.info(`Replaced token [${vName }]`);
                     }           
                 }

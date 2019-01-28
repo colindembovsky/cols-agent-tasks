@@ -81,6 +81,60 @@ After tokenization, the file would appear as follows:
 }
 ```
 
+### Arrays
+Arrays are replaced according to the following rule: if it is an array of primitives (strings etc.) then replace the values in the array with a single variable name. If it is a complex array (objects) then iterate into the object. For example:
+
+```js
+{
+  "defaultAssembly": "WebApi",
+  "modules": [
+    {
+      "type": "WebApi.Infrastucture.ContainerModules.DataModule, WebApi",
+      "parameters": {
+        "connectionString": "",
+        "defaultSchema": ""
+      }
+    },
+    {
+      "type": "WebApi.Infrastucture.ContainerModules.MediatorModule, WebApi"
+    }
+  ],
+  "Auth": {
+    "ClientSecret": "",
+    "ValidAudiences": [
+      ""
+    ],
+    "ConnectionStringKVSecretName": ""
+  }
+}
+```
+becomes
+```js
+{
+  "defaultAssembly": "__defaultAssembly__",
+  "modules": [
+    {
+      "type": "__modules[0].type__",
+      "parameters": {
+        "connectionString": "__modules[0].parameters.connectionString__",
+        "defaultSchema": "__modules[0].parameters.defaultSchema__"
+      }
+    },
+    {
+      "type": "__modules[1].type__"
+    }
+  ],
+  "Auth": {
+    "ClientSecret": "__Auth.ClientSecret__",
+    "ValidAudiences": [
+      "__Auth.ValidAudiences__"
+    ],
+    "ConnectionStringKVSecretName": "__Auth.ConnectionStringKVSecretName__"
+  }
+}
+```
+> **Note:** In this example, `modules[]` is a complex array since it contains complex objects, while `Auth.ValidAudiences[]` is a primitive array (containing strings).
+
 ## Using Tokenizer with ReplaceTokens
 It is expected that this combination will be used for DotNet Core applications. You will likely want to tokenize the appsettings.json file during the build and then use the [ReplaceTokens](../ReplaceTokens) task to fill in
 values during the Release. This is possible, but you will need to change the defaults for the ReplaceTokens task in order to work with
@@ -89,4 +143,7 @@ the json "namespaces". The following process will get you going:
 1. Use the Tokenizer to tokenize the appsettings.json file as described above.
 2. On the Release, enter the name of the tokens but substitute an `_` (underscore) for the `.` (period). Using the above example, you'd need three environment
 variables: `ConnectionStrings_DefaultConnection`, `Tricky_Gollum` and `Tricky_Hobbit`.
-3. On the Release, add a ReplaceTokens task and change the default Token Regex parameter to `__(\w+[\.\w+]*)__`
+3. On the Release, add a ReplaceTokens task and change the default Token Regex parameter to `__(\w+[\.\w+]+(\[\])?)__`
+4. If you have array entries, the token will be suffixed with `[]` (for example `__Client.ValidAudiences[]__`). In this case, the variable you should define when doing replacement would be the name _without the brackets_: in this case `Client_ValidAudiences`. The value of this variable should be a comma-separated list and will be expanded appropriately (i.e. if your variable value is `a,b` then the value injected will be `"a","b"`).
+
+> **Note:** Though you can tokenize int arrays, the ReplaceTokens task can only replace string arrays.

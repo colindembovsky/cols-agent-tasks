@@ -22,8 +22,8 @@ steps:
 - task: PublishTestResults@2
   displayName: 'Publish Test Results test-results.xml'
   inputs:
-    testResultsFiles: 'test-results.xml'
-    testRunTitle: 'Mocha Tests'
+    testResultsFiles: '$(Build.SourcesDirectory)/test-results.xml'
+    testRunTitle: 'Publish test results'
   condition: succeededOrFailed()
 
 - task: PublishCodeCoverageResults@1

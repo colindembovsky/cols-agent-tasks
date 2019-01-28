@@ -41,7 +41,7 @@ fs.writeFile(tmpFile, `
   // set inputs
   tmr.setInput('sourcePath', "working");
   tmr.setInput('filePattern', '*.json');
-  tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]*\\[?\\]?)__'); 
+  tmr.setInput('tokenRegex', '__(\\w+[\\.\\w+]+(\\[\\])?)__'); 
 
   // set variables
   process.env["AUTH_VALIDAUDIENCES"] = "a,b,c";

@@ -143,7 +143,7 @@ the json "namespaces". The following process will get you going:
 1. Use the Tokenizer to tokenize the appsettings.json file as described above.
 2. On the Release, enter the name of the tokens but substitute an `_` (underscore) for the `.` (period). Using the above example, you'd need three environment
 variables: `ConnectionStrings_DefaultConnection`, `Tricky_Gollum` and `Tricky_Hobbit`.
-3. On the Release, add a ReplaceTokens task and change the default Token Regex parameter to `__(\w+[\.\w+]*)__`
+3. On the Release, add a ReplaceTokens task and change the default Token Regex parameter to `__(\w+[\.\w+]+(\[\])?)__`
 4. If you have array entries, the token will be suffixed with `[]` (for example `__Client.ValidAudiences[]__`). In this case, the variable you should define when doing replacement would be the name _without the brackets_: in this case `Client_ValidAudiences`. The value of this variable should be a comma-separated list and will be expanded appropriately (i.e. if your variable value is `a,b` then the value injected will be `"a","b"`).
 
 > **Note:** Though you can tokenize int arrays, the ReplaceTokens task can only replace string arrays.

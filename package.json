@@ -12,7 +12,7 @@
     "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer && yarn install-libs-tagBuild && yarn install-libs-routeTraffic",
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
-    "junittest": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --require source-map-support/register --full-trace --timeout 45000 --bail --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results.xml",
+    "junittest": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --require source-map-support/register --full-trace --timeout 45000 --bail --reporter spec --reporter mocha-junit-reporter --reporter-options mochaFile=./test-results.xml",
     "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --bail --reporter spec",
     "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --bail",
     "cover": "nyc yarn junittest",

@@ -18,6 +18,7 @@ steps:
 
 - script: 'yarn prepextension' 
   displayName: 'Run yarn prepextension'
+  workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results test-results.xml'

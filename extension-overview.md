@@ -49,7 +49,7 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
-### 1.4.83
+### 1.4.84
 - DacPacReport
 	- Fix `vswhere.exe` missing [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/117)
 

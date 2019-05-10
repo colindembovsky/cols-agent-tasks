@@ -20,6 +20,10 @@ steps:
   displayName: 'Run yarn prepextension'
   workingDirectory: '$(Build.SourcesDirectory)'
 
+- script: 'ls -la Tasks/DacPacReport'
+  displayName: 'ls dacpac report path'
+  workingDirectory: '$(Build.SourcesDirectory)'
+
 - task: PublishTestResults@2
   displayName: 'Publish Test Results test-results.xml'
   inputs:

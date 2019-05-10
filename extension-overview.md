@@ -49,6 +49,10 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
+### 1.4.83
+- DacPacReport
+	- Fix `vswhere.exe` missing [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/117)
+
 ### 1.4.79
 - Tokenizer & ReplaceTokens
 	- Fixed [arrays tokenization](https://github.com/colindembovsky/cols-agent-tasks/issues/43) from [this PR](https://github.com/colindembovsky/cols-agent-tasks/pull/112) - thanks to [@RunnX](https://github.com/RunnX) for contributions!

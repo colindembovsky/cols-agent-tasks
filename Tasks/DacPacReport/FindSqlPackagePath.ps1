@@ -2,6 +2,26 @@
 # from https://raw.githubusercontent.com/Microsoft/vsts-tasks/master/Tasks/SqlAzureDacpacDeploymentV1/FindSqlPackagePath.ps1
 #
 
+function Find-File {
+    [CmdletBinding()]
+    param(
+        [string]$fileName
+    )
+
+    $file_location = Get-Command $fileName -erroraction 'silentlycontinue'
+    if(!$file_location){
+        $file_location = Get-Command $PSScriptRoot\$fileName -erroraction 'silentlycontinue'
+    }
+
+    if(!$file_location){
+         throw [System.IO.FileNotFoundException] "$fileName not found."
+    }
+
+    $file_location = $file_location | Select-Object -ExpandProperty Definition
+
+    return $file_location
+}
+
 function Get-SqlPackageOnTargetMachine
 {
     try
@@ -445,7 +465,12 @@ function Get-VisualStudio_15_0 {
         # may be something like 15.2.
         Write-Verbose "Getting latest Visual Studio 15 setup instance."
         $output = New-Object System.Text.StringBuilder
-        Invoke-VstsTool -FileName "$PSScriptRoot\vswhere.exe" -Arguments "-version [15.0,16.0) -latest -format json" -RequireExitCodeZero 2>&1 |
+
+        # Attempt to locate the vswhere.exe command which could either be in the path or in 
+        # the script root.  
+        $vswhere_location = Find-File -fileName "vswhere.exe"
+
+        Invoke-VstsTool -FileName "$vswhere_location" -Arguments "-version [15.0,16.0) -latest -format json" -RequireExitCodeZero 2>&1 |
             ForEach-Object {
                 if ($_ -is [System.Management.Automation.ErrorRecord]) {
                     Write-Verbose "STDERR: $($_.Exception.Message)"
@@ -464,7 +489,8 @@ function Get-VisualStudio_15_0 {
             # the same scheme. It appears to follow the 15.<UPDATE_NUMBER>.* versioning scheme.
             Write-Verbose "Getting latest BuildTools 15 setup instance."
             $output = New-Object System.Text.StringBuilder
-            Invoke-VstsTool -FileName "$PSScriptRoot\vswhere.exe" -Arguments "-version [15.0,16.0) -products Microsoft.VisualStudio.Product.BuildTools -latest -format json" -RequireExitCodeZero 2>&1 |
+
+            Invoke-VstsTool -FileName "$vswhere_location" -Arguments "-version [15.0,16.0) -products Microsoft.VisualStudio.Product.BuildTools -latest -format json" -RequireExitCodeZero 2>&1 |
                 ForEach-Object {
                     if ($_ -is [System.Management.Automation.ErrorRecord]) {
                         Write-Verbose "STDERR: $($_.Exception.Message)"

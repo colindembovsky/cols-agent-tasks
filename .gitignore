@@ -205,3 +205,4 @@ coverage
 test-results.xml
 .taskkey
 .\nyc_output
+Tasks/DacPacReport/vswhere.exe

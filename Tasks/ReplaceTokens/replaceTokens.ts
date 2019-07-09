@@ -25,8 +25,13 @@ async function run() {
         tl.checkPath(sourcePath, "sourcePath");
 
         var filePattern = tl.getInput("filePattern", true);
+        var warningsAsErrors = tl.getBoolInput("warningsAsErrors", false);
         var tokenRegex = tl.getInput("tokenRegex", true);
         var secretTokenInput = tl.getInput("secretTokens", false);
+
+        const warning = warningsAsErrors ?
+            (message: string) => tl.error(message) :
+            (message: string) => tl.warning(message);
 
         // store the tokens and values if there is any secret token input 
         var secretTokens: {[id: string]: string} = {};
@@ -64,7 +69,7 @@ async function run() {
         if (!files || files.length === 0) {
             var msg = `Could not find files with glob [${filePattern}].`;
             if (os.platform() !== "win32") {
-                tl.warning("No files found for pattern. Non-windows file systems are case sensitvive, so check the case of your path and file patterns.");
+                warning("No files found for pattern. Non-windows file systems are case sensitvive, so check the case of your path and file patterns.");
             }
             tl.setResult(tl.TaskResult.Failed, msg);
         }
@@ -96,7 +101,7 @@ async function run() {
                     var vValue = tl.getVariable(vName);
 
                     if (typeof vValue === 'undefined') {
-                        tl.warning(`Token [${vName}] does not have an environment value`);
+                        warning(`Token [${vName}] does not have an environment value`);
                     } else {
                         if (vIsArray) {
                             newContents = newContents.replace(match[0], vValue.replace(/,/g, "\",\""));

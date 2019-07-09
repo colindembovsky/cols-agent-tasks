@@ -124,7 +124,49 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with arrays', (done: MochaDone) => {
+    it('should report warning when warnings without warningsAsErrors', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-error-off.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert.equal(tr.warningIssues.length, 1, "should have 1 warning");
+        assert.equal(tr.errorIssues.length, 0, "should have no errors");
+
+        done();
+    });
+
+    it('should report error when warnings with warningsAsErrors', (done: MochaDone) => {
+        // this.timeout(1000);
+
+        let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-errors-on.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        let x = tr.run();
+        if (debug) {
+            console.log(tr.stdout);
+        }
+        if (tr.stderr) {
+           done(tr.stderr);
+           return;
+        }
+
+        assert.equal(tr.warningIssues.length, 0, "should have no warnings");
+        assert.equal(tr.errorIssues.length, 1, "should have 1 error");
+
+        done();
+    });
+
+    it('should with arrays', (done: MochaDone) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-arrays.js');

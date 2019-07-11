@@ -42,6 +42,13 @@
       "required": true
     },
     {
+      "name": "warningsAsErrors",
+      "type": "boolean",
+      "label": "Treat warnings as errors",
+      "defaultValue": false,
+      "helpMarkDown": "When switched to true, warnings are treated as errors causing breakage of build."
+    },
+    {
       "name": "tokenRegex",
       "type": "string",
       "label": "Token Regex",

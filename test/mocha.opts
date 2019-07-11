@@ -1,0 +1,8 @@
+--compilers ts-node/register
+--require source-map-support/register
+--full-trace
+--bail
+--timeout 45000
+#--reporter mocha-junit-reporter
+#--reporter-options=mochaFile=./test-results.xml
+test/_testsuite.ts

@@ -1,0 +1,10 @@
+
+{
+  "Auth": {
+    "ClientSecret": "Secret",
+    "ValidAudiences": [
+      "a","b","c"
+    ],
+    "ConnectionStringKVSecretName": "someval"
+  }
+}

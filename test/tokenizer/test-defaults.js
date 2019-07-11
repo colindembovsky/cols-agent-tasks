@@ -1,0 +1,83 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tmrm = require("azure-pipelines-task-lib/mock-run");
+const path = require("path");
+const fs = require("fs");
+let rootDir = path.join(__dirname, '../../Tasks', 'Tokenizer');
+let taskPath = path.join(rootDir, 'tokenizer.js');
+let tmr = new tmrm.TaskMockRunner(taskPath);
+// set up a tmp file for the test
+var workingFolder = path.join(__dirname, "working");
+if (!fs.existsSync(workingFolder)) {
+    fs.mkdirSync(workingFolder);
+}
+var tmpFile = path.join(workingFolder, "appsettings.json");
+// provide answers for task mock
+let a = {
+    "checkPath": {
+        "working": true
+    },
+    "findMatch": {
+        "appsettings.json": [tmpFile]
+    }
+};
+tmr.setAnswers(a);
+fs.writeFile(tmpFile, `
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\\\mssqllocaldb;Database=aspnet-WebApplication1-26e8893e-d7c0-4fc6-8aab-29b59971d622;Trusted_Connection=True;MultipleActiveResultSets=true"
+  },
+  "Tricky": {
+    "Tricky": "Tricky",
+    "Tricky1": {
+        "Tricky2": "Tricky"
+    }
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Debug",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}
+`, (err) => {
+    // set inputs
+    tmr.setInput('sourcePath', "working");
+    tmr.setInput('filePattern', 'appsettings.json');
+    tmr.setInput('tokenizeType', 'Json');
+    tmr.setInput('includes', 'ConnectionStrings.DefaultConnection,Logging.LogLevel.Default');
+    tmr.setInput('excludes', '');
+    tmr.setInput('nullBehavior', 'warning');
+    tmr.run();
+    // validate the replacement
+    let actual = fs.readFileSync(tmpFile).toString();
+    var expected = `{
+  "ConnectionStrings": {
+    "DefaultConnection": "__ConnectionStrings.DefaultConnection__"
+  },
+  "Tricky": {
+    "Tricky": "Tricky",
+    "Tricky1": {
+      "Tricky2": "Tricky"
+    }
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "__Logging.LogLevel.Default__",
+      "System": "Information",
+      "Microsoft": "Information"
+    }
+  }
+}`;
+    if (actual.trim() !== expected.trim()) {
+        console.log(actual);
+        console.error("Tokenization failed.");
+    }
+    else {
+        console.log("Tokenization succeeded!");
+    }
+});
+//# sourceMappingURL=test-defaults.js.map

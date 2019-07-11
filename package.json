@@ -12,10 +12,10 @@
     "install-libs": "yarn install-libs-cov-gate && yarn install-libs-rep-tokens && yarn install-libs-ver-asms && yarn install-libs-tokenizer && yarn install-libs-tagBuild && yarn install-libs-routeTraffic",
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
-    "junittest": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --require source-map-support/register --recursive --full-trace --timeout 45000 --bail --reporter mocha-junit-reporter --reporter-options=mochaFile=./test-results.xml",
-    "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --bail --reporter spec",
-    "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 mocha tests/_testsuite.ts --require ts-node/register --bail",
-    "cover": "nyc npm run junittest",
+    "junittest": "NODE_ENV=test NODE_NO_WARNINGS=1 nyc mocha",
+    "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.ts --require ts-node/register --bail --reporter spec",
+    "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.ts --require ts-node/register --bail",
+    "cover": "yarn build && cross-env yarn junittest",
     "install-vswhere": "curl https://github.com/Microsoft/vswhere/releases/download/1.0.62/vswhere.exe -Lo Tasks/DacPacReport/vswhere.exe",
     "prepextension": "yarn install-vswhere && yarn install-libs && yarn cover"
   },
@@ -55,8 +55,7 @@
     "shelljs": "^0.8.3",
     "source-map-support": "^0.5.12",
     "ts-node": "^7.0.1",
-    "typescript": "^3.0.3",
-    "@istanbuljs/nyc-config-typescript": "^0.1.3"
+    "typescript": "^3.0.3"
   },
   "main": "index.js",
   "dependencies": {
@@ -66,30 +65,25 @@
     "azure-pipelines-task-lib": "^2.8.0"
   },
   "nyc": {
-    "instrument": true,
-    "extends": "@istanbuljs/nyc-config-typescript",
     "include": [
-      "Tasks/VersionAssemblies/*.js",
-      "Tasks/ReplaceTokens/*.js",
-      "Tasks/Tokenizer/*.js",
-      "Tasks/CoverageGate/*.js",
-      "Tasks/TagBuild/*.js",
-      "Tasks/RouteTraffic/*.js",
-      "test/**/*.ts"
+      "Tasks/**/*.{js,ts}",
+      "test/**/*.{js,ts}"
+    ],
+    "exclude": [
+      "**/fileencoding.{js,ts}",
+      "test/**/*.{js,ts}"
     ],
     "extension": [
       ".ts"
-    ],
-    "require": [
-      "ts-node/register",
-      "source-map-support/register"
     ],
     "reporter": [
       "text",
       "cobertura",
       "html"
     ],
-    "source-map": true,
-    "all": true
+    "all": true,
+    "sourceMap": true,
+    "instrument": true,
+    "cache": false
   }
 }

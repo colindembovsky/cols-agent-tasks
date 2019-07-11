@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+azure-pipelines-task-lib@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/azure-pipelines-task-lib/-/azure-pipelines-task-lib-2.8.0.tgz#8a0117a98f86c2e9ee85333e649874bf83ccb836"
+  integrity sha512-PR8oap9z2j+o455W3PwAfB4SX1p4GdJc9OHQaQV0V+iQS1IBY6dVgcNSQMkHAXb0V1bbuLOFBLanXPe5eSgGTQ==
+  dependencies:
+    minimatch "3.0.4"
+    mockery "^1.7.0"
+    q "^1.1.2"
+    semver "^5.1.0"
+    shelljs "^0.3.0"
+    uuid "^3.0.1"
+
 balanced-match@^0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-0.4.2.tgz#cb3f3e3c732dc0f01ee70b403f302e61d7709838"
@@ -112,9 +124,10 @@ shelljs@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.3.0.tgz#3596e6307a781544f591f37da618360f31db57b1"
 
-shelljs@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.2.tgz#345b7df7763f4c2340d584abb532c5f752ca9e35"
+shelljs@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.8.3.tgz#a7f3319520ebf09ee81275b2368adb286659b097"
+  integrity sha512-fc0BKlAWiLpwZljmOvAOTE/gXawtCoNrP5oaY7KIaQbbyHeQVg01pSEuEGvGh3HEdBU4baCD7wQBwADmM/7f7A==
   dependencies:
     glob "^7.0.0"
     interpret "^1.0.0"
@@ -123,17 +136,6 @@ shelljs@^0.8.2:
 uuid@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
-
-vsts-task-lib@^2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/vsts-task-lib/-/vsts-task-lib-2.6.1.tgz#f8a27e1b941d06a3e7198fbe7fb313c337b37031"
-  dependencies:
-    minimatch "3.0.4"
-    mockery "^1.7.0"
-    q "^1.1.2"
-    semver "^5.1.0"
-    shelljs "^0.3.0"
-    uuid "^3.0.1"
 
 wrappy@1:
   version "1.0.2"

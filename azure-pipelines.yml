@@ -31,16 +31,12 @@ steps:
     testRunTitle: 'Publish test results'
   condition: succeededOrFailed()
 
-# taking these out since publish test results now calculated coverage automatically
-# - script: 'cat $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml' 
-#   displayName: 'Check coverage file'
-
-# - task: PublishCodeCoverageResults@1
-#   displayName: 'Publish Code Coverage Results $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
-#   inputs:
-#     codeCoverageTool: Cobertura
-#     summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
-#     reportDirectory: '$(Build.SourcesDirectory)/coverage'
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish Code Coverage Results $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+    reportDirectory: '$(Build.SourcesDirectory)/coverage'
 
 - task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
   displayName: 'Package real Extension '

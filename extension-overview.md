@@ -49,6 +49,13 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
+### 1.4.91
+- ReplaceTokens
+	- Added [Throw error on missing variable](https://github.com/colindembovsky/cols-agent-tasks/issues/109) option (thanks to [Gabriel Górski](https://github.com/Glaeqen))
+- General
+	- Updated code coverage settings to get coverage to calculate for tests
+	- Updated vsts-task-lib to [azure-pipelines-task-lib](https://github.com/microsoft/azure-pipelines-task-lib)
+
 ### 1.4.85
 - DacPacReport
 	- Fix `vswhere.exe` missing [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/117)

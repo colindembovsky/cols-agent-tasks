@@ -13,15 +13,19 @@ steps:
   inputs:
     checkLatest: true
 
-- script: 'yarn install' 
+- task: CacheBeta@0
+  inputs:
+    key: |
+      yarn
+      $(Build.SourcesDirectory)/yarn.lock
+    path: $(Pipeline.Workspace)/.yarn
+  displayName: Cache Yarn packages
+
+- script: 'yarn install --frozen-lockfile' 
   displayName: 'Run yarn install'
 
 - script: 'yarn prepextension' 
   displayName: 'Run yarn prepextension'
-  workingDirectory: '$(Build.SourcesDirectory)'
-
-- script: 'ls -la Tasks/DacPacReport'
-  displayName: 'ls dacpac report path'
   workingDirectory: '$(Build.SourcesDirectory)'
 
 - task: PublishTestResults@2

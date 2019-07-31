@@ -21,6 +21,9 @@ steps:
     path: $(Pipeline.Workspace)/.yarn
   displayName: Cache Yarn packages
 
+- script: 'yarn cache dir' 
+  displayName: 'Determine yarn cache dir'
+
 - script: 'yarn install --frozen-lockfile' 
   displayName: 'Run yarn install'
 

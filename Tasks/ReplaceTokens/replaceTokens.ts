@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as os from 'os';
 
 async function run() {
+    var errCount = 0;
     try {
         tl.debug("Starting Replace Tokens task");
 
@@ -30,7 +31,7 @@ async function run() {
         var secretTokenInput = tl.getInput("secretTokens", false);
 
         const warning = warningsAsErrors ?
-            (message: string) => tl.error(message) :
+            (message: string) => { tl.error(message); errCount++ } :
             (message: string) => tl.warning(message);
 
         // store the tokens and values if there is any secret token input 
@@ -125,6 +126,10 @@ async function run() {
             msg = err.message;
         }
         tl.setResult(tl.TaskResult.Failed, msg);
+    }
+
+    if (errCount > 0) {
+        tl.setResult(tl.TaskResult.Failed, "Errors were encountered - please check logs for details.");
     }
 
     tl.debug("Leaving Replace Tokens task");

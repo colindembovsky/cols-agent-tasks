@@ -139,6 +139,7 @@ describe('replaceTokens', function () {
            return;
         }
 
+        assert(tr.succeeded, 'should have succeeded');
         assert.equal(tr.warningIssues.length, 1, "should have 1 warning");
         assert.equal(tr.errorIssues.length, 0, "should have no errors");
 
@@ -160,8 +161,10 @@ describe('replaceTokens', function () {
            return;
         }
 
+        assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
-        assert.equal(tr.errorIssues.length, 1, "should have 1 error");
+        assert.equal(tr.errorIssues.length, 2, "should have 2 errors");
+        assert.equal(tr.errorIssues[0], "Token [CoolKey] does not have an environment value");
 
         done();
     });

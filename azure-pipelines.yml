@@ -13,12 +13,18 @@ steps:
   inputs:
     checkLatest: true
 
+- script: |
+    export cpath=$(yarn cache dir)
+    echo "Yarn cache path is [$cpath]"
+    echo "##vso[task.setvariable variable=YARN_CACHE_PATH;]$cpath"
+  displayName: 'Calculate yarn cache path'
+
 - task: CacheBeta@0
   inputs:
     key: |
       yarn
       $(Build.SourcesDirectory)/yarn.lock
-    path: $(Pipeline.Workspace)/.cache/yarn
+    path: $YARN_CACHE_PATH
   displayName: Cache Yarn packages
 
 - script: 'yarn install --frozen-lockfile' 

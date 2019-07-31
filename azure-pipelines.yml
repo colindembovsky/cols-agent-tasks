@@ -18,11 +18,8 @@ steps:
     key: |
       yarn
       $(Build.SourcesDirectory)/yarn.lock
-    path: $(Pipeline.Workspace)/.yarn
+    path: $(Pipeline.Workspace)/.cache/yarn
   displayName: Cache Yarn packages
-
-- script: 'yarn cache dir' 
-  displayName: 'Determine yarn cache dir'
 
 - script: 'yarn install --frozen-lockfile' 
   displayName: 'Run yarn install'

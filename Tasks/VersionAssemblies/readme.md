@@ -8,7 +8,7 @@ This task versions assemblies so that the assembly version matches the version p
 ## YAML
 ```yaml
 steps:
-- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.version-assemblies-task.VersionAssemblies@2
+- task: colinsalmcorner.colinsalmcorner-buildtasks.version-assemblies-task.VersionAssemblies@2
   displayName: 'Version Assemblies using **\AssemblyInfo.*'
   inputs:
     sourcePath: MyApp  # Path to search for files
@@ -22,6 +22,8 @@ steps:
     # replacePostfix: </string>  # use to add a replacement postfix
     # failIfNoMatchFound: false  # set to true to fail if no match pattern is found
 ```
+
+> **NOTE** If you do not use the fully qualified name (`colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.VersionAssemblies@2`) and instead use just `VersionAssemblies@2` you may get "ambiguous task" errors if you install any other extension with a task called "VersionAssemblies". See [this issue](https://github.com/colindembovsky/cols-agent-tasks/issues/126) for details.
 
 ## Settings
 The task requires the following settings:

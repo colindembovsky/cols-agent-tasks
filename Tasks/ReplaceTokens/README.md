@@ -8,7 +8,7 @@ This task invokes replaces tokens in a file with values from the matching variab
 ## YAML
 ```yaml
 steps:
-- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.replace-tokens-task.ReplaceTokens@1
+- task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
   displayName: 'Replace tokens in MyPath.'
   inputs:
     sourcePath: MyPath  # Root path to find files in.
@@ -16,6 +16,8 @@ steps:
     # tokenRegex: '__(\w+)__'  # regex pattern to use to find tokens
     # secretTokens: df  # DO NOT USE UNLESS YOU'RE ON TFS 2015. Specify the secret values here
 ```
+
+> **NOTE** If you do not use the fully qualified name (`colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1`) and instead use just `ReplaceTokens@1` you may get "ambiguous task" errors if you install any other extension with a task called "ReplaceTokens". See [this issue](https://github.com/colindembovsky/cols-agent-tasks/issues/126) for details.
 
 ## Settings
 The task requires the following settings:

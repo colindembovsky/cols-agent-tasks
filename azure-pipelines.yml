@@ -24,7 +24,7 @@ steps:
     key: |
       yarn
       $(Build.SourcesDirectory)/yarn.lock
-    path: $YARN_CACHE_PATH
+    path: $(YARN_CACHE_PATH)
   displayName: Cache Yarn packages
 
 - script: 'yarn install --frozen-lockfile' 
@@ -33,6 +33,9 @@ steps:
 - script: 'yarn prepextension' 
   displayName: 'Run yarn prepextension'
   workingDirectory: '$(Build.SourcesDirectory)'
+
+- script: ls -la $(YARN_CACHE_PATH)
+  displayName: 'List yarn cache path contents'
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results test-results.xml'

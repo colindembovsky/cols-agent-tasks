@@ -235,7 +235,7 @@ if ($compareBuild -ne $null) {
         if ($targetDacpac -ne $null) {
             Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
-            if ($reverse) {
+            if ($reverse -eq $TRUE) {
                 New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
             } else {
                 New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs

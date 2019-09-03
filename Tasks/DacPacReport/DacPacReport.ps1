@@ -11,6 +11,7 @@ $targetDacpacPath = Get-VstsInput -Name "targetDacpacPath" -Require
 $dacpacName = Get-VstsInput -Name "dacpacName" -Require
 $extraArgs = Get-VstsInput -Name "extraArgs"
 $reverse = Get-VstsInput -Name "reverse"
+$userSqlPackagePath = Get-VstsInput -Name "userSqlPackagePath"
 
 function Get-LatestBuild {
     param(
@@ -201,7 +202,21 @@ some housekeeping code and any pre- and post-deployment scripts you may have in 
 #
 # Main script
 #
-$SqlPackagePath = Get-SqlPackageOnTargetMachine
+try {
+    $SqlPackagePath = Get-SqlPackageOnTargetMachine
+} catch {
+    Write-Warning "Could not find SQL Package path: $_"
+    $SqlPackagePath = ""
+}
+
+if ($SqlPackagePath -eq $null -or $SqlPackagePath -eq "") {
+    if ($userSqlPackagePath -eq $null -or $userSqlPackagePath -eq "") {
+        Write-Error "SQL Package Path could not be located and no user value has been specified. Please set the SQL Package path parameter for the task."
+        throw
+    } else { 
+        $SqlPackagePath = $userSqlPackagePath
+    }
+}
 Write-Verbose -Verbose "Using sqlPackage path $SqlPackagePath"
 
 $rootUri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis"

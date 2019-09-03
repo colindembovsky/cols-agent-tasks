@@ -69,6 +69,15 @@
       "required": false,
       "helpMarkDown": "Check this to reverse the source and target.",
       "groupName": "advanced"
+    },
+    {
+      "name": "userSqlPackagePath",
+      "type": "string",
+      "label": "SQL Package exe filepath",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Specify the sqlpackage.exe filepath - use this only if the default does not detect the path correctly.",
+      "groupName": "advanced"
     }
   ],
   "execution": {

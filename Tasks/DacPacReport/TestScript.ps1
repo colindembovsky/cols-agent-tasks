@@ -1,7 +1,7 @@
 #
 # DEBUGGING:
-# 1. clone the vsts-task-lib to the same level as cols-agent-tasks
-#    Import-Module ..\..\..\vsts-task-lib\powershell\VstsTaskSdk\VstsTaskSdk.psd1 -ArgumentList @{ NonInteractive = $true } -Verbose:$true
+# 1. clone the azure-pipelines-task-lib to the same level as cols-agent-tasks
+#    Import-Module ..\..\..\azure-pipelines-task-lib\powershell\VstsTaskSdk\VstsTaskSdk.psd1 -ArgumentList @{ NonInteractive = $true } -Verbose:$true
 # 3. Invoke this script
 #
 

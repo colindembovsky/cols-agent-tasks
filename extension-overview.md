@@ -49,9 +49,9 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
-### 1.4.85
+### 1.4.104
 - DacPacReport
-	- Fix `vswhere.exe` missing [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/117)
+	- Fix `sqlpacakge.exe` missing path [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/130) by updating PS module as well as adding a new param to allow users to specify the path to `sqlpackage.exe`
 
 ### 1.4.94
 - ReplaceTokens

@@ -206,19 +206,14 @@ try {
 # Main script
 #
     try {
-        $SqlPackagePath = Get-SqlPackageOnTargetMachine
-    } catch {
-        Write-Warning "Could not find SQL Package path: $_"
-        $SqlPackagePath = ""
-    }
-    
-    if ($SqlPackagePath -eq $null -or $SqlPackagePath -eq "") {
         if ($userSqlPackagePath -eq $null -or $userSqlPackagePath -eq "") {
-            Write-Error "SQL Package Path could not be located and no user value has been specified. Please set the SQL Package path parameter for the task."
-            throw
+            $SqlPackagePath = Get-SqlPackageOnTargetMachine
         } else { 
             $SqlPackagePath = $userSqlPackagePath
         }
+    } catch {
+        Write-Warning "Could not find SQL Package path: $_"
+        throw
     }
     Write-Verbose -Verbose "Using sqlPackage path $SqlPackagePath"
 

@@ -27,7 +27,7 @@ $env:INPUT_DROPNAME="drop"
 $env:INPUT_DACPACNAME="fabFiber.Schema"
 $env:INPUT_TARGETDACPACPATH="C:\mData\ws\col\dac"
 $env:INPUT_EXTRAARGS="/v:Hello=Bye"
-$env:INPUT_USERSQLPACKAGEPATH="c:\foo\foo.exe"
+#$env:INPUT_USERSQLPACKAGEPATH="c:\foo\foo.exe"
 
 # invoke the script
 Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create('. .\DacPacReport.ps1')) -Verbose

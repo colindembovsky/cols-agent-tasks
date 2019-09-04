@@ -227,8 +227,8 @@ try {
 
     # just for testing
     if (-not ($env:TF_BUILD)) {
-    Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
-    $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
+        Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
+        $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
     }
 
     $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
@@ -249,8 +249,10 @@ try {
                 Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
                 if ($reverse) {
+                    Write-Verbose "Using 'reverse' logic since reverse was set to true"
                     New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
                 } else {
+                    Write-Verbose "Using original logic since reverse was set to false"
                     New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
                 }
 

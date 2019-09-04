@@ -1,5 +1,104 @@
 <#
 .SYNOPSIS
+Gets assembly reference information.
+
+.DESCRIPTION
+Not supported for use during task execution. This function is only intended to help developers resolve the minimal set of DLLs that need to be bundled when consuming the VSTS REST SDK or TFS Extended Client SDK. The interface and output may change between patch releases of the VSTS Task SDK.
+
+Only a subset of the referenced assemblies may actually be required, depending on the functionality used by your task. It is best to bundle only the DLLs required for your scenario.
+
+Walks an assembly's references to determine all of it's dependencies. Also walks the references of the dependencies, and so on until all nested dependencies have been traversed. Dependencies are searched for in the directory of the specified assembly. NET Framework assemblies are omitted.
+
+See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
+
+.PARAMETER LiteralPath
+Assembly to walk.
+
+.EXAMPLE
+Get-VstsAssemblyReference -LiteralPath C:\nuget\microsoft.teamfoundationserver.client.14.102.0\lib\net45\Microsoft.TeamFoundation.Build2.WebApi.dll
+#>
+function Get-AssemblyReference {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$LiteralPath)
+
+    $ErrorActionPreference = 'Stop'
+    Write-Warning "Not supported for use during task execution. This function is only intended to help developers resolve the minimal set of DLLs that need to be bundled when consuming the VSTS REST SDK or TFS Extended Client SDK. The interface and output may change between patch releases of the VSTS Task SDK."
+    Write-Output ''
+    Write-Warning "Only a subset of the referenced assemblies may actually be required, depending on the functionality used by your task. It is best to bundle only the DLLs required for your scenario."
+    $directory = [System.IO.Path]::GetDirectoryName($LiteralPath)
+    $hashtable = @{ }
+    $queue = @( [System.Reflection.Assembly]::ReflectionOnlyLoadFrom($LiteralPath).GetName() )
+    while ($queue.Count) {
+        # Add a blank line between assemblies.
+        Write-Output ''
+
+        # Pop.
+        $assemblyName = $queue[0]
+        $queue = @( $queue | Select-Object -Skip 1 )
+
+        # Attempt to find the assembly in the same directory.
+        $assembly = $null
+        $path = "$directory\$($assemblyName.Name).dll"
+        if ((Test-Path -LiteralPath $path -PathType Leaf)) {
+            $assembly = [System.Reflection.Assembly]::ReflectionOnlyLoadFrom($path)
+        } else {
+            $path = "$directory\$($assemblyName.Name).exe"
+            if ((Test-Path -LiteralPath $path -PathType Leaf)) {
+                $assembly = [System.Reflection.Assembly]::ReflectionOnlyLoadFrom($path)
+            }
+        }
+
+        # Make sure the assembly full name matches, not just the file name.
+        if ($assembly -and $assembly.GetName().FullName -ne $assemblyName.FullName) {
+            $assembly = $null
+        }
+
+        # Print the assembly.
+        if ($assembly) {
+            Write-Output $assemblyName.FullName
+        } else {
+            if ($assemblyName.FullName -eq 'Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed') {
+                Write-Warning "*** NOT FOUND $($assemblyName.FullName) *** This is an expected condition when using the HTTP clients from the 15.x VSTS REST SDK. Use Get-VstsVssHttpClient to load the HTTP clients (which applies a binding redirect assembly resolver for Newtonsoft.Json). Otherwise you will need to manage the binding redirect yourself."
+            } else {
+                Write-Warning "*** NOT FOUND $($assemblyName.FullName) ***"
+            }
+    
+            continue
+        }
+
+        # Walk the references.
+        $refAssemblyNames = @( $assembly.GetReferencedAssemblies() )
+        for ($i = 0 ; $i -lt $refAssemblyNames.Count ; $i++) {
+            $refAssemblyName = $refAssemblyNames[$i]
+
+            # Skip framework assemblies.
+            $fxPaths = @(
+                "$env:windir\Microsoft.Net\Framework64\v4.0.30319\$($refAssemblyName.Name).dll"
+                "$env:windir\Microsoft.Net\Framework64\v4.0.30319\WPF\$($refAssemblyName.Name).dll"
+            )
+            $fxPath = $fxPaths |
+                Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
+                Where-Object { [System.Reflection.Assembly]::ReflectionOnlyLoadFrom($_).GetName().FullName -eq $refAssemblyName.FullName }
+            if ($fxPath) {
+                continue
+            }
+
+            # Print the reference.
+            Write-Output "    $($refAssemblyName.FullName)"
+
+            # Add new references to the queue.
+            if (!$hashtable[$refAssemblyName.FullName]) {
+                $queue += $refAssemblyName
+                $hashtable[$refAssemblyName.FullName] = $true
+            }
+        }
+    }
+}
+
+<#
+.SYNOPSIS
 Gets a credentials object that can be used with the TFS extended client SDK.
 
 .DESCRIPTION
@@ -7,14 +106,14 @@ The agent job token is used to construct the credentials object. The identity as
 
 Refer to Get-VstsTfsService for a more simple to get a TFS service object.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER OMDirectory
 Directory where the extended client object model DLLs are located. If the DLLs for the credential types are not already loaded, an attempt will be made to automatically load the required DLLs from the object model directory.
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .EXAMPLE
 #
@@ -63,7 +162,7 @@ Gets a TFS extended client service.
 .DESCRIPTION
 Gets an instance of an ITfsTeamProjectCollectionObject.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER TypeName
 Namespace-qualified type name of the service to get.
@@ -73,13 +172,13 @@ Directory where the extended client object model DLLs are located. If the DLLs f
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the TFS extended client SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the TFS extended client SDK from a task.
 
 .PARAMETER Uri
 URI to use when initializing the service. If not specified, defaults to System.TeamFoundationCollectionUri.
 
 .PARAMETER TfsClientCredentials
-Credentials to use when intializing the service. If not specified, the default uses the agent job token to construct the credentials object. The identity associated with the token depends on the scope selected in the build/release definition (either the project collection build/release service identity, or the project build/release service identity).
+Credentials to use when initializing the service. If not specified, the default uses the agent job token to construct the credentials object. The identity associated with the token depends on the scope selected in the build/release definition (either the project collection build/release service identity, or the project build/release service identity).
 
 .EXAMPLE
 $versionControlServer = Get-VstsTfsService -TypeName Microsoft.TeamFoundation.VersionControl.Client.VersionControlServer
@@ -133,27 +232,27 @@ function Get-TfsService {
 
 <#
 .SYNOPSIS
-Gets a credentials object that can be used with the REST SDK.
+Gets a credentials object that can be used with the VSTS REST SDK.
 
 .DESCRIPTION
 The agent job token is used to construct the credentials object. The identity associated with the token depends on the scope selected in the build/release definition (either the project collection build/release service identity, or the project service build/release identity).
 
 Refer to Get-VstsVssHttpClient for a more simple to get a VSS HTTP client.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 .PARAMETER OMDirectory
 Directory where the REST client object model DLLs are located. If the DLLs for the credential types are not already loaded, an attempt will be made to automatically load the required DLLs from the object model directory.
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 .EXAMPLE
 #
 # Refer to Get-VstsTfsService for a more simple way to get a TFS service object.
 #
-# This example works using the 14.x SDK. A Newtonsoft.Json 6.0 to 8.0 binding
+# This example works using the 14.x .NET SDK. A Newtonsoft.Json 6.0 to 8.0 binding
 # redirect may be required when working with the 15.x SDK. Or use Get-VstsVssHttpClient
 # to avoid managing the binding redirect.
 #
@@ -207,7 +306,7 @@ Gets a VSS HTTP client.
 .DESCRIPTION
 Gets an instance of an VSS HTTP client.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 .PARAMETER TypeName
 Namespace-qualified type name of the HTTP client to get.
@@ -217,13 +316,22 @@ Directory where the REST client object model DLLs are located. If the DLLs for t
 
 If not specified, defaults to the directory of the entry script for the task.
 
-*** DO NOT USE Agent.ServerOMDirectory *** See TODO_HREF for reliable usage when working with the REST SDK from a task.
+*** DO NOT USE Agent.ServerOMDirectory *** See https://github.com/Microsoft/azure-pipelines-task-lib/tree/master/powershell/Docs/UsingOM.md for reliable usage when working with the VSTS REST SDK from a task.
 
 # .PARAMETER Uri
 # URI to use when initializing the HTTP client. If not specified, defaults to System.TeamFoundationCollectionUri.
 
 # .PARAMETER VssCredentials
-# Credentials to use when intializing the HTTP client. If not specified, the default uses the agent job token to construct the credentials object. The identity associated with the token depends on the scope selected in the build/release definition (either the project collection build/release service identity, or the project build/release service identity).
+# Credentials to use when initializing the HTTP client. If not specified, the default uses the agent job token to construct the credentials object. The identity associated with the token depends on the scope selected in the build/release definition (either the project collection build/release service identity, or the project build/release service identity).
+
+# .PARAMETER WebProxy
+# WebProxy to use when initializing the HTTP client. If not specified, the default uses the proxy configuration agent current has.
+
+# .PARAMETER ClientCert
+# ClientCert to use when initializing the HTTP client. If not specified, the default uses the client certificate agent current has.
+
+# .PARAMETER IgnoreSslError
+# Skip SSL server certificate validation on all requests made by this HTTP client. If not specified, the default is to validate SSL server certificate.
 
 .EXAMPLE
 $projectHttpClient = Get-VstsVssHttpClient -TypeName Microsoft.TeamFoundation.Core.WebApi.ProjectHttpClient
@@ -239,7 +347,13 @@ function Get-VssHttpClient {
 
         [string]$Uri,
 
-        $VssCredentials)
+        $VssCredentials,
+        
+        $WebProxy = (Get-WebProxy),
+        
+        $ClientCert = (Get-ClientCertificate),
+        
+        [switch]$IgnoreSslError)
 
     Trace-EnteringInvocation -InvocationInfo $MyInvocation
     $originalErrorActionPreference = $ErrorActionPreference
@@ -262,10 +376,38 @@ function Get-VssHttpClient {
         # Validate the type can be loaded.
         $null = Get-OMType -TypeName $TypeName -OMKind 'WebApi' -OMDirectory $OMDirectory -Require
 
+        # Update proxy setting for vss http client
+        [Microsoft.VisualStudio.Services.Common.VssHttpMessageHandler]::DefaultWebProxy = $WebProxy
+        
+        # Update client certificate setting for vss http client
+        $null = Get-OMType -TypeName 'Microsoft.VisualStudio.Services.Common.VssHttpRequestSettings' -OMKind 'WebApi' -OMDirectory $OMDirectory -Require
+        $null = Get-OMType -TypeName 'Microsoft.VisualStudio.Services.WebApi.VssClientHttpRequestSettings' -OMKind 'WebApi' -OMDirectory $OMDirectory -Require
+        [Microsoft.VisualStudio.Services.Common.VssHttpRequestSettings]$Settings = [Microsoft.VisualStudio.Services.WebApi.VssClientHttpRequestSettings]::Default.Clone()
+
+        if ($ClientCert) {
+            $null = Get-OMType -TypeName 'Microsoft.VisualStudio.Services.WebApi.VssClientCertificateManager' -OMKind 'WebApi' -OMDirectory $OMDirectory -Require
+            $null = [Microsoft.VisualStudio.Services.WebApi.VssClientCertificateManager]::Instance.ClientCertificates.Add($ClientCert)
+            
+            $Settings.ClientCertificateManager = [Microsoft.VisualStudio.Services.WebApi.VssClientCertificateManager]::Instance
+        }        
+
+        # Skip SSL server certificate validation
+        [bool]$SkipCertValidation = (Get-TaskVariable -Name Agent.SkipCertValidation -AsBool) -or $IgnoreSslError
+        if ($SkipCertValidation) {
+            if ($Settings.GetType().GetProperty('ServerCertificateValidationCallback')) {
+                Write-Verbose "Ignore any SSL server certificate validation errors.";
+                $Settings.ServerCertificateValidationCallback = [VstsTaskSdk.VstsHttpHandlerSettings]::UnsafeSkipServerCertificateValidation
+            }
+            else {
+                # OMDirectory has older version of Microsoft.VisualStudio.Services.Common.dll
+                Write-Verbose "The version of 'Microsoft.VisualStudio.Services.Common.dll' does not support skip SSL server certificate validation."
+            }
+        }
+
         # Try to construct the HTTP client.
         Write-Verbose "Constructing HTTP client."
         try {
-            return New-Object $TypeName($Uri, $VssCredentials)
+            return New-Object $TypeName($Uri, $VssCredentials, $Settings)
         } catch {
             # Rethrow if the exception is not due to Newtonsoft.Json DLL not found.
             if ($_.Exception.InnerException -isnot [System.IO.FileNotFoundException] -or
@@ -292,7 +434,7 @@ function Get-VssHttpClient {
             # dependency on the 6.0.0.0 Newtonsoft.Json DLL, while other parts reference
             # the 8.0.0.0 Newtonsoft.Json DLL.
             Write-Verbose "Adding assembly resolver."
-            $onAssemblyResolve = [System.ResolveEventHandler]{
+            $onAssemblyResolve = [System.ResolveEventHandler] {
                 param($sender, $e)
 
                 if ($e.Name -like 'Newtonsoft.Json, *') {
@@ -307,7 +449,7 @@ function Get-VssHttpClient {
             try {
                 # Try again to construct the HTTP client.
                 Write-Verbose "Trying again to construct the HTTP client."
-                return New-Object $TypeName($Uri, $VssCredentials)
+                return New-Object $TypeName($Uri, $VssCredentials, $Settings)
             } finally {
                 # Unregister the assembly resolver.
                 Write-Verbose "Removing assemlby resolver."
@@ -318,6 +460,73 @@ function Get-VssHttpClient {
         $ErrorActionPreference = $originalErrorActionPreference
         Write-Error $_
     } finally {
+        Trace-LeavingInvocation -InvocationInfo $MyInvocation
+    }
+}
+
+<#
+.SYNOPSIS
+Gets a VstsTaskSdk.VstsWebProxy
+
+.DESCRIPTION
+Gets an instance of a VstsTaskSdk.VstsWebProxy that has same proxy configuration as Build/Release agent.
+
+VstsTaskSdk.VstsWebProxy implement System.Net.IWebProxy interface.
+
+.EXAMPLE
+$webProxy = Get-VstsWebProxy
+$webProxy.GetProxy(New-Object System.Uri("https://github.com/Microsoft/azure-pipelines-task-lib"))
+#>
+function Get-WebProxy {
+    [CmdletBinding()]
+    param()
+
+    Trace-EnteringInvocation -InvocationInfo $MyInvocation
+    try {
+        # Min agent version that supports proxy
+        Assert-Agent -Minimum '2.105.7'
+
+        $proxyUrl = Get-TaskVariable -Name Agent.ProxyUrl
+        $proxyUserName = Get-TaskVariable -Name Agent.ProxyUserName
+        $proxyPassword = Get-TaskVariable -Name Agent.ProxyPassword
+        $proxyBypassListJson = Get-TaskVariable -Name Agent.ProxyBypassList
+        [string[]]$ProxyBypassList = ConvertFrom-Json -InputObject $ProxyBypassListJson
+        
+        return New-Object -TypeName VstsTaskSdk.VstsWebProxy -ArgumentList @($proxyUrl, $proxyUserName, $proxyPassword, $proxyBypassList)
+    }
+    finally {
+        Trace-LeavingInvocation -InvocationInfo $MyInvocation
+    }
+}
+
+<#
+.SYNOPSIS
+Gets a client certificate for current connected TFS instance
+
+.DESCRIPTION
+Gets an instance of a X509Certificate2 that is the client certificate Build/Release agent used.
+
+.EXAMPLE
+$x509cert = Get-ClientCertificate
+WebRequestHandler.ClientCertificates.Add(x509cert)
+#>
+function Get-ClientCertificate {
+    [CmdletBinding()]
+    param()
+
+    Trace-EnteringInvocation -InvocationInfo $MyInvocation
+    try {
+        # Min agent version that supports client certificate
+        Assert-Agent -Minimum '2.122.0'
+
+        [string]$clientCert = Get-TaskVariable -Name Agent.ClientCertArchive
+        [string]$clientCertPassword = Get-TaskVariable -Name Agent.ClientCertPassword
+        
+        if ($clientCert -and (Test-Path -LiteralPath $clientCert -PathType Leaf)) {
+            return New-Object -TypeName System.Security.Cryptography.X509Certificates.X509Certificate2 -ArgumentList @($clientCert, $clientCertPassword)
+        }        
+    }
+    finally {
         Trace-LeavingInvocation -InvocationInfo $MyInvocation
     }
 }

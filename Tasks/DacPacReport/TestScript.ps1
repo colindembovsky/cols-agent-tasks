@@ -1,7 +1,7 @@
 #
 # DEBUGGING:
 # 1. clone the azure-pipelines-task-lib to the same level as cols-agent-tasks
-#    Import-Module ..\..\..\azure-pipelines-task-lib\powershell\VstsTaskSdk\VstsTaskSdk.psd1 -ArgumentList @{ NonInteractive = $true } -Verbose:$true
+#    Import-Module ..\..\..\azure-pipelines-task-lib\powershell\VstsTaskSdk -ArgumentList @{ NonInteractive = $true } -Verbose:$true
 # 3. Invoke this script
 #
 
@@ -14,7 +14,7 @@ $rootUri = "https://$vstsAcc.visualstudio.com/"
 
 $base64authinfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f "", $pat)))
 
-Import-Module .\ps_modules\VstsTaskSdk\VstsTaskSdk.psd1 -ArgumentList @{ NonInteractive = $true } -Verbose:$true
+Import-Module .\ps_modules\VstsTaskSdk -ArgumentList @{ NonInteractive = $true } -Verbose:$true
 
 # system variables
 $env:SYSTEM_ACCESSTOKEN=$base64authinfo
@@ -27,6 +27,7 @@ $env:INPUT_DROPNAME="drop"
 $env:INPUT_DACPACNAME="fabFiber.Schema"
 $env:INPUT_TARGETDACPACPATH="C:\mData\ws\col\dac"
 $env:INPUT_EXTRAARGS="/v:Hello=Bye"
+$env:INPUT_USERSQLPACKAGEPATH="c:\foo\foo.exe"
 
 # invoke the script
-Invoke-VstsTaskScript -ScriptBlock { . .\DacPacReport.ps1 } -Verbose
+Invoke-VstsTaskScript -ScriptBlock ([scriptblock]::Create('. .\DacPacReport.ps1')) -Verbose

@@ -13,6 +13,8 @@ $extraArgs = Get-VstsInput -Name "extraArgs"
 $reverse = Get-VstsInput -Name "reverse"
 $userSqlPackagePath = Get-VstsInput -Name "userSqlPackagePath"
 
+Write-Debug "DropName is $dropName"
+Write-Debug "$userSqlPackagePath"
 function Get-LatestBuild {
     param(
         [string]$RootUri,
@@ -31,7 +33,7 @@ function Get-LatestBuild {
     }
 }
  
-function Find-File {
+function xFind-File {
     param(
         [string]$Path,
         [string]$FilePattern
@@ -131,7 +133,7 @@ function Get-BuildDrop {
             }
         }
 
-        $tfile = Find-File -Path $tPath -FilePattern "**\$DacpacName.dacpac"
+        $tfile = Find-VstsMatch -DefaultRoot $tPath -Pattern "**\$DacpacName.dacpac"
         return $tFile
     }
 }
@@ -199,76 +201,77 @@ some housekeeping code and any pre- and post-deployment scripts you may have in 
     sc -Path "SchemaCompare\ChangeScript.md" -Value $md
 }
 
+try {
 #
 # Main script
 #
-try {
-    $SqlPackagePath = Get-SqlPackageOnTargetMachine
-} catch {
-    Write-Warning "Could not find SQL Package path: $_"
-    $SqlPackagePath = ""
-}
-
-if ($SqlPackagePath -eq $null -or $SqlPackagePath -eq "") {
-    if ($userSqlPackagePath -eq $null -or $userSqlPackagePath -eq "") {
-        Write-Error "SQL Package Path could not be located and no user value has been specified. Please set the SQL Package path parameter for the task."
-        throw
-    } else { 
-        $SqlPackagePath = $userSqlPackagePath
+    try {
+        $SqlPackagePath = Get-SqlPackageOnTargetMachine
+    } catch {
+        Write-Warning "Could not find SQL Package path: $_"
+        $SqlPackagePath = ""
     }
-}
-Write-Verbose -Verbose "Using sqlPackage path $SqlPackagePath"
-
-$rootUri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis"
-
-$headers = @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
-if (-not($env:SYSTEM_ACCESSTOKEN) -or $env:SYSTEM_ACCESSTOKEN -eq '') {
-    Write-Error "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options"
-    throw
-}
-
-# just for testing
-if (-not ($env:TF_BUILD)) {
-   Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
-   $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
-}
-
-$compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
-if ($compareBuild -ne $null) {
-    $sourceDacpac = Get-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
-
-    # hack: when using unzip, the Get-BuildDrop return is an array [not sure why]
-    if ($sourceDacpac.GetType().Name -ne "String") {
-        $sourceDacpac = $sourceDacpac[1]
-    }
-    Write-Host "Got $sourceDacpac"
-
-    if ($sourceDacpac -ne $null) {
-        Write-Verbose -Verbose "Found source dacpac $sourceDacpac"
-
-        $targetDacpac = Find-File -Path $targetDacpacPath -FilePattern "$dacpacName.dacpac"
-        if ($targetDacpac -ne $null) {
-            Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
-
-            if ($reverse) {
-                New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
-            } else {
-                New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
-            }
-
-            $reportPath = ".\SchemaCompare\SchemaCompare.xml"
-            Convert-Report
-
-            # upload the schema report files as artifacts
-            Write-Verbose -Verbose "Uploading report"
-            $schemaComparePath = Resolve-Path ".\SchemaCompare"
-            
-            # Add the summary sections
-            Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Schema Change Summary - $dacpacName.dacpac" -Path "$schemaComparePath\deploymentReport.md"
-            Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Change Script - $dacpacName.dacpac" -Path "$schemaComparePath\ChangeScript.md"
+    
+    if ($SqlPackagePath -eq $null -or $SqlPackagePath -eq "") {
+        if ($userSqlPackagePath -eq $null -or $userSqlPackagePath -eq "") {
+            Write-Error "SQL Package Path could not be located and no user value has been specified. Please set the SQL Package path parameter for the task."
+            throw
+        } else { 
+            $SqlPackagePath = $userSqlPackagePath
         }
     }
+    Write-Verbose -Verbose "Using sqlPackage path $SqlPackagePath"
+
+    $rootUri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis"
+
+    $headers = @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
+    if (-not($env:SYSTEM_ACCESSTOKEN) -or $env:SYSTEM_ACCESSTOKEN -eq '') {
+        Write-Error "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options"
+        throw
+    }
+
+    # just for testing
+    if (-not ($env:TF_BUILD)) {
+    Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
+    $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
+    }
+
+    $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
+    if ($compareBuild -ne $null) {
+        $sourceDacpac = Get-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
+
+        # hack: when using unzip, the Get-BuildDrop return is an array [not sure why]
+        if ($sourceDacpac.GetType().Name -ne "String") {
+            $sourceDacpac = $sourceDacpac[1]
+        }
+        Write-Host "Got $sourceDacpac"
+
+        if ($sourceDacpac -ne $null) {
+            Write-Verbose -Verbose "Found source dacpac $sourceDacpac"
+
+            $targetDacpac = xFind-File -Path $targetDacpacPath -FilePattern "$dacpacName.dacpac"
+            if ($targetDacpac -ne $null) {
+                Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
+
+                if ($reverse) {
+                    New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
+                } else {
+                    New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
+                }
+
+                $reportPath = ".\SchemaCompare\SchemaCompare.xml"
+                Convert-Report
+
+                # upload the schema report files as artifacts
+                Write-Verbose -Verbose "Uploading report"
+                $schemaComparePath = Resolve-Path ".\SchemaCompare"
+                
+                # Add the summary sections
+                Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Schema Change Summary - $dacpacName.dacpac" -Path "$schemaComparePath\deploymentReport.md"
+                Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Change Script - $dacpacName.dacpac" -Path "$schemaComparePath\ChangeScript.md"
+            }
+        }
+    }
+} finally {
+    Trace-VstsLeavingInvocation $MyInvocation
 }
-
-
-Trace-VstsLeavingInvocation $MyInvocation

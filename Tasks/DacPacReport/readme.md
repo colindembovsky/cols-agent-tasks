@@ -13,6 +13,7 @@ steps:
     targetDacPacPath: MyDBProject\bin\$(BuildConfiguration)  # Path to dacpac in this build (to compare to output of previous build)
     # extraArgs: '/Variables myvar=myvalue'  # extra args for the compare - use to supply SQLCMD variables, for example.
     # reverse: false  # set to true to reverse source and target for compare
+    # userSqlPackagePath: '' # the sqlpackage.exe filepath - use this only if the default does not detect the path correctly
 ```
 
 ## Overview

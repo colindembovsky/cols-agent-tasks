@@ -21,9 +21,7 @@ steps:
 
 - task: CacheBeta@0
   inputs:
-    key: |
-      yarn
-      $(Build.SourcesDirectory)/yarn.lock
+    key: yarn | $(Build.SourcesDirectory)/yarn.lock
     path: $(YARN_CACHE_PATH)
   displayName: Cache Yarn packages
 

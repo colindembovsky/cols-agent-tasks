@@ -49,7 +49,7 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
-### 1.4.109
+### 1.4.110
 - DacPacReport
 	- Fix `sqlpacakge.exe` missing path [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/130) by updating PS module as well as adding a new param to allow users to specify the path to `sqlpackage.exe`
 

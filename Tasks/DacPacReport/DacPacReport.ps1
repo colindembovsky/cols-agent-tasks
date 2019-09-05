@@ -248,7 +248,7 @@ try {
             if ($targetDacpac -ne $null) {
                 Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
 
-                if ($reverse) {
+                if ($reverse -eq $true) {
                     Write-Verbose "Using 'reverse' logic since reverse was set to true"
                     New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
                 } else {

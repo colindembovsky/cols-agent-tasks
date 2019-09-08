@@ -49,6 +49,10 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
+### 1.4.114
+- DacPacReport
+	- Update retrieval of SYSTEM_ACCESSTOKEN to make DacPacReport yml compatible. Fixes this [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/131).
+
 ### 1.4.110
 - DacPacReport
 	- Fix `sqlpacakge.exe` missing path [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/130) by updating PS module as well as adding a new param to allow users to specify the path to `sqlpackage.exe`

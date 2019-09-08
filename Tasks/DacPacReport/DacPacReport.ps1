@@ -219,10 +219,12 @@ try {
 
     $rootUri = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis"
 
-    $headers = @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"}
-    if (-not($env:SYSTEM_ACCESSTOKEN) -or $env:SYSTEM_ACCESSTOKEN -eq '') {
+    $token = Get-VstsTaskVariable -Name "System.AccessToken"
+    if (-not($token) -or $token -eq '') {
         Write-Error "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options"
         throw
+    } else {
+        $headers = @{Authorization = "Bearer $token"}
     }
 
     # just for testing

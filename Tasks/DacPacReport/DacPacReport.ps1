@@ -134,6 +134,10 @@ function Get-BuildDrop {
         }
 
         $tfile = Find-VstsMatch -DefaultRoot $tPath -Pattern "**\$DacpacName.dacpac"
+        if (-not ($tfile)) {
+            Write-Warning "Could not find dacpac in build drop matching pattern '**\$DacpacName.dacpac'"
+            throw
+        }
         return $tFile
     }
 }
@@ -243,7 +247,6 @@ try {
         if ($sourceDacpac.GetType().Name -ne "String") {
             $sourceDacpac = $sourceDacpac[1]
         }
-        Write-Host "Got $sourceDacpac"
 
         if ($sourceDacpac -ne $null) {
             Write-Verbose -Verbose "Found source dacpac $sourceDacpac"

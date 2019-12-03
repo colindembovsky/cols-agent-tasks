@@ -26,6 +26,7 @@ steps:
   displayName: Cache Yarn packages
 
 - task: UseNode@1
+  displayName: Use Node 8.x
   inputs:
     version: '8.x'
 
@@ -34,8 +35,9 @@ steps:
   workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
 
 - task: UseNode@1
+  displayName: Use Node 12.13.0
   inputs:
-    version: '12.x'
+    version: '12.13.0'
 
 - script: 'yarn install --frozen-lockfile' 
   displayName: 'Run yarn install'

@@ -25,6 +25,18 @@ steps:
     path: $(YARN_CACHE_PATH)
   displayName: Cache Yarn packages
 
+- task: UseNode@1
+  inputs:
+    version: '8.x'
+
+- script: 'yarn install'
+  displayName: 'Run yarn install using Node 8.x for DacPacReport'
+  workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
+
+- task: UseNode@1
+  inputs:
+    version: '10.x'
+
 - script: 'yarn install --frozen-lockfile' 
   displayName: 'Run yarn install'
 

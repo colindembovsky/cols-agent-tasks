@@ -39,14 +39,14 @@ async function run() {
         tl.debug(`replacePostfix: ${replacePostfix}`);
         tl.debug(`buildNumber: ${buildNumber}`);
 
-        let buildRegex = customBuildRegex;
+        let buildRegex;
         switch (versionFormat) {
             default:
             case "fourParts": buildRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;
             case "threeParts": buildRegex = "\\d+\\.\\d+\\.\\d+"; break;
             case "custom": buildRegex = customBuildRegex; break;
         }
-        let replaceRegex = customReplaceRegex;
+        let replaceRegex;
         switch (replaceVersionFormat) {
             default:
             case "fourParts": replaceRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;

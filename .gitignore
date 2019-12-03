@@ -206,3 +206,5 @@ test-results.xml
 .taskkey
 .\nyc_output
 Tasks/DacPacReport/vswhere.exe
+test/tokenizer/working/appsettings.json
+test/**/*.js

@@ -42,6 +42,7 @@
     "@types/shelljs": "^0.8.5",
     "assert": "^2.0.0",
     "cross-env": "^6.0.3",
+    "glob-exec": "^0.1.1",
     "minimatch": "^3.0.4",
     "mocha": "^6.2.2",
     "mocha-junit-reporter": "^1.23.0",
@@ -50,9 +51,9 @@
     "path": "^0.12.7",
     "shelljs": "^0.8.3",
     "source-map-support": "^0.5.12",
+    "sync-request": "^6.1.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.0.3",
-    "glob-exec": "^0.1.1"
+    "typescript": "^3.0.3"
   },
   "main": "index.js",
   "dependencies": {

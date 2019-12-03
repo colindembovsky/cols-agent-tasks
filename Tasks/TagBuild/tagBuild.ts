@@ -1,8 +1,6 @@
 import * as tl from 'azure-pipelines-task-lib/task';
 import * as vstsInterfaces from 'azure-devops-node-api/interfaces/common/VsoBaseInterfaces';
 import * as webApi from 'azure-devops-node-api/WebApi';
-import * as locationsInterfaces from 'azure-devops-node-api/interfaces/LocationsInterfaces';
-import * as relInterfaces from 'azure-devops-node-api/ReleaseApi';
 
 function completeTask(sucess: boolean, message?: any) {
     if (sucess) {

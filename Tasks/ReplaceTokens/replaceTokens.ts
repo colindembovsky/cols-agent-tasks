@@ -36,7 +36,7 @@ async function run() {
 
         // store the tokens and values if there is any secret token input 
         var secretTokens: {[id: string]: string} = {};
-        if (secretTokenInput != null && typeof secretTokenInput !== 'undefined') {
+        if (secretTokenInput != null) {
             var inputArray : string[] = secretTokenInput.split(";");
             for (var token of inputArray) {
                 if (token.indexOf(":") > -1) {  

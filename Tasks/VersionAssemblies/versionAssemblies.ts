@@ -62,8 +62,6 @@ async function run() {
         }
         tl.debug(`Using ${buildRegexIndex} as the build regex group index`);
 
-        let separator = os.platform() === "win32" ? "\\" : "/";
-
         let versionNum = "";
         let skip = false;
         switch (versionSource) {

@@ -50,7 +50,7 @@ async function run() {
         switch (replaceVersionFormat) {
             default:
             case "fourParts": replaceRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;
-            case "threeParts": replaceRegex = "\\d+\.\\d+\\.\\d+"; break;
+            case "threeParts": replaceRegex = "\\d+\\.\\d+\\.\\d+"; break;
             case "custom": replaceRegex = customReplaceRegex; break;
         }
 

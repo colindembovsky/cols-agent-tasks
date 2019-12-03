@@ -21,9 +21,9 @@
   },
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "devDependencies": {
-    "minimatch": "^3.0.4",
-    "shelljs": "^0.8.3",
     "azure-pipelines-task-lib": "^2.8.0",
-    "libxslt": "^0.7.0"
+    "libxslt": "^0.7.0",
+    "minimatch": "^3.0.4",
+    "shelljs": "^0.8.3"
   }
 }

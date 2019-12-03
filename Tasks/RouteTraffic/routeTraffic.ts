@@ -2,7 +2,6 @@ import * as tl from 'azure-pipelines-task-lib/task';
 import * as Q from 'q';
 import * as querystring from 'querystring';
 import * as httpClient from 'typed-rest-client/HttpClient';
-import parseString from 'xml2js';
 
 const defaultAuthUrl = 'https://login.windows.net/';
 const azureApiVersion = 'api-version=2016-08-01';
@@ -30,7 +29,7 @@ async function getAuthorizationToken(endPoint: IEndpoint)  {
     });
     var requestHeader = {
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
-    }
+    };
 
     tl.debug('Requesting for Auth Token: ' + authorityUrl);
     try {

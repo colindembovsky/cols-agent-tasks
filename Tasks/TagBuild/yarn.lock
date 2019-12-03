@@ -2,18 +2,19 @@
 # yarn lockfile v1
 
 
-azure-devops-node-api@^6.6.0:
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/azure-devops-node-api/-/azure-devops-node-api-6.6.0.tgz#6fb34b282f62c9c29719eea57c49d10b62258f53"
+azure-devops-node-api@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/azure-devops-node-api/-/azure-devops-node-api-9.0.1.tgz#ba6dce7f274db01589a653cdbdf43e71e9f9b527"
+  integrity sha512-0veE4EWHObJxzwgHlydG65BjNMuLPkR1nzcQ2K51PIho1/F4llpKt3pelC30Vbex5zA9iVgQ9YZGlkkvOBSksw==
   dependencies:
     tunnel "0.0.4"
-    typed-rest-client "1.0.9"
+    typed-rest-client "1.2.0"
     underscore "1.8.3"
 
-azure-pipelines-task-lib@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/azure-pipelines-task-lib/-/azure-pipelines-task-lib-2.8.0.tgz#8a0117a98f86c2e9ee85333e649874bf83ccb836"
-  integrity sha512-PR8oap9z2j+o455W3PwAfB4SX1p4GdJc9OHQaQV0V+iQS1IBY6dVgcNSQMkHAXb0V1bbuLOFBLanXPe5eSgGTQ==
+azure-pipelines-task-lib@^2.9.3:
+  version "2.9.3"
+  resolved "https://registry.yarnpkg.com/azure-pipelines-task-lib/-/azure-pipelines-task-lib-2.9.3.tgz#7f62a1de99bace97b840b7ffe54e7712cfc2ba84"
+  integrity sha512-SPWKSfgmjyBDVIMzXnnPH0Gv7YXZ+AQ3SyIhNNALAmQpOltqJhgslvzrOClR5rKuoOyJlG0AWZILbZIXCkztAA==
   dependencies:
     minimatch "3.0.4"
     mockery "^1.7.0"
@@ -25,10 +26,12 @@ azure-pipelines-task-lib@^2.8.0:
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
+  integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
 brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
+  integrity sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
@@ -36,36 +39,44 @@ brace-expansion@^1.1.7:
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
+  integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
 minimatch@3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
+  integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
   dependencies:
     brace-expansion "^1.1.7"
 
 mockery@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/mockery/-/mockery-1.7.0.tgz#f4ede0d8750c1c9727c272ea2c60629e2c9a1c4f"
+  integrity sha1-9O3g2HUMHJcnwnLqLGBiniyaHE8=
 
 q@^1.1.2:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
+  integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
 
 semver@^5.1.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.7.1.tgz#a954f931aeba508d307bbf069eff0c01c96116f7"
+  integrity sha512-sauaDf/PZdVgrLTNYHRtpXa1iRiKcaebiKQ1BJdpQlWH2lCvexQdX55snPFyK7QzpudqbCI0qXFfOasHdyNDGQ==
 
 shelljs@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/shelljs/-/shelljs-0.3.0.tgz#3596e6307a781544f591f37da618360f31db57b1"
+  integrity sha1-NZbmMHp4FUT1kfN9phg2DzHbV7E=
 
 tunnel@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.4.tgz#2d3785a158c174c9a16dc2c046ec5fc5f1742213"
+  integrity sha1-LTeFoVjBdMmhbcLARuxfxfF0IhM=
 
-typed-rest-client@1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/typed-rest-client/-/typed-rest-client-1.0.9.tgz#5317b607c9c8ee425b64260c9249d400d0a6bf1a"
+typed-rest-client@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/typed-rest-client/-/typed-rest-client-1.2.0.tgz#723085d203f38d7d147271e5ed3a75488eb44a02"
+  integrity sha512-FrUshzZ1yxH8YwGR29PWWnfksLEILbWJydU7zfIRkyH7kAEzB62uMAl2WY6EyolWpLpVHeJGgQm45/MaruaHpw==
   dependencies:
     tunnel "0.0.4"
     underscore "1.8.3"
@@ -73,7 +84,9 @@ typed-rest-client@1.0.9:
 underscore@1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+  integrity sha1-Tz+1OxBuYJf8+ctBCfKl6b36UCI=
 
 uuid@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
+  version "3.3.3"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
+  integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==

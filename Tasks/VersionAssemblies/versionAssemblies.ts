@@ -39,18 +39,18 @@ async function run() {
         tl.debug(`replacePostfix: ${replacePostfix}`);
         tl.debug(`buildNumber: ${buildNumber}`);
 
-        let buildRegex = customBuildRegex;
+        let buildRegex;
         switch (versionFormat) {
             default:
             case "fourParts": buildRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;
             case "threeParts": buildRegex = "\\d+\\.\\d+\\.\\d+"; break;
             case "custom": buildRegex = customBuildRegex; break;
         }
-        let replaceRegex = customReplaceRegex;
+        let replaceRegex;
         switch (replaceVersionFormat) {
             default:
             case "fourParts": replaceRegex = "\\d+\\.\\d+\\.\\d+\\.\\d+"; break;
-            case "threeParts": replaceRegex = "\\d+\.\\d+\\.\\d+"; break;
+            case "threeParts": replaceRegex = "\\d+\\.\\d+\\.\\d+"; break;
             case "custom": replaceRegex = customReplaceRegex; break;
         }
 
@@ -61,8 +61,6 @@ async function run() {
             buildRegexIndex = "0";
         }
         tl.debug(`Using ${buildRegexIndex} as the build regex group index`);
-
-        let separator = os.platform() === "win32" ? "\\" : "/";
 
         let versionNum = "";
         let skip = false;

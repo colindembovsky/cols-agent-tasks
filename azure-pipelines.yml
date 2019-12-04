@@ -25,24 +25,28 @@ steps:
     path: $(YARN_CACHE_PATH)
   displayName: Cache Yarn packages
 
-#- task: UseNode@1
-#  displayName: Use Node 12.13.0
-#  inputs:
-#    version: '12.13.0'
+- script: 'node -v' 
 
-- script: 'yarn install --frozen-lockfile' 
-  displayName: 'Run yarn install'
+- task: UseNode@1
+  displayName: Use Node 8.x
+  inputs:
+    version: '8.x'
 
 - script: 'yarn install'
   displayName: 'Run yarn install for DacPacReport'
   workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
 
+- task: UseNode@1
+  displayName: Use Node 12.13.0
+  inputs:
+    version: '12.13.0'
+
+- script: 'yarn install --frozen-lockfile' 
+  displayName: 'Run yarn install'
+
 - script: 'yarn prepextension' 
   displayName: 'Run yarn prepextension'
   workingDirectory: '$(Build.SourcesDirectory)'
-
-- script: ls -la $(YARN_CACHE_PATH)
-  displayName: 'List yarn cache path contents'
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results test-results.xml'

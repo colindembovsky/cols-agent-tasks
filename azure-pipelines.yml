@@ -26,15 +26,6 @@ steps:
   displayName: Cache Yarn packages
 
 #- task: UseNode@1
-#  displayName: Use Node 8.x
-#  inputs:
-#    version: '8.x'
-
-#- script: 'yarn install'
-#  displayName: 'Run yarn install using Node 8.x for DacPacReport'
-#  workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
-
-#- task: UseNode@1
 #  displayName: Use Node 12.13.0
 #  inputs:
 #    version: '12.13.0'
@@ -63,10 +54,14 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
     reportDirectory: '$(Build.SourcesDirectory)/coverage'
 
-#- task: UseNode@1
-#  displayName: Use Node 10.x
-#  inputs:
-#    version: '10.x'
+- task: UseNode@1
+  displayName: Use Node 8.x
+  inputs:
+    version: '8.x'
+
+- script: 'yarn install'
+  displayName: 'Run yarn install using Node 8.x for DacPacReport'
+  workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
 
 - task: PackageVSTSExtension@1
   displayName: 'Package real Extension '

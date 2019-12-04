@@ -8,7 +8,7 @@ queue:
   - DotNetFramework
 
 steps:
-- task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@2
+- task: YarnInstaller@2
   displayName: 'Use Yarn 1.x'
   inputs:
     checkLatest: true
@@ -63,7 +63,12 @@ steps:
     summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
     reportDirectory: '$(Build.SourcesDirectory)/coverage'
 
-- task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
+- task: UseNode@1
+  displayName: Use Node 10.x
+  inputs:
+    version: '10.x'
+
+- task: PackageVSTSExtension@1
   displayName: 'Package real Extension '
   inputs:
     rootFolder: '$(Build.SourcesDirectory)'
@@ -86,7 +91,7 @@ steps:
   condition: ne(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true
 
-- task: ms-devlabs.vsts-developer-tools-build-tasks.package-extension-build-task.PackageVSTSExtension@1
+- task: PackageVSTSExtension@1
   displayName: 'Package beta Extension '
   inputs:
     outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'

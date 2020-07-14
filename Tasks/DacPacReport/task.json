@@ -14,9 +14,9 @@
     "sqlpackage"
   ],
   "version": {
-    "Major": "1",
-    "Minor": "2",
-    "Patch": "31"
+    "Major": "2",
+    "Minor": "5",
+    "Patch": "0"
   },
   "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "DacPac Schema Compare $(dacpacName).dacpac",
@@ -68,6 +68,15 @@
       "defaultValue": false,
       "required": false,
       "helpMarkDown": "Check this to reverse the source and target.",
+      "groupName": "advanced"
+    },
+    {
+      "name": "database",
+      "type": "boolean",
+      "label": "Database Comparison",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Check this to make a comparison with a database server, instead of the previous build",
       "groupName": "advanced"
     },
     {

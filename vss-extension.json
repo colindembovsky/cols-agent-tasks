@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "colinsalmcorner-buildtasks",
     "name": "Colin's ALM Corner Build & Release Tools",
-    "version": "1.0.36",
+    "version": "2.5.0",
     "publisher": "colinsalmcorner",
     "public": true,
     "repository": {

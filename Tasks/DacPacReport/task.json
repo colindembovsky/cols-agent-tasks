@@ -22,6 +22,21 @@
   "instanceNameFormat": "DacPac Schema Compare $(dacpacName).dacpac",
   "groups": [
     {
+      "name": "connection",
+      "displayName": "Connection to the SQL Server",
+      "isExpanded": false
+    },
+    {
+      "name": "ignore",
+      "displayName": "Items to Ignore",
+      "isExpanded": false
+    },
+    {
+      "name": "notdrop",
+      "displayName": "Do not Drop these missing items",
+      "isExpanded": false
+    },
+    {
       "name": "advanced",
       "displayName": "Advanced",
       "isExpanded": false
@@ -53,6 +68,51 @@
       "helpMarkDown": "Path to find the target dacpac (typically the artifact staging path where the dacpac will be uploaded from)."
     },
     {
+      "name": "servername",
+      "type": "string",
+      "label": "SQL Server Name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "SQL Server name, including port if not default, using the format <server>,<port>",
+      "groupName": "connection"
+    },
+    {
+      "name": "databasename",
+      "type": "string",
+      "label": "Database Name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Name of the database target of the comparison",
+      "groupName": "connection"
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "label": "User Name",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "User name for the SQL Server connection",
+      "groupName": "connection"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "label": "Password",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Password for the SQL Server connection",
+      "groupName": "connection"
+    },
+    {
+      "name": "integratedsecurity",
+      "type": "boolean",
+      "label": "Integrated Security",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Check this to use integrated security to SQL Server",
+      "groupName": "connection"
+    },
+    {
       "name": "extraArgs",
       "type": "string",
       "label": "Extra SQLPackage args",
@@ -78,6 +138,87 @@
       "required": false,
       "helpMarkDown": "Check this to make a comparison with a database server, instead of the previous build",
       "groupName": "advanced"
+    },
+    {
+      "name": "ignorepermissions",
+      "type": "boolean",
+      "label": "Ignore Permissions",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Ignore permissions differences during comparison",
+      "groupName": "ignore"
+    },
+    {
+      "name": "ignoreauthorizer",
+      "type": "boolean",
+      "label": "Ignore the Authorizer",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Ignore owner (Authorizer) of the object, in special schemas",
+      "groupName": "ignore"
+    },
+    {
+      "name": "ignorerolemembership",
+      "type": "boolean",
+      "label": "Ignore Role Membership",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Ignore Role Membership during comparison",
+      "groupName": "ignore"
+    },
+    {
+      "name": "notapplicationroles",
+      "type": "boolean",
+      "label": "Do not drop application roles",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Don't drop existing application roles",
+      "groupName": "notdrop"
+    },
+    {
+      "name": "notdatabaseroles",
+      "type": "boolean",
+      "label": "Don't drop existing database roles",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Don't drop existing database roles",
+      "groupName": "notdrop"
+    },
+    {
+      "name": "notdefaults",
+      "type": "boolean",
+      "label": "Do not drop defaults",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Don't drop existing default objects. Keep in mind most developers forget to name default objects and unamed default objects will be considered different",
+      "groupName": "notdrop"
+    },
+    {
+      "name": "notlogins",
+      "type": "boolean",
+      "label": "Don't drop existing logins",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Don't drop existing logins",
+      "groupName": "notdrop"
+    },
+    {
+      "name": "notserverrolemembership",
+      "type": "boolean",
+      "label": "Don't drop server role membership",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Don't drop existing server roles membership",
+      "groupName": "notdrop"
+    },
+    {
+      "name": "notusers",
+      "type": "boolean",
+      "label": "Don't drop database users",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Don't drop existing database users",
+      "groupName": "notdrop"
     },
     {
       "name": "userSqlPackagePath",

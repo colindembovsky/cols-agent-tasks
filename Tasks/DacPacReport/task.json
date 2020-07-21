@@ -2,9 +2,9 @@
   "id": "1EBF2967-63B3-4372-89F7-6799108A22F0",
   "name": "DacPacReport",
   "friendlyName": "DacPac Schema Compare",
-  "description": "Provides a report on database model changes since the last build",
-  "author": "Colin Dembovsky (colinsalmcorner.com)",
-  "helpMarkDown": "[More Information](https://github.com/colindembovsky/cols-agent-tasks/tree/master/Tasks/DacPacReport)",
+  "description": "Provides a report on database model changes. You can compare your DACPAC with DACPAC's from previous builds or with sql server databases. This task is an improvement of the task created by Colin Dembovsky (colinsalmcorner.com)",
+  "author": "Dennes Torres (dennestorres.com) and Colin Dembovsky (colinsalmcorner.com)",
+  "helpMarkDown": "[More Information](https://github.com/DennesTorres/cols-agent-tasks)",
   "category": "Build",
   "visibility": [
     "Build",

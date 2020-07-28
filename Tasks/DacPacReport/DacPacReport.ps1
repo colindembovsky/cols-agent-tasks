@@ -97,7 +97,9 @@ function Get-IgnoreParameters
     {
     "IgnorePermissions": $(Get-Input -name "ignorepermissions"),
     "IgnoreRoleMembership": $(Get-Input -name "ignorerolemembership"),
-    "IgnoreAuthorizer": $(Get-Input -name "ignoreauthorizer")
+    "IgnoreAuthorizer": $(Get-Input -name "ignoreauthorizer"),
+    "BlockOnPossibleDataLoss" : $(Get-Input -name "blockonpossibledataloss"),
+    "IgnoreExtendedProperties" : $(Get-Input -name "ignoreextendedproperties")
     }
 "@
     return $ignore;
@@ -124,6 +126,9 @@ function Get-IgnoreParametersStatement
         if ($obj."$key")
         {
             $result= $result + " /p:$key=True"
+        }
+        else {
+            $result= $result + " /p:$key=False"
         }        
     }
     return $result;
@@ -353,7 +358,7 @@ try {
 #
 # Main script
 #
-    $hardCodedArgs=" /p:DropObjectsNotInSource=True /p:BlockOnPossibleDataLoss=True /p:DisableAndReenableDdlTriggers=True /p:DropStatisticsNotInSource=False /p:IncludeTransactionalScripts=True /p:ScriptDatabaseOptions=False"
+    $hardCodedArgs=" /p:DropObjectsNotInSource=True /p:DisableAndReenableDdlTriggers=True /p:DropStatisticsNotInSource=False /p:IncludeTransactionalScripts=True /p:ScriptDatabaseOptions=False"
 
     try {
         if ($null -eq $userSqlPackagePath -or $userSqlPackagePath -eq "") {

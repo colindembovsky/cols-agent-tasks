@@ -167,6 +167,29 @@
       "groupName": "ignore"
     },
     {
+      "name": "ignoreextendedproperties",
+      "type": "boolean",
+      "label": "Ignore Extended Properties",
+      "defaultValue": true,
+      "required": false,
+      "helpMarkDown": "Ignore Extended Properties",
+      "groupName": "ignore"
+    },
+    {
+      "name": "blockonpossibledataloss",
+      "type": "pickList",
+      "label": "Block on Possible Data Loss",
+      "defaultValue": "Block on possible data loss",
+      "required": false,
+      "helpMarkDown": "Changing this option will allow script generation including data loss. You need to be absolutely sure about what you are doing to uncheck this. This is sometimes useful to drop old tables or remove legacy fields when both have data.",
+      "groupName": "ignore",
+      "properties": {"EditableOptions": "True" },
+      "options": {
+        "true": "Block on possible data loss",
+        "false": "Accept Data Loss"
+      }
+    },
+    {
       "name": "notapplicationroles",
       "type": "boolean",
       "label": "Do not drop application roles",

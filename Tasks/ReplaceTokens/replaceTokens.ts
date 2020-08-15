@@ -3,7 +3,7 @@ import * as sh from 'shelljs';
 import * as fs from 'fs';
 import * as os from 'os';
 import * as AdmZip from 'adm-zip';
-const rimraf = require("rimraf");
+import * as rimraf from 'rimraf'
 
 async function run() {
     var errCount = 0;
@@ -144,7 +144,7 @@ async function run() {
             zip.writeZip(sourcePathZipFilePath);
 
             tl.debug(`Deleting temp directory '${sourcePathZipDirectoryPath}'.`)
-            rimraf(sourcePathZipDirectoryPath, function () { tl.debug(`Temp directory '${sourcePathZipDirectoryPath}' has been deleted.`) });
+            rimraf.sync(sourcePathZipDirectoryPath);
         }
     } catch (err) {
         let msg = err;

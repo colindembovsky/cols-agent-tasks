@@ -38,7 +38,7 @@ fs.writeFile(tmpFile, `
 
         // Zip up file to be token replaced.
         let zipFilePath = path.join(workingFolder, "Archive.zip");
-        const zip = AdmZip();
+        const zip = new AdmZip();
         zip.addLocalFile(tmpFile);
         zip.writeZip(zipFilePath)
 
@@ -56,7 +56,7 @@ fs.writeFile(tmpFile, `
         // Unzip the file so we can make sure the tokens were replaced properly.
         let unzipDirectoryPath = path.join(workingFolder, "Replaced");
         const unzip = new AdmZip(zipFilePath);
-        unzip.extractAllTo()
+		unzip.extractAllTo(unzipDirectoryPath)
         let replacedFilePath = path.join(unzipDirectoryPath, "file.config")
 
         // validate the replacement

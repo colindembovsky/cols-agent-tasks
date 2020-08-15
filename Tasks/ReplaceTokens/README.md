@@ -11,7 +11,7 @@ steps:
 - task: colinsalmcorner.colinsalmcorner-buildtasks.replace-tokens-task.ReplaceTokens@1
   displayName: 'Replace tokens in MyPath.'
   inputs:
-    sourcePath: MyPath  # Root path to find files in.
+    sourcePath: MyPath  # Root path to find files in. Can be a directory or zip file.
     filePattern: **\*.release.config  # file pattern (glob) to search within root path. All matching files will be updated.
     # tokenRegex: '__(\w+)__'  # regex pattern to use to find tokens
     # secretTokens: df  # DO NOT USE UNLESS YOU'RE ON TFS 2015. Specify the secret values here
@@ -38,7 +38,7 @@ Imagine you have a file with the following contents:
 <?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <setParameter name="IIS Web Application Name" value="__SiteName__" />
-</parameters>  
+</parameters>
 ```
 
 This file contains a token called "SiteName".
@@ -63,16 +63,16 @@ You can see all the environment variables in the logs for a deployment.
 
 1. Secrets
 
-    Since the native [vso-task-lib](https://github.com/Microsoft/vsts-task-lib) does not support secrets for 
+    Since the native [vso-task-lib](https://github.com/Microsoft/vsts-task-lib) does not support secrets for
     Node (it does for PowerShell) there is a hack that allows you to specify secrets as an advanced parameter.
-    You specify them in key-value pairs (with the key being the name and the value being the secret variable) 
+    You specify them in key-value pairs (with the key being the name and the value being the secret variable)
     and can use a semi-colon to separate them:
-    
+
     ```
     key1:$(secret1);key2:$(secret2)
     ```
-    
-    Hopefully [this issue](https://github.com/Microsoft/vsts-task-lib/issues/48) will be implemented and I can 
+
+    Hopefully [this issue](https://github.com/Microsoft/vsts-task-lib/issues/48) will be implemented and I can
     remove this "hack" - thanks to [Di](https://github.com/dixu99) for the contribution!
 
 ## Using Tokenizer with ReplaceTokens

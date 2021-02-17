@@ -12,9 +12,129 @@ $dacpacName = Get-VstsInput -Name "dacpacName" -Require
 $extraArgs = Get-VstsInput -Name "extraArgs"
 $reverse = Get-VstsInput -Name "reverse"
 $userSqlPackagePath = Get-VstsInput -Name "userSqlPackagePath"
+$database = Get-VstsInput -Name "database"
 
 Write-Debug "DropName is $dropName"
 Write-Debug "$userSqlPackagePath"
+
+function Get-ConnectionString
+{
+    $serverName= Get-VstsInput -Name "servername"
+    $integratedSecurity= Get-VstsInput -Name "integratedsecurity"
+    $databaseName=Get-VstsInput -Name "databasename"
+
+    $connectionstring="Server=$serverName;Database=$databaseName;"
+
+    Write-Host "Integrated Security: $integratedSecurity"
+    Write-Host "Variable type: $($integratedSecurity.GetType())"
+    if (($null -ne ($integratedSecurity)) -and ($integratedSecurity -eq $true))
+    {
+        Write-Host "Building integrated security string"
+        $connectionstring=$connectionstring + "Integrated Security=SSPI"
+    }
+    else
+    {
+        Write-Host "Building user name/password string"
+        $username=Get-VstsInput -name "username"
+        $password=Get-VstsInput -name "password"
+
+        $connectionstring=$connectionstring + "UID=$username;PWD=$password";
+    }
+    return $connectionstring;
+}
+
+function Get-Input{
+    param ([string]$name,
+    [boolean]$require)
+    
+        if ($require)
+        {
+            $result=(Get-VstsInput -Name $name -Require)
+        }
+        else
+        {
+            $result=(Get-VstsInput -Name $name)
+        }
+        return $result    
+}
+
+function Get-NotParametersStatement
+{
+    Write-Host "Building Not drop parameters"
+    $parameters=Get-NotParameters
+    $result=""    
+    $obj=ConvertFrom-Json $parameters
+    $obj | Get-Member -MemberType NoteProperty | ForEach-Object {
+        $key=$_.Name
+        if ($obj."$key")
+        {
+            $result= $result + "$key;"
+        }        
+    }
+    $result=" /p:DoNotDropObjectTypes=$result"
+    return $result;
+}
+
+function Get-NotParameters
+{
+    $notdrop = @"
+    {
+    "ApplicationRoles": $(Get-Input -name "notapplicationroles"),
+    "DatabaseRoles": $(Get-Input -name "notdatabaseroles"),
+    "Defaults": $(Get-Input -name "notdefaults"),
+    "Logins": $(Get-Input -name "notlogins"),
+    "ServerRoleMembership": $(Get-Input -name "notserverrolemembership"),
+    "Users": $(Get-Input -name "notusers")
+    }
+"@
+
+    return $notdrop;
+}
+
+function Get-IgnoreParameters
+{
+    $ignore = @"
+    {
+    "IgnorePermissions": $(Get-Input -name "ignorepermissions"),
+    "IgnoreRoleMembership": $(Get-Input -name "ignorerolemembership"),
+    "IgnoreAuthorizer": $(Get-Input -name "ignoreauthorizer"),
+    "BlockOnPossibleDataLoss" : $(Get-Input -name "blockonpossibledataloss"),
+    "IgnoreExtendedProperties" : $(Get-Input -name "ignoreextendedproperties")
+    }
+"@
+    return $ignore;
+}
+
+function Get-AdditionalParameters
+{
+    $ignore=Get-IgnoreParametersStatement
+    $notdrop=Get-NotParametersStatement
+    $result=$ignore + $notdrop
+    return $result
+}
+
+function Get-IgnoreParametersStatement
+{
+    Write-Host "Building Ignore Parameters"
+    $parameters=Get-IgnoreParameters
+    $result=""
+    Write-Host "Ignore Parameters: $parameters"
+    Write-Host "Converting to JSON"
+    $obj=ConvertFrom-Json $parameters
+    $obj | Get-Member -MemberType NoteProperty | ForEach-Object {
+        $key=$_.Name
+        if ($obj."$key")
+        {
+            $result= $result + " /p:$key=True"
+        }
+        else {
+            $result= $result + " /p:$key=False"
+        }        
+    }
+    return $result;
+}
+
+
 function Get-LatestBuild {
     param(
         [string]$RootUri,
@@ -42,9 +162,9 @@ function xFind-File {
     Write-Verbose -Verbose "Searching for $FilePattern in $Path"
     $files = Find-VstsFiles -LiteralDirectory $Path -LegacyPattern $FilePattern
 
-    if ($files -eq $null -or $files.GetType().Name -ne "String") {
+    if ($null -eq $files -or $files.GetType().Name -ne "String") {
         $count = 0
-        if ($files -ne $null) {
+        if ($null -eq $files) {
             $count = $files.length
         }
         Write-Warning "Found $count matching files in folder. Expected a single file."
@@ -89,8 +209,8 @@ function Get-BuildDrop {
 
     $uri = "$($RootUri)/build/builds/$BuildId/artifacts"
     $artifacts = Invoke-RestMethod -Uri $uri -Headers $Headers
-    $drop = $artifacts.value | ? { $_.name.ToUpperInvariant() -eq $DropName.ToUpperInvariant() }
-    if ($drop -eq $null) {
+    $drop = $artifacts.value | Where-Object { $_.name.ToUpperInvariant() -eq $DropName.ToUpperInvariant() }
+    if ($null -eq $drop) {
         Write-Warning "There is no drop with the name $DropName."
         ""
     } else {
@@ -110,7 +230,7 @@ function Get-BuildDrop {
         } else {
             # the drop is a server drop
             Write-Verbose -Verbose "Downloading drop $($drop.resource.downloadUrl)"
-            wget -Uri $drop.resource.downloadUrl -Headers $Headers -OutFile "$DropName.zip"
+            Invoke-WebRequest -Uri $drop.resource.downloadUrl -Headers $Headers -OutFile "$DropName.zip"
 
             # extract the zip file
             if (Get-Command "Expand-Archive" -ErrorAction SilentlyContinue) {
@@ -147,25 +267,53 @@ function New-Report {
         [string]$SqlPackagePath,
         [string]$SourceDacpac,
         [string]$TargetDacpac,
+        [string]$ReportPath,
         [string]$ExtraArgs
     )
 
-    $SourceDacpac = Resolve-Path -Path $SourceDacpac
-    $TargetDacpac = Resolve-Path -Path $TargetDacpac
-
-    Write-Verbose "Generating report: source = $SourceDacpac, target = $TargetDacpac"
-    $commandArgs = "/a:{0} /sf:`"$SourceDacpac`" /tf:`"$TargetDacpac`" /tdn:Test /op:`"{1}`" {2}"
-
-    if (-not (Test-Path -Path "./SchemaCompare")) {
-        mkdir "SchemaCompare"
+    if (($null -eq $SourceDacpac) -or ($null -eq $TargetDacpac))
+    {
+        $tdn=" /tdn:Test"
+    }
+    else
+    {
+        $tdn=""
     }
 
-    $reportArgs = $commandArgs -f "DeployReport", "./SchemaCompare/SchemaCompare.xml", $ExtraArgs
+    if (($null -ne $SourceDacpac) -and ($SourceDacpac -ne ""))
+    {
+        $SourceDacpac = Resolve-Path -Path $SourceDacpac
+        $SourceArgs=" /sf:`"$SourceDacpac`""
+    }
+    else
+    {
+        $SourceDacpac=$extraArgs;
+        $SourceArgs=""
+    }
+    if (($null -ne $TargetDacpac) -and ($TargetDacpac -ne ""))
+    {
+        $TargetDacpac = Resolve-Path -Path $TargetDacpac
+        $TargetArgs=" /tf:`"$TargetDacpac`""
+    }
+    else
+    {
+        $TargetDacpac=$ExtraArgs
+        $TargetArgs=""
+    }
+
+    Write-Verbose "Generating report: source = $SourceDacpac, target = $TargetDacpac"
+    $commandArgs = "/a:{0} $SourceArgs $TargetArgs $tdn /op:`"{1}`" {2}"
+
+    if (-not (Test-Path -Path "$ReportPath/SchemaCompare")) {
+        mkdir "$ReportPath/SchemaCompare"
+    }
+
+    $reportArgs = $commandArgs -f "DeployReport", "$ReportPath/SchemaCompare/SchemaCompare.xml", $ExtraArgs
     $reportCommand = "`"$SqlPackagePath`" $reportArgs"
     $reportCommand
     Invoke-Command -command $reportCommand
 
-    $scriptArgs = $commandArgs -f "Script", "./SchemaCompare/ChangeScript.sql", $ExtraArgs
+    $scriptArgs = $commandArgs -f "Script", "$ReportPath/SchemaCompare/ChangeScript.sql", $ExtraArgs
     $scriptCommand = "`"$SqlPackagePath`" $scriptArgs"
     $scriptCommand
     Invoke-Command -command $scriptCommand
@@ -173,12 +321,13 @@ function New-Report {
 
 function Convert-Report {
     param(
-        [string]$ReportPath = ".\SchemaCompare\SchemaCompare.xml"
+        [string]$ReportPath = ".\SchemaCompare",
+        [string]$reportName = "SchemaCompare.xml"
     )
 
     Write-Verbose -Verbose "Converting report $reportPath to md"
-    $xslXml = [xml](gc ".\report-transformToMd.xslt")
-    $reportXml = [xml](gc $reportPath)
+    $xslXml = [xml](Get-Content ".\report-transformToMd.xslt")
+    $reportXml = [xml](Get-Content "$reportPath\$reportName")
 
     $xslt = New-Object System.Xml.Xsl.XslCompiledTransform
     $xslt.Load($xslXml)
@@ -189,7 +338,7 @@ function Convert-Report {
     $text = $reader.ReadToEnd()
 
     Write-Verbose -Verbose "Writing out transformed report to deploymentReport.md"
-    sc -Path "SchemaCompare\deploymentReport.md" -Value $text
+    Set-Content -Path "$reportPath\deploymentReport.md" -Value $text
 
     # make an md file out of the sql script
 
@@ -201,16 +350,18 @@ some housekeeping code and any pre- and post-deployment scripts you may have in 
 {0}
 ``````
 "@
-    $md = $mdTemplate -f (gc ".\SchemaCompare\ChangeScript.sql" -Raw)
-    sc -Path "SchemaCompare\ChangeScript.md" -Value $md
+    $md = $mdTemplate -f (Get-Content "$reportPath\ChangeScript.sql" -Raw)
+    Set-Content -Path "$reportPath\ChangeScript.md" -Value $md
 }
 
 try {
 #
 # Main script
 #
+    $hardCodedArgs=" /p:DropObjectsNotInSource=True /p:DisableAndReenableDdlTriggers=True /p:DropStatisticsNotInSource=False /p:IncludeTransactionalScripts=True /p:ScriptDatabaseOptions=False"
+
     try {
-        if ($userSqlPackagePath -eq $null -or $userSqlPackagePath -eq "") {
+        if ($null -eq $userSqlPackagePath -or $userSqlPackagePath -eq "") {
             $SqlPackagePath = Get-SqlPackageOnTargetMachine
         } else { 
             $SqlPackagePath = $userSqlPackagePath
@@ -232,50 +383,78 @@ try {
         Write-Host "Successfully obtained System.AccessToken"
         $headers = @{Authorization = "Bearer $token"}
     }
-
+    Write-Host "Moving Forward..."
     # just for testing
     if (-not ($env:TF_BUILD)) {
         Write-Verbose -Verbose "*** NOT RUNNING IN A BUILD ***"
         $headers = @{Authorization = "Basic $env:SYSTEM_ACCESSTOKEN"}
     }
 
-    $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
-    if ($compareBuild -ne $null) {
-        $sourceDacpac = Get-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
+    if (-not ($database))
+    {
+        Write-Host "Not a database comparison"
+        $compareBuild = Get-LatestBuild -RootUri $rootUri -Headers $headers
+        if ($null -eq $compareBuild) {
+            $sourceDacpac = Get-BuildDrop -RootUri $rootUri -Headers $headers -BuildId $compareBuild.id -DropName $dropName -DacpacName $dacpacName
 
-        # hack: when using unzip, the Get-BuildDrop return is an array [not sure why]
-        if ($sourceDacpac.GetType().Name -ne "String") {
-            $sourceDacpac = $sourceDacpac[1]
-        }
 
-        if ($sourceDacpac -ne $null) {
-            Write-Verbose -Verbose "Found source dacpac $sourceDacpac"
+            # hack: when using unzip, the Get-BuildDrop return is an array [not sure why]
+            if ($sourceDacpac.GetType().Name -ne "String") {
+                $sourceDacpac = $sourceDacpac[1]
+            }
 
-            $targetDacpac = xFind-File -Path $targetDacpacPath -FilePattern "$dacpacName.dacpac"
-            if ($targetDacpac -ne $null) {
-                Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
-
-                if ($reverse -eq $true) {
-                    Write-Verbose "Using 'reverse' logic since reverse was set to true"
-                    New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs
-                } else {
-                    Write-Verbose "Using original logic since reverse was set to false"
-                    New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs
-                }
-
-                $reportPath = ".\SchemaCompare\SchemaCompare.xml"
-                Convert-Report
-
-                # upload the schema report files as artifacts
-                Write-Verbose -Verbose "Uploading report"
-                $schemaComparePath = Resolve-Path ".\SchemaCompare"
-                
-                # Add the summary sections
-                Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Schema Change Summary - $dacpacName.dacpac" -Path "$schemaComparePath\deploymentReport.md"
-                Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Change Script - $dacpacName.dacpac" -Path "$schemaComparePath\ChangeScript.md"
+            if ($null -eq $sourceDacpac) {
+                Write-Verbose -Verbose "Found source dacpac $sourceDacpac"
             }
         }
     }
+    else {
+        $hardCodedArgs=$hardCodedArgs + " /tcs:" + "`"" + (Get-ConnectionString) + "`""
+    }
+    Write-Host "Searching the Target Dacpac at $targetDacpacPath"    
+    $targetDacpac = xFind-File -Path $targetDacpacPath -FilePattern "$dacpacName.dacpac"
+    if ($null -ne $targetDacpac) {
+        Write-Verbose -Verbose "Found target dacpac $($targetDacpac)"
+    }
+    $additionalParameters=Get-AdditionalParameters
+    $extraArgs=$extraArgs + $hardCodedArgs + $additionalParameters
+    if (-not ($database))
+    {
+        Write-Host "Not a database comparison"
+        if ($reverse -eq $true) {
+            Write-Verbose "Using 'reverse' logic since reverse was set to true"
+            New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -TargetDacpac $sourceDacpac -ExtraArgs $extraArgs -ReportPath $targetDacpacPath
+        } 
+        else {
+                    Write-Verbose "Using original logic since reverse was set to false"
+                    New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $sourceDacpac -TargetDacpac $targetDacpac -ExtraArgs $extraArgs -ReportPath $targetDacpacPath
+            }
+    }
+    else
+    {
+        Write-Host "Database Comparison"
+        if ($reverse -eq $true) {
+            Write-Verbose "Using 'reverse' logic since reverse was set to true"
+            New-Report -SqlPackagePath $SqlPackagePath -SourceDacpac $targetDacpac -ExtraArgs $extraArgs  -ReportPath $targetDacpacPath
+        } 
+        else {
+                Write-Verbose "Using original logic since reverse was set to false"
+                New-Report -SqlPackagePath $SqlPackagePath -TargetDacpac $targetDacpac -ExtraArgs $extraArgs  -ReportPath $targetDacpacPath
+            }        
+    }
+
+    $reportPath = "$targetDacpacPath\SchemaCompare"
+    $reportName="\SchemaCompare.xml"
+    Convert-Report -ReportPath $reportPath -ReportName $reportName
+
+    # upload the schema report files as artifacts
+    Write-Verbose -Verbose "Uploading report"
+    $schemaComparePath = Resolve-Path "$targetDacpacPath\SchemaCompare"
+    
+    # Add the summary sections
+    Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Schema Change Summary - $dacpacName.dacpac" -Path "$schemaComparePath\deploymentReport.md"
+    Write-VstsAddAttachment -Type "Distributedtask.Core.Summary" -Name "Change Script - $dacpacName.dacpac" -Path "$schemaComparePath\ChangeScript.md"
+
 } finally {
     Trace-VstsLeavingInvocation $MyInvocation
 }

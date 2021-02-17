@@ -58,7 +58,7 @@ async function run() {
     let credHandler: vstsInterfaces.IRequestHandler;
     let accessToken = tl.getVariable("System.AccessToken");
     if (!accessToken || accessToken.length === 0) {
-        tl.setResult(tl.TaskResult.Failed, "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options.");
+        tl.setResult(tl.TaskResult.Failed, "Could not find token for authenticating. Please enable OAuth token in Build/Release Options.");
         tl.debug("Leaving Tag Build task");
         return;
     } else {

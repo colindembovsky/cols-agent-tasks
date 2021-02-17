@@ -129,6 +129,33 @@ The second step will replace the full version, with a four part version value us
 
 (Note: For version 1.x of this script, the build regex pattern is: `\d+\.\d+\.\d+\.\d+` with group index: `0`)
 
+#### iOS Vesioning Example YAML
+
+```yaml
+steps:
+- task: VersionAssemblies@2
+  displayName: 'Version CFBundleShortVersionString'
+  inputs:
+    filePattern: '**\Info.plist'
+    versionSource: 'buildNumber'
+    versionFormat: 'threeParts'
+    replaceVersionFormat: 'custom'
+    customReplaceRegex: '<key>CFBundleShortVersionString</key>\s*<string>.*</string>'
+    replacePrefix: '<key>CFBundleShortVersionString</key><string>'
+    replacePostfix: '</string>'
+
+- task: VersionAssemblies@2
+  displayName: 'Version CFBundleVersion'
+  inputs:
+    filePattern: '**\Info.plist'
+    versionSource: 'buildNumber'
+    versionFormat: 'fourParts'
+    replaceVersionFormat: 'custom'
+    customReplaceRegex: '<key>CFBundleVersion</key>\s*<string>.*</string>'
+    replacePrefix: '<key>CFBundleVersion</key><string>'
+    replacePostfix: '</string>'
+```
+
 ### Windows Package.appxmanifest Versioning Example
 Previous windows store apps, and UWP apps use a Package.appxmanifest file to version the store packages. They can generally be versioned similarly.
 

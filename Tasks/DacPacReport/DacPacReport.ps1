@@ -144,7 +144,7 @@ function Get-BuildDrop {
 
 function New-Report {
     param(
-        [string]$SlPackagePath,
+        [string]$SqlPackagePath,
         [string]$SourceDacpac,
         [string]$TargetDacpac,
         [string]$ExtraArgs

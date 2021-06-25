@@ -178,9 +178,9 @@ async function run() {
             // make the file writable
             sh.chmod(666, file);
             var content = JSON.stringify(json, null, 2)
-                .replace(/"string(.*?)"/g, '"$1"')
-                .replace(/"boolean(.*?)"/g, '$1')
-                .replace(/"number(.*?)"/g, '$1');
+                .replace(/"string(__.*?__)"/g, '"$1"')
+                .replace(/"boolean(__.*?__)"/g, '$1')
+                .replace(/"number(__.*?__)"/g, '$1');
             fs.writeFileSync(file, content);  
         }
 

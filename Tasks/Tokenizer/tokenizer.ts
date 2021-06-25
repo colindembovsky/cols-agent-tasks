@@ -160,7 +160,7 @@ async function run() {
                     
             // if something has been tokenized before so there is invalid json, add it to the includeSet and set it to false so it gets tokenzed back
             contents.match(/: __.*?__/g)
-                .map(match => match.replace(': ', ''))
+                ?.map(match => match.replace(': ', ''))
                 .forEach(match => {
                     contents = contents.replace(match, 'false');
                     includeSet.add(match.replace(/__/g, ''));

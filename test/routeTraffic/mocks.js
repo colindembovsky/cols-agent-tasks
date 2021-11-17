@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getEndpointUrl = exports.getEndpointDataParameter = exports.getEndpointAuthorizationParameter = exports.TestHttpClient = exports.HttpClientResponse = void 0;
 class HttpClientResponse {
     constructor(message) {
         this.message = message;

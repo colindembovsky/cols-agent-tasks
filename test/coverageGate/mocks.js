@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.MockWebApi = void 0;
 var MockWebApi;
 (function (MockWebApi) {
     MockWebApi.calledBasic = false;

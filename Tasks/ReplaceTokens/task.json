@@ -68,7 +68,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "Node10": {
       "target": "replaceTokens.js",
       "argumentFormat": ""
     }

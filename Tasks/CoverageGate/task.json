@@ -63,7 +63,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "Node10": {
       "target": "coverageGate.js",
       "argumentFormat": ""
     }

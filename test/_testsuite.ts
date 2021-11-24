@@ -15,7 +15,7 @@ describe('replaceTokens', function () {
     });
 
     it('should succeed with default inputs', (done) => {
-        // this.timeout(1000);
+        this.timeout(10000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);

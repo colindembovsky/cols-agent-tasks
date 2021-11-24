@@ -101,4 +101,4 @@ steps:
     PathtoPublish: '$(build.artifactstagingdirectory)'
     ArtifactName: vsix
     
- - script: echo "Test workflows in https://dev.azure.com/cacdemo/Demo/"
+- script: echo "Test workflows in https://dev.azure.com/cacdemo/Demo/"

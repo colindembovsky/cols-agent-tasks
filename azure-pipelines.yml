@@ -30,11 +30,6 @@ steps:
   displayName: 'Run yarn install for DacPacReport'
   workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
 
-# - task: UseNode@1
-#   displayName: Use Node 12.x
-#   inputs:
-#     version: '12.x'
-
 - script: 'yarn install --frozen-lockfile' 
   displayName: 'Run yarn install'
 

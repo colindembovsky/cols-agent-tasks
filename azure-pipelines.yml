@@ -59,7 +59,7 @@ steps:
 - script: '/usr/local/bin/npm install tfx-cli@0.5.14 --prefix /home/vsts/work/_tools/'
   displayName: 'Workaround npm version issue'
 
-- task: PackageVSTSExtension@1
+- task: PackageVSTSExtension@3
   displayName: 'Package real Extension '
   inputs:
     rootFolder: '$(Build.SourcesDirectory)'
@@ -82,7 +82,7 @@ steps:
   condition: ne(variables['Agent.OS'], 'Windows_NT')
   failOnStderr: true
 
-- task: PackageVSTSExtension@1
+- task: PackageVSTSExtension@3
   displayName: 'Package beta Extension '
   inputs:
     outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'

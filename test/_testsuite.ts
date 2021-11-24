@@ -15,10 +15,11 @@ describe('replaceTokens', function () {
     });
 
     it('should succeed with default inputs', (done) => {
-        this.timeout(10000);
+        // this.timeout(10000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -40,7 +41,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-ascii.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -62,7 +64,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-emptyPath.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -84,7 +87,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-atTokens.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -106,7 +110,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-dotTokens.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -128,7 +133,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-error-off.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -150,7 +156,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-errors-on.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -173,7 +180,8 @@ describe('replaceTokens', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-arrays.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -203,7 +211,8 @@ describe('versionAssemblies', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults4.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -225,7 +234,8 @@ describe('versionAssemblies', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults3.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -247,7 +257,8 @@ describe('versionAssemblies', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-custom.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -269,7 +280,8 @@ describe('versionAssemblies', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-complex.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -291,7 +303,8 @@ describe('versionAssemblies', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-failIfNotFound.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -317,7 +330,8 @@ describe('versionAssemblies', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-multiline.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -347,7 +361,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-defaults.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -369,7 +384,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-trailingSlash.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -391,7 +407,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-exclude.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -413,7 +430,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-all.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -435,7 +453,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failIfBothIncAndExcSpecified.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -458,7 +477,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-arrays-primitive.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -480,7 +500,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-arrays-complex.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -502,7 +523,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-writesWarningForNullWhenNullBehaviorIsWarn.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -525,7 +547,8 @@ describe('tokenizer JSON', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failsWhenNullBehaviorIsError.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -557,7 +580,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-lessThan0-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -579,7 +603,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-negdelta-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -601,7 +626,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-posdelta-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -623,7 +649,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-lessEqual0-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -646,7 +673,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-nodata-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -669,7 +697,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-nodelta-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -692,7 +721,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-noauth-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -715,7 +745,8 @@ describe('coverageGate', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-username-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -745,7 +776,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-singleTag-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -767,7 +799,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-multiTag-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -789,7 +822,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagRelease-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -811,7 +845,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildFromRelease-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -833,7 +868,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-noauth-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -856,7 +892,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-build-noBuildId-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -879,7 +916,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-release-noReleaseId-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -902,7 +940,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagReleaseHandlesFailedCall.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -925,7 +964,8 @@ describe('tagBuild', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildHandlesFailedCall.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -956,7 +996,8 @@ describe('routeTraffic', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-success-forNormalInputs.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/RouteTraffic/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -978,7 +1019,8 @@ describe('routeTraffic', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-handles-authFailure.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/RouteTraffic/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -1001,7 +1043,8 @@ describe('routeTraffic', function () {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-handles-callFailure.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/RouteTraffic/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {

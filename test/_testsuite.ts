@@ -14,7 +14,7 @@ describe('replaceTokens', function () {
     after(() => {
     });
 
-    it('should succeed with default inputs', (done: MochaDone) => {
+    it('should succeed with default inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
@@ -36,7 +36,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with ascii inputs', (done: MochaDone) => {
+    it('should succeed with ascii inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-ascii.js');
@@ -58,7 +58,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with empty path', (done: MochaDone) => {
+    it('should succeed with empty path', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-emptyPath.js');
@@ -80,7 +80,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with @ tokens', (done: MochaDone) => {
+    it('should succeed with @ tokens', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-atTokens.js');
@@ -102,7 +102,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with dotted tokens', (done: MochaDone) => {
+    it('should succeed with dotted tokens', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-dotTokens.js');
@@ -124,7 +124,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should report warning when warnings without warningsAsErrors', (done: MochaDone) => {
+    it('should report warning when warnings without warningsAsErrors', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-error-off.js');
@@ -146,7 +146,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should report error when warnings with warningsAsErrors', (done: MochaDone) => {
+    it('should report error when warnings with warningsAsErrors', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-errors-on.js');
@@ -169,7 +169,7 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should with arrays', (done: MochaDone) => {
+    it('should with arrays', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-arrays.js');
@@ -199,7 +199,7 @@ describe('versionAssemblies', function () {
     after(() => {
     });
 
-    it('should succeed with default 4 part inputs', (done: MochaDone) => {
+    it('should succeed with default 4 part inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults4.js');
@@ -221,7 +221,7 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed with default 3 part inputs', (done: MochaDone) => {
+    it('should succeed with default 3 part inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults3.js');
@@ -243,7 +243,7 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed with custom settings', (done: MochaDone) => {
+    it('should succeed with custom settings', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-custom.js');
@@ -265,7 +265,7 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed with complex Android-like setup', (done: MochaDone) => {
+    it('should succeed with complex Android-like setup', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-complex.js');
@@ -287,7 +287,7 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should fail if there is no match', (done: MochaDone) => {
+    it('should fail if there is no match', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-failIfNotFound.js');
@@ -313,7 +313,7 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed for multi-line replacements', (done: MochaDone) => {
+    it('should succeed for multi-line replacements', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-multiline.js');
@@ -343,7 +343,7 @@ describe('tokenizer JSON', function () {
     after(() => {
     });
 
-    it('should succeed with default inputs', (done: MochaDone) => {
+    it('should succeed with default inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-defaults.js');
@@ -365,7 +365,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed with trailing slash in source path', (done: MochaDone) => {
+    it('should succeed with trailing slash in source path', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-trailingSlash.js');
@@ -387,7 +387,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed with excludes', (done: MochaDone) => {
+    it('should succeed with excludes', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-exclude.js');
@@ -409,7 +409,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should replace all if includes and excludes are both empty', (done: MochaDone) => {
+    it('should replace all if includes and excludes are both empty', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-all.js');
@@ -431,7 +431,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should fail if includes and excludes are both specified', (done: MochaDone) => {
+    it('should fail if includes and excludes are both specified', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failIfBothIncAndExcSpecified.js');
@@ -454,7 +454,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed for primitive array objects', (done: MochaDone) => {
+    it('should succeed for primitive array objects', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-arrays-primitive.js');
@@ -476,7 +476,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed for complex array objects', (done: MochaDone) => {
+    it('should succeed for complex array objects', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-arrays-complex.js');
@@ -498,7 +498,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should warn when nullBehavior is warning', (done: MochaDone) => {
+    it('should warn when nullBehavior is warning', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-writesWarningForNullWhenNullBehaviorIsWarn.js');
@@ -521,7 +521,7 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should fail if nullBehavior is set to null', (done: MochaDone) => {
+    it('should fail if nullBehavior is set to null', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failsWhenNullBehaviorIsError.js');
@@ -553,7 +553,7 @@ describe('coverageGate', function () {
     after(() => {
     });
 
-    it('should succeed with lt and 0 delta', (done: MochaDone) => {
+    it('should succeed with lt and 0 delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-lessThan0-succeeds.js');
@@ -575,7 +575,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should succeed with lt and negative delta', (done: MochaDone) => {
+    it('should succeed with lt and negative delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-negdelta-succeeds.js');
@@ -597,7 +597,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should succeed with lt and positive delta', (done: MochaDone) => {
+    it('should succeed with lt and positive delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-posdelta-succeeds.js');
@@ -619,7 +619,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with le and 0 delta', (done: MochaDone) => {
+    it('should fail with le and 0 delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-lessEqual0-fails.js');
@@ -642,7 +642,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with no coverage data', (done: MochaDone) => {
+    it('should fail with no coverage data', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-nodata-fails.js');
@@ -665,7 +665,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with no deltas', (done: MochaDone) => {
+    it('should fail with no deltas', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-nodelta-fails.js');
@@ -688,7 +688,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with no auth', (done: MochaDone) => {
+    it('should fail with no auth', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-noauth-fails.js');
@@ -711,7 +711,7 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should succeed with username', (done: MochaDone) => {
+    it('should succeed with username', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-username-succeeds.js');
@@ -741,7 +741,7 @@ describe('tagBuild', function () {
     after(() => {
     });
 
-    it('should succeed with single tag', (done: MochaDone) => {
+    it('should succeed with single tag', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-singleTag-succeeds.js');
@@ -763,7 +763,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with multiple tags', (done: MochaDone) => {
+    it('should succeed with multiple tags', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-multiTag-succeeds.js');
@@ -785,7 +785,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=release in release', async (done: MochaDone) => {
+    it('should succeed with type=release in release', async (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagRelease-succeeds.js');
@@ -807,7 +807,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=build in release', (done: MochaDone) => {
+    it('should succeed with type=build in release', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildFromRelease-succeeds.js');
@@ -829,7 +829,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with no auth', (done: MochaDone) => {
+    it('should fail with no auth', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-noauth-fails.js');
@@ -852,7 +852,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with type=build and no buildId', (done: MochaDone) => {
+    it('should fail with type=build and no buildId', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-build-noBuildId-fails.js');
@@ -875,7 +875,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with type=release and no releaseId', (done: MochaDone) => {
+    it('should fail with type=release and no releaseId', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-release-noReleaseId-fails.js');
@@ -898,7 +898,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should handle failed call to releaseApi', (done: MochaDone) => {
+    it('should handle failed call to releaseApi', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagReleaseHandlesFailedCall.js');
@@ -921,7 +921,7 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should handle failed call to buildApi', (done: MochaDone) => {
+    it('should handle failed call to buildApi', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildHandlesFailedCall.js');
@@ -952,7 +952,7 @@ describe('routeTraffic', function () {
     after(() => {
     });
 
-    it('should succeed with normal inputs', (done: MochaDone) => {
+    it('should succeed with normal inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-success-forNormalInputs.js');
@@ -974,7 +974,7 @@ describe('routeTraffic', function () {
         done();
     });
 
-    it('should fail with auth fail', (done: MochaDone) => {
+    it('should fail with auth fail', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-handles-authFailure.js');
@@ -997,7 +997,7 @@ describe('routeTraffic', function () {
         done();
     });
 
-    it('should fail when traffic call fails', (done: MochaDone) => {
+    it('should fail when traffic call fails', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-handles-callFailure.js');

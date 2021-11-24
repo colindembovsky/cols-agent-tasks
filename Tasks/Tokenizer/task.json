@@ -75,7 +75,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "Node10": {
       "target": "tokenizer.js",
       "argumentFormat": ""
     }

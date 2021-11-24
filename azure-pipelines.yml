@@ -44,6 +44,7 @@ steps:
 - script: 'yarn prepextension' 
   displayName: 'Run yarn prepextension'
   workingDirectory: '$(Build.SourcesDirectory)'
+  retryCountOnTaskFailure: 2
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results test-results.xml'

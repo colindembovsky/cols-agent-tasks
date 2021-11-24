@@ -59,6 +59,12 @@ steps:
 - script: '/usr/local/bin/npm install tfx-cli@0.5.14 --prefix /home/vsts/work/_tools/'
   displayName: 'Workaround npm version issue'
 
+- task: TfxInstaller@3
+  displayName: 'Use Node CLI for Azure DevOps'
+  inputs:
+    version: '0.9.x'
+    checkLatest: true
+
 - task: PackageAzureDevOpsExtension@3
   displayName: 'Package real Extension '
   inputs:

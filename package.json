@@ -66,7 +66,7 @@
     "bail": true,
     "full-trace": true,
     "package": "./package.json",
-    "reporter": [ "mocha-junit-reporter", "spec" ],
+    "reporter": "mocha-junit-reporter",
     "reporter-options": "mochaFile=./test-results.xml",
     "timeout": "45000",
     "require": ["ts-node/register", "source-map-support/register"]

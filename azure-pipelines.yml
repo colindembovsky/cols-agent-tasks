@@ -1,12 +1,11 @@
 name: 1.4$(Rev:.r)
+
 resources:
 - repo: self
-queue:
-  name: Hosted Ubuntu 1604
-  demands: 
-  - npm
-  - DotNetFramework
 
+pool:
+  vmImage: ubuntu-latest
+  
 steps:
 - task: YarnInstaller@2
   displayName: 'Use Yarn 1.x'

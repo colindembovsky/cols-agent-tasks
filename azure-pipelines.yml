@@ -125,6 +125,11 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: TfxInstaller@3
+            displayName: 'Use Node CLI for Azure DevOps'
+            inputs:
+              version: '0.9.x'
+              checkLatest: true
           - task: PublishAzureDevOpsExtension@3
             displayName: Publish Extension
             inputs:
@@ -148,6 +153,11 @@ stages:
       runOnce:
         deploy:
           steps:
+          - task: TfxInstaller@3
+            displayName: 'Use Node CLI for Azure DevOps'
+            inputs:
+              version: '0.9.x'
+              checkLatest: true
           - task: PublishAzureDevOpsExtension@3
             displayName: Publish Extension
             inputs:

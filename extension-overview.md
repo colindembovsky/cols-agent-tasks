@@ -49,6 +49,13 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
+### 1.4.148
+- Update runner to Node10
+- Update to latest NodeJS task lib
+- Update dependencies
+- Update nyc/moch to latest versions, and update config
+- Add release stages to YML pipeline
+
 ### 1.4.114
 - DacPacReport
 	- Update retrieval of SYSTEM_ACCESSTOKEN to make DacPacReport yml compatible. Fixes this [issue](https://github.com/colindembovsky/cols-agent-tasks/issues/131).

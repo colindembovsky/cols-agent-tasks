@@ -54,3 +54,5 @@ tfx extension create --manifest-globs .\vss-extension.json
 ```
 
 Upload to the marketplace by singing in to your [publisher profile](http://aka.ms/vsmarketplace-manage).
+
+`Test trigger`

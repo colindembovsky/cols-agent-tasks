@@ -11,7 +11,7 @@ stages:
   displayName: Build and Test
   
   jobs:
-  - template: templates/buid-job.yml
+  - template: templates/build-job.yml
     parameters:
       isBeta: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
   

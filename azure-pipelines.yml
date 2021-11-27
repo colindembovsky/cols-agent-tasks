@@ -129,7 +129,7 @@ stages:
             displayName: Download beta vsix
             inputs:
               artifact: vsix
-              pattern: *-beta-*.vsix
+              pattern: '*-beta-*.vsix'
           - task: TfxInstaller@3
             displayName: 'Use Node CLI for Azure DevOps'
             inputs:
@@ -162,7 +162,7 @@ stages:
             displayName: Download marketplace vsix
             inputs:
               artifact: vsix
-              pattern: *!(-beta-)*.vsix
+              pattern: '*!(-beta-)*.vsix'
           - task: TfxInstaller@3
             displayName: 'Use Node CLI for Azure DevOps'
             inputs:

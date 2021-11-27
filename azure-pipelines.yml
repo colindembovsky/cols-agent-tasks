@@ -117,7 +117,7 @@ stages:
   dependsOn: build
   jobs:
   - deployment: dev
-    displayName: Dev
+    displayName: Beta
     pool:
       vmImage: ubuntu-latest
     environment: cacdemo
@@ -125,9 +125,11 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download:
-            artifact: vsix
-            pattern: *-beta-*.vsix
+          - task: DownloadBuildArtifacts@0
+            displayName: Download beta vsix
+            inputs:
+              artifact: vsix
+              pattern: *-beta-*.vsix
           - task: TfxInstaller@3
             displayName: 'Use Node CLI for Azure DevOps'
             inputs:
@@ -156,9 +158,11 @@ stages:
       runOnce:
         deploy:
           steps:
-          - download:
-            artifact: vsix
-            pattern: *!(-beta-)*.vsix
+          - task: DownloadBuildArtifacts@0
+            displayName: Download marketplace vsix
+            inputs:
+              artifact: vsix
+              pattern: *!(-beta-)*.vsix
           - task: TfxInstaller@3
             displayName: 'Use Node CLI for Azure DevOps'
             inputs:

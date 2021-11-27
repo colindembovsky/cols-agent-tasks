@@ -22,5 +22,5 @@ stages:
   - template: templates/deploy-job.yml
     ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
       parameters:
-        env: prod
+        env: marketplace
         envName: Marketplace

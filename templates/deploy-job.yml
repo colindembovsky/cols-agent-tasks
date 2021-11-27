@@ -47,5 +47,5 @@ jobs:
             displayName: Tag Build
             inputs:
               tags: |
-              releasedToPublic
-              $(Build.BuildNumber)
+                releasedToPublic
+                $(Build.BuildNumber)

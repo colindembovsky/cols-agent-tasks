@@ -1,0 +1,109 @@
+parameters:
+  isBeta: true
+
+jobs:
+- job: build
+  displayName: Build and test
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - task: YarnInstaller@2
+    displayName: 'Use Yarn 1.x'
+    inputs:
+      checkLatest: true
+
+  - script: |
+      export cpath=$(yarn cache dir)
+      echo "Yarn cache path is [$cpath]"
+      echo "##vso[task.setvariable variable=YARN_CACHE_PATH;]$cpath"
+    displayName: 'Calculate yarn cache path'
+
+  - task: CacheBeta@0
+    inputs:
+      key: yarn | $(Build.SourcesDirectory)/yarn.lock
+      path: $(YARN_CACHE_PATH)
+    displayName: Cache Yarn packages
+
+  - task: UseNode@1
+    displayName: Use Node 14.x
+    inputs:
+      version: '14.x'
+
+  - script: 'yarn install'
+    displayName: 'Run yarn install for DacPacReport'
+    workingDirectory: '$(Build.SourcesDirectory)/Tasks/DacPacReport'
+
+  - script: 'yarn install --frozen-lockfile' 
+    displayName: 'Run yarn install'
+
+  - script: 'yarn prepextension' 
+    displayName: 'Run yarn prepextension'
+    workingDirectory: '$(Build.SourcesDirectory)'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results test-results.xml'
+    inputs:
+      testResultsFiles: '$(Build.SourcesDirectory)/test-results.xml'
+      testRunTitle: 'Publish test results'
+    condition: succeededOrFailed()
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish Code Coverage Results $(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: '$(Build.SourcesDirectory)/coverage/cobertura-coverage.xml'
+      reportDirectory: '$(Build.SourcesDirectory)/coverage'
+
+  - script: '/usr/local/bin/npm install tfx-cli@0.5.14 --prefix /home/vsts/work/_tools/'
+    displayName: 'Workaround npm version issue'
+
+  - task: TfxInstaller@3
+    displayName: 'Use Node CLI for Azure DevOps'
+    inputs:
+      version: '0.9.x'
+      checkLatest: true
+
+  - ${{ if: eq(parametes.isBeta, true) }}:
+    - task: PackageAzureDevOpsExtension@3
+      displayName: 'Package real Extension '
+      inputs:
+        rootFolder: '$(Build.SourcesDirectory)'
+        outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
+        publisherId: colinsalmcorner
+        extensionId: 'colinsalmcorner-buildtasks'
+        extensionVersion: '$(Build.BuildNumber)'
+        updateTasksVersion: true
+        updateTasksVersionType: patch
+        cwd: '$(Build.SourcesDirectory)'
+
+    - powershell: './Update-TaskIDs.ps1 -Beta'
+      displayName: 'PowerShell Update beta ids'
+      condition: eq(variables['Agent.OS'], 'Windows_NT')
+      failOnStderr: true
+
+    - bash: 'sh update-taskids.sh beta' 
+      workingDirectory: '$(Build.SourcesDirectory)'
+      displayName: 'Bash Update beta ids'
+      condition: ne(variables['Agent.OS'], 'Windows_NT')
+      failOnStderr: true
+
+    - task: PackageAzureDevOpsExtension@3
+      displayName: 'Package beta Extension '
+      inputs:
+        outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
+        publisherId: colinsalmcorner
+        extensionId: 'colinsalmcorner-buildtasks'
+        extensionTag: beta
+        extensionVersion: '$(Build.BuildNumber)'
+        updateTasksVersion: true
+        updateTasksVersionType: patch
+        extensionVisibility: private
+        extensionPricing: free
+
+  - ${{ if: ne(parametes.isBeta, true) }}:
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: vsix'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: vsix

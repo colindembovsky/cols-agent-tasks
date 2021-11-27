@@ -1,0 +1,51 @@
+parameters:
+  env: cacdemo
+  envName: Beta
+
+jobs:
+- deployment: ${{ parameters.env }}
+  displayName: ${{ parameters.envName }}
+  pool:
+    vmImage: ubuntu-latest
+  environment: ${{ parameters.env }}
+  variables:
+    ${{ if eq(parameters.envName, 'Beta') }}:
+      fileName: colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix
+    ${{ if ne(parameters.envName, 'Beta') }}:
+      fileName: colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - download: none
+        - task: DownloadBuildArtifacts@0
+          displayName: Download vsix
+          inputs:
+            artifactName: vsix
+            pattern: ${{ parameters.vsixPattern }}
+        - task: TfxInstaller@3
+          displayName: 'Use Node CLI for Azure DevOps'
+          inputs:
+            version: '0.9.x'
+            checkLatest: true
+        - task: PublishAzureDevOpsExtension@3
+          displayName: Publish Extension
+          inputs:
+            connectedServiceName: MarketPlace
+            fileType: vsix
+            vsixFile: '$(Build.ArtifactStagingDirectory)/vsix/$(fileName)'
+            updateTasksVersion: false
+            noWaitValidation: true
+            shareWith: cacdemo
+        
+        - ${{ if eq(parameters.envName, 'Beta') }}:
+          - script: echo "Test workflows in https://dev.azure.com/cacdemo/Demo/"
+            displayName: Reminder of testing URL
+        
+        - ${{ if ne(parameters.evnName, 'Beta') }}:
+          - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
+              displayName: Tag Build
+              inputs:
+                tags: |
+                releasedToPublic
+                $(Build.BuildNumber)

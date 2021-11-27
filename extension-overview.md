@@ -42,13 +42,13 @@ Click on the 'More...' link for each task to see how yaml references.
 
 |Stage|Status|
 |---|---|
-|Build|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=build)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
+|Build|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=Build%20and%20test)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
 |Beta|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=Beta)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
 |Marketplace|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=Marketplace)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
 
 ## Release Notes
 
-### 1.4.148
+### 1.4.152
 - Update runner to Node10
 - Update to latest NodeJS task lib
 - Update dependencies

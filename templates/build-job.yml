@@ -101,7 +101,7 @@ jobs:
         extensionVisibility: private
         extensionPricing: free
 
-  - ${{ if ne(parametes.isBeta, true) }}:
+  - ${{ if ne(parameters.isBeta, true) }}:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: vsix'
       inputs:

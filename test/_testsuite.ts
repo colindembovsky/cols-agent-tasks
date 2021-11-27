@@ -883,7 +883,7 @@ describe('tagBuild', function () {
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have failed");
-        assert.equal(tr.errorIssues[0], "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options.");
+        assert.equal(tr.errorIssues[0], "Could not find token for autheniticating. For classic pipelines, please enable OAuth token in Build/Release Options. For YALM pipelines, set 'SYSTEM.ACCESSTOKEN' in the environment.");
 
         done();
     });

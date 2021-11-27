@@ -125,6 +125,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download: none
           - task: DownloadBuildArtifacts@0
             displayName: Download beta vsix
             inputs:
@@ -140,7 +141,7 @@ stages:
             inputs:
               connectedServiceName: MarketPlace
               fileType: vsix
-              vsixFile: '$(System.DefaultWorkingDirectory)/vsix/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
+              vsixFile: '$(Build.ArtifactStagingDirectory)/vsix/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
               updateTasksVersion: false
               noWaitValidation: true
               shareWith: cacdemo
@@ -158,6 +159,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download: none
           - task: DownloadBuildArtifacts@0
             displayName: Download marketplace vsix
             inputs:
@@ -173,7 +175,7 @@ stages:
             inputs:
               connectedServiceName: MarketPlace
               fileType: vsix
-              vsixFile: '$(System.DefaultWorkingDirectory)/vsix/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
+              vsixFile: '$(Build.ArtifactStagingDirectory)/vsix/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
               updateTasksVersion: false
               noWaitValidation: true
           - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0

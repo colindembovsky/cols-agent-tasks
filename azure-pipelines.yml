@@ -125,6 +125,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download:
+            artifact: vsix
+            pattern: *-beta-*.vsix
           - task: TfxInstaller@3
             displayName: 'Use Node CLI for Azure DevOps'
             inputs:
@@ -135,7 +138,7 @@ stages:
             inputs:
               connectedServiceName: MarketPlace
               fileType: vsix
-              vsixFile: '$(System.DefaultWorkingDirectory)/Marketplace cols-agent-tasks/vsix/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
+              vsixFile: '$(System.DefaultWorkingDirectory)/vsix/colinsalmcorner.colinsalmcorner-buildtasks-beta-$(Build.BuildNumber).vsix'
               updateTasksVersion: false
               noWaitValidation: true
               shareWith: cacdemo
@@ -153,6 +156,9 @@ stages:
       runOnce:
         deploy:
           steps:
+          - download:
+            artifact: vsix
+            pattern: *!(-beta-)*.vsix
           - task: TfxInstaller@3
             displayName: 'Use Node CLI for Azure DevOps'
             inputs:
@@ -163,7 +169,7 @@ stages:
             inputs:
               connectedServiceName: MarketPlace
               fileType: vsix
-              vsixFile: '$(System.DefaultWorkingDirectory)/Marketplace cols-agent-tasks/vsix/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
+              vsixFile: '$(System.DefaultWorkingDirectory)/vsix/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
               updateTasksVersion: false
               noWaitValidation: true
           - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0

@@ -42,12 +42,18 @@ Click on the 'More...' link for each task to see how yaml references.
 
 |Stage|Status|
 |---|---|
-|Build|[![Build Status](https://colinsalmcorner.visualstudio.com/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline)](https://colinsalmcorner.visualstudio.com/MarketPlace/_build/latest?definitionId=33)|
-|Beta|[![Release Status](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/4)](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/4)|
-|Production|[![Release Status](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/5)](https://colinsalmcorner.vsrm.visualstudio.com/_apis/public/Release/badge/34532943-412e-4dac-b314-a87833e22dd8/3/5)|
-
+|Build|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=Build%20and%20test)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
+|Beta|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=Beta)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
+|Marketplace|[![Build Status](https://dev.azure.com/colinsalmcorner/MarketPlace/_apis/build/status/MarketPlace-yaml-pipeline?branchName=master&jobName=Marketplace)](https://dev.azure.com/colinsalmcorner/MarketPlace/_build/latest?definitionId=33&branchName=master)|
 
 ## Release Notes
+
+### 1.4.152
+- Update runner to Node10
+- Update to latest NodeJS task lib
+- Update dependencies
+- Update nyc/moch to latest versions, and update config
+- Add release stages to YML pipeline
 
 ### 1.4.114
 - DacPacReport

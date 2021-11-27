@@ -40,7 +40,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "Node10": {
       "target": "tagBuild.js",
       "argumentFormat": ""
     }

@@ -146,7 +146,7 @@
     }
   ],
   "execution": {
-    "Node": {
+    "Node10": {
       "target": "versionAssemblies.js",
       "argumentFormat": ""
     }

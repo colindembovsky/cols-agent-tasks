@@ -14,11 +14,12 @@ describe('replaceTokens', function () {
     after(() => {
     });
 
-    it('should succeed with default inputs', (done: MochaDone) => {
-        // this.timeout(1000);
+    it('should succeed with default inputs', (done) => {
+        // this.timeout(10000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-normalInputs.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -36,11 +37,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with ascii inputs', (done: MochaDone) => {
+    it('should succeed with ascii inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-ascii.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -58,11 +60,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with empty path', (done: MochaDone) => {
+    it('should succeed with empty path', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-emptyPath.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -80,11 +83,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with @ tokens', (done: MochaDone) => {
+    it('should succeed with @ tokens', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-atTokens.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -102,11 +106,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should succeed with dotted tokens', (done: MochaDone) => {
+    it('should succeed with dotted tokens', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-dotTokens.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -124,11 +129,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should report warning when warnings without warningsAsErrors', (done: MochaDone) => {
+    it('should report warning when warnings without warningsAsErrors', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-error-off.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -146,11 +152,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should report error when warnings with warningsAsErrors', (done: MochaDone) => {
+    it('should report error when warnings with warningsAsErrors', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-warnings-as-errors-on.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -169,11 +176,12 @@ describe('replaceTokens', function () {
         done();
     });
 
-    it('should with arrays', (done: MochaDone) => {
+    it('should with arrays', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'replaceTokens', 'test-arrays.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/ReplaceTokens/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -199,11 +207,12 @@ describe('versionAssemblies', function () {
     after(() => {
     });
 
-    it('should succeed with default 4 part inputs', (done: MochaDone) => {
+    it('should succeed with default 4 part inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults4.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -221,11 +230,12 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed with default 3 part inputs', (done: MochaDone) => {
+    it('should succeed with default 3 part inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-defaults3.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -243,11 +253,12 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed with custom settings', (done: MochaDone) => {
+    it('should succeed with custom settings', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-custom.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -265,11 +276,12 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed with complex Android-like setup', (done: MochaDone) => {
+    it('should succeed with complex Android-like setup', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-complex.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -287,11 +299,12 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should fail if there is no match', (done: MochaDone) => {
+    it('should fail if there is no match', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-failIfNotFound.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -313,11 +326,12 @@ describe('versionAssemblies', function () {
         done();
     });
 
-    it('should succeed for multi-line replacements', (done: MochaDone) => {
+    it('should succeed for multi-line replacements', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'versionAssemblies', 'test-multiline.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/VersionAssemblies/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -343,11 +357,12 @@ describe('tokenizer JSON', function () {
     after(() => {
     });
 
-    it('should succeed with default inputs', (done: MochaDone) => {
+    it('should succeed with default inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-defaults.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -365,11 +380,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed with trailing slash in source path', (done: MochaDone) => {
+    it('should succeed with trailing slash in source path', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-trailingSlash.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -387,11 +403,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed with excludes', (done: MochaDone) => {
+    it('should succeed with excludes', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-exclude.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -409,11 +426,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should replace all if includes and excludes are both empty', (done: MochaDone) => {
+    it('should replace all if includes and excludes are both empty', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-all.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -431,11 +449,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should fail if includes and excludes are both specified', (done: MochaDone) => {
+    it('should fail if includes and excludes are both specified', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failIfBothIncAndExcSpecified.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -454,11 +473,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed for primitive array objects', (done: MochaDone) => {
+    it('should succeed for primitive array objects', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-arrays-primitive.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -476,11 +496,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should succeed for complex array objects', (done: MochaDone) => {
+    it('should succeed for complex array objects', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-arrays-complex.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -498,11 +519,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should warn when nullBehavior is warning', (done: MochaDone) => {
+    it('should warn when nullBehavior is warning', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-writesWarningForNullWhenNullBehaviorIsWarn.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -521,11 +543,12 @@ describe('tokenizer JSON', function () {
         done();
     });
 
-    it('should fail if nullBehavior is set to null', (done: MochaDone) => {
+    it('should fail if nullBehavior is set to null', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tokenizer', 'test-failsWhenNullBehaviorIsError.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/Tokenizer/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         let x = tr.run();
         if (debug) {
@@ -553,11 +576,12 @@ describe('coverageGate', function () {
     after(() => {
     });
 
-    it('should succeed with lt and 0 delta', (done: MochaDone) => {
+    it('should succeed with lt and 0 delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-lessThan0-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -575,11 +599,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should succeed with lt and negative delta', (done: MochaDone) => {
+    it('should succeed with lt and negative delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-negdelta-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -597,11 +622,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should succeed with lt and positive delta', (done: MochaDone) => {
+    it('should succeed with lt and positive delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-posdelta-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -619,11 +645,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with le and 0 delta', (done: MochaDone) => {
+    it('should fail with le and 0 delta', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-lessEqual0-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -642,11 +669,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with no coverage data', (done: MochaDone) => {
+    it('should fail with no coverage data', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-nodata-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -665,11 +693,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with no deltas', (done: MochaDone) => {
+    it('should fail with no deltas', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-nodelta-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -688,11 +717,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should fail with no auth', (done: MochaDone) => {
+    it('should fail with no auth', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-noauth-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -711,11 +741,12 @@ describe('coverageGate', function () {
         done();
     });
 
-    it('should succeed with username', (done: MochaDone) => {
+    it('should succeed with username', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'coverageGate', 'test-username-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/CoverageGate/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -741,11 +772,12 @@ describe('tagBuild', function () {
     after(() => {
     });
 
-    it('should succeed with single tag', (done: MochaDone) => {
+    it('should succeed with single tag', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-singleTag-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -763,11 +795,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with multiple tags', (done: MochaDone) => {
+    it('should succeed with multiple tags', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-multiTag-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -785,11 +818,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=release in release', async (done: MochaDone) => {
+    it('should succeed with type=release in release', async (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagRelease-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -807,11 +841,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should succeed with type=build in release', (done: MochaDone) => {
+    it('should succeed with type=build in release', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildFromRelease-succeeds.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -829,11 +864,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with no auth', (done: MochaDone) => {
+    it('should fail with no auth', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-noauth-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -847,16 +883,17 @@ describe('tagBuild', function () {
         assert(tr.failed, 'should have failed');
         assert.equal(tr.warningIssues.length, 0, "should have no warnings");
         assert.equal(tr.errorIssues.length, 1, "should have failed");
-        assert.equal(tr.errorIssues[0], "Could not find token for autheniticating. Please enable OAuth token in Build/Release Options.");
+        assert.equal(tr.errorIssues[0], "Could not find token for autheniticating. For classic pipelines, please enable OAuth token in Build/Release Options. For YALM pipelines, set 'SYSTEM.ACCESSTOKEN' in the environment.");
 
         done();
     });
 
-    it('should fail with type=build and no buildId', (done: MochaDone) => {
+    it('should fail with type=build and no buildId', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-build-noBuildId-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -875,11 +912,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should fail with type=release and no releaseId', (done: MochaDone) => {
+    it('should fail with type=release and no releaseId', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-release-noReleaseId-fails.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -898,11 +936,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should handle failed call to releaseApi', (done: MochaDone) => {
+    it('should handle failed call to releaseApi', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagReleaseHandlesFailedCall.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -921,11 +960,12 @@ describe('tagBuild', function () {
         done();
     });
 
-    it('should handle failed call to buildApi', (done: MochaDone) => {
+    it('should handle failed call to buildApi', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'tagBuild', 'test-tagBuildHandlesFailedCall.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/TagBuild/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -952,11 +992,12 @@ describe('routeTraffic', function () {
     after(() => {
     });
 
-    it('should succeed with normal inputs', (done: MochaDone) => {
+    it('should succeed with normal inputs', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-success-forNormalInputs.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/RouteTraffic/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -974,11 +1015,12 @@ describe('routeTraffic', function () {
         done();
     });
 
-    it('should fail with auth fail', (done: MochaDone) => {
+    it('should fail with auth fail', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-handles-authFailure.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/RouteTraffic/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {
@@ -997,11 +1039,12 @@ describe('routeTraffic', function () {
         done();
     });
 
-    it('should fail when traffic call fails', (done: MochaDone) => {
+    it('should fail when traffic call fails', (done) => {
         // this.timeout(1000);
 
         let tp = path.join(__dirname, 'routeTraffic', 'test-handles-callFailure.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tj = path.join(__dirname, "../Tasks/RouteTraffic/task.json");
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp, tj);
 
         tr.run();
         if (debug) {

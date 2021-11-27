@@ -42,10 +42,10 @@ jobs:
           - script: echo "Test workflows in https://dev.azure.com/cacdemo/Demo/"
             displayName: Reminder of testing URL
         
-        - ${{ if ne(parameters.evnName, 'Beta') }}:
+        - ${{ if ne(parameters.envName, 'Beta') }}:
           - task: colinsalmcorner.colinsalmcorner-buildtasks.tag-build-task.tagBuildOrRelease@0
-              displayName: Tag Build
-              inputs:
-                tags: |
-                releasedToPublic
-                $(Build.BuildNumber)
+            displayName: Tag Build
+            inputs:
+              tags: |
+              releasedToPublic
+              $(Build.BuildNumber)

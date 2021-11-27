@@ -64,7 +64,7 @@ jobs:
       version: '0.9.x'
       checkLatest: true
 
-  - ${{ if: eq(parameters.isBeta, true) }}:
+  - ${{ if eq(parameters.isBeta, true) }}:
     - task: PackageAzureDevOpsExtension@3
       displayName: 'Package real Extension '
       inputs:
@@ -101,7 +101,7 @@ jobs:
         extensionVisibility: private
         extensionPricing: free
 
-  - ${{ if: ne(parametes.isBeta, true) }}:
+  - ${{ if ne(parametes.isBeta, true) }}:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: vsix'
       inputs:

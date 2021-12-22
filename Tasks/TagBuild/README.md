@@ -9,13 +9,13 @@ This task tags a build/release with the tags specified.
 
 ```yaml
 steps:
-- task: colinsalmcorner.colinsalmcorner-buildtasksbeta.tag-build-task.tagBuildOrRelease@0
-  displayName: 'Tag Build'
-  type: Build  # Build or Release - specify which artifact to tag (default is Build)
+- task: tagBuildOrRelease@0
+  displayName: "Tag Build"
   inputs:
+    type: 'Build' # Build or Release - specify which artifact to tag (default is Build)
     tags: |
-     tag1
-     tag2
+      tag1
+      tag2
 ```
 
 ## Settings

@@ -66,7 +66,8 @@ function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet
         } else {
             if (shouldReplaceProp(includeSet, excludeSet, propPath)) {
                 console.info(`Tokenizing ${propPath}`);
-                obj[prop] = `__${propPath}__`;
+                const type = typeof(obj[prop]);
+                obj[prop] = `${type}__${propPath}__`;
             }
         }
     }
@@ -156,6 +157,15 @@ async function run() {
             let contents = fs.readFileSync(file).toString();
             // remove BOM if present
             contents = contents.replace(String.fromCharCode(65279), '');
+                    
+            // if something has been tokenized before so there is invalid json, add it to the includeSet and set it to false so it gets tokenzed back
+            contents.match(/: __.*?__/g)
+                ?.map(match => match.replace(': ', ''))
+                .forEach(match => {
+                    contents = contents.replace(match, 'false');
+                    includeSet.add(match.replace(/__/g, ''));
+                });  
+            
             let json = JSON.parse(contents);
 
             // find the include properties recursively
@@ -167,7 +177,11 @@ async function run() {
             tl.debug("Writing new values to file...");
             // make the file writable
             sh.chmod(666, file);
-            fs.writeFileSync(file, JSON.stringify(json, null, 2));
+            var content = JSON.stringify(json, null, 2)
+                .replace(/"string(__.*?__)"/g, '"$1"')
+                .replace(/"boolean(__.*?__)"/g, '$1')
+                .replace(/"number(__.*?__)"/g, '$1');
+            fs.writeFileSync(file, content);  
         }
 
     }

@@ -13,9 +13,9 @@
   "version": {
     "Major": "2",
     "Minor": "2",
-    "Patch": "34"
+    "Patch": "35"
   },
-  "minimumAgentVersion": "1.91.0",
+  "minimumAgentVersion": "3.236.1",
   "instanceNameFormat": "Version Assemblies using $(filePattern)",
   "groups": [
     {
@@ -146,7 +146,7 @@
     }
   ],
   "execution": {
-    "Node10": {
+    "Node16": {
       "target": "versionAssemblies.js",
       "argumentFormat": ""
     }

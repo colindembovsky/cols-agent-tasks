@@ -13,9 +13,9 @@
   "version": {
     "Major": "1",
     "Minor": "2",
-    "Patch": "29"
+    "Patch": "30"
   },
-  "minimumAgentVersion": "1.91.0",
+  "minimumAgentVersion": "3.236.1",
   "instanceNameFormat": "Tokenize file(s)",
   "inputs": [
     {
@@ -75,7 +75,7 @@
     }
   ],
   "execution": {
-    "Node10": {
+    "Node16": {
       "target": "tokenizer.js",
       "argumentFormat": ""
     }

@@ -13,7 +13,7 @@
   "version": {
     "Major": "1",
     "Minor": "2",
-    "Patch": "27"
+    "Patch": "28"
   },
   "groups": [
     {
@@ -22,7 +22,7 @@
       "isExpanded": false
     }
   ],
-  "minimumAgentVersion": "1.91.0",
+  "minimumAgentVersion": "3.236.1",
   "instanceNameFormat": "Replace tokens in $(sourcePath)",
   "inputs": [
     {
@@ -68,7 +68,7 @@
     }
   ],
   "execution": {
-    "Node10": {
+    "Node16": {
       "target": "replaceTokens.js",
       "argumentFormat": ""
     }

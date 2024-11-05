@@ -36,7 +36,7 @@ jobs:
             vsixFile: '$(Build.ArtifactStagingDirectory)/vsix/$(fileName)'
             updateTasksVersion: false
             noWaitValidation: true
-            shareWith: cacdemo
+            #shareWith: cacdemo
         
         - ${{ if eq(parameters.envName, 'Beta') }}:
           - script: echo "Test workflows in https://dev.azure.com/cacdemo/Demo/"

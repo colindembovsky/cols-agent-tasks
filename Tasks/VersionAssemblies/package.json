@@ -22,7 +22,7 @@
   "homepage": "https://github.com/colindembovsky/cols-agent-tasks",
   "devDependencies": {
     "azure-pipelines-task-lib": "^4.17.3",
-    "minimatch": "^10.0.1",
+    "minimatch": "^3.0.5",
     "shelljs": "^0.8.5"
   }
 }

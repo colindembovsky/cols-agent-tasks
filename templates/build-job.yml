@@ -26,9 +26,9 @@ jobs:
     displayName: Cache Yarn packages
 
   - task: UseNode@1
-    displayName: Use Node 18.x
+    displayName: Use Node 20.x
     inputs:
-      version: '18.x'
+      version: '20.x'
 
   - script: 'yarn install'
     displayName: 'Run yarn install for DacPacReport'

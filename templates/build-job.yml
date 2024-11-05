@@ -63,7 +63,7 @@ jobs:
     inputs:
       version: '0.17.0'
 
-  - ${{ if eq(parameters.isBeta, true) }}:
+  - ${{ if ne(parameters.isBeta, true) }}:
     - task: PackageAzureDevOpsExtension@3
       displayName: 'Package real Extension '
       inputs:

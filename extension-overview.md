@@ -48,6 +48,10 @@ Click on the 'More...' link for each task to see how yaml references.
 
 ## Release Notes
 
+### 1.4.162
+- Update runner to Node18
+- Update tests
+
 ### 1.4.152
 - Update runner to Node10
 - Update to latest NodeJS task lib

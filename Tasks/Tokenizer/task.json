@@ -15,7 +15,7 @@
     "Minor": "2",
     "Patch": "30"
   },
-  "minimumAgentVersion": "3.236.1",
+  "minimumAgentVersion": "1.91.0",
   "instanceNameFormat": "Tokenize file(s)",
   "inputs": [
     {

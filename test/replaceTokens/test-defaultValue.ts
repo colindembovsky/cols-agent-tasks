@@ -34,6 +34,9 @@ fs.writeFile(tmpFile, `
     <add key="Regex1" value="__Regex1:^.*$__" />
     <add key="SpecialKeys" value="__SpecialKeys:#-/@__" />
     <add key="Regex" value="__Regex:  x * \\  __" />
+    <add key="Regex5" value="__Regex5:  x * \\  __" />
+    __key__ : __value:dd__
+    __key1__ = __value1:dd__
   </appSettings>
 </configuration>
 `, 
@@ -45,8 +48,8 @@ fs.writeFile(tmpFile, `
   tmr.setInput('tokenRegex', '__(\\w+)(:(?<defaultValue>.*))?__'); 
 
   // set variables
-  //process.env["COOLKEY"] = "MyCoolKey";
-  //process.env["SECRET_Secret1"] = "supersecret1";
+  process.env["key1"] = "MyCoolKey";
+  process.env["value1"] = "supersecret1";
 
   tmr.run();
 

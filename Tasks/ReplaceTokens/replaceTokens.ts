@@ -85,17 +85,16 @@ async function run() {
             var match: RegExpExecArray;
             // keep a separate var for the contents so that the regex index doesn't get messed up
             // by replacing items underneath it
-            var newContents = contents; // initial value, updated with replacements
+            var newContents = contents;
             while((match = reg.exec(contents)) !== null) {
                 var vName = match[1];
                 var vIsArray = vName.endsWith("[]");
-
                 if (vIsArray) {
                     vName = vName.substring(0, vName.length - 2);
                     console.info(`Detected that ${vName} is an array token`);
                 }
 
-                // Vérifier si le token a une valeur par défaut dans le format __token:defaultValue__
+                // check if the token has a default value in the format of  __token:defaultValue__
                 let defaultValue: string | undefined = undefined;
                 const defaultValueMatch = match[2]; // Pour __token:defaultValue__, match[2] capte la valeur par défaut
                 if (defaultValueMatch && defaultValueMatch.includes(":")) {
@@ -107,16 +106,16 @@ async function run() {
                 }
 
                 if (typeof secretTokens[vName.toLowerCase()] !== 'undefined') {
-                    // Si un secret token est trouvé, on le remplace
+                    // try find the variable in secret tokens input first
                     newContents = newContents.replace(match[0], secretTokens[vName.toLowerCase()]);
                     console.info(`Replaced token [${vName}] with a secret value`);
                 } else {
-                    // Trouver la variable dans les variables d'environnement
+                    // find the variable value in the environment
                     var vValue = tl.getVariable(vName);
 
                     if (typeof vValue === 'undefined') {
                         if (defaultValue !== undefined) {
-                            // Si la variable n'est pas définie et qu'il existe une valeur par défaut, on remplace par la valeur par défaut
+                            // If the variable is not defined, and there is a default value is defined we replace the variable by the default value
                             newContents = newContents.replace(match[0], defaultValue);
                             console.info(`Replaced token [${vName}] with default value [${defaultValue}]`);
                         } else {
@@ -128,7 +127,7 @@ async function run() {
                         } else {
                             newContents = newContents.replace(match[0], vValue);
                         }
-                        console.info(`Replaced token [${vName}] with value [${vValue}]`);
+                        console.info(`Replaced token [${vName }]`);
                     }
                 }
             }

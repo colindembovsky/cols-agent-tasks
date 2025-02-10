@@ -100,7 +100,7 @@ async function run() {
                 if (defaultValueMatch && defaultValueMatch.includes(":")) {
                     const parts = defaultValueMatch.split(":");
                     if (parts.length == 2) {
-                        defaultValue = parts[1];
+                        defaultValue = parts[1].trim();
                         console.info(`Detected default value for token [${vName}]: ${defaultValue}`);
                     }
                 }

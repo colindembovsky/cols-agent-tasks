@@ -28,8 +28,12 @@ tmr.setAnswers(a);
 fs.writeFile(tmpFile, `
 <configuration>
   <appSettings>
+    <add key="NoDefault" value="__NoDefault__" />
     <add key="CoolKey" value="__CoolKey:1__" />
     <add key="Secret1" value="__Secret1:2qAs4__" />
+    <add key="Regex1" value="__Regex1:^.*$__" />
+    <add key="SpecialKeys" value="__SpecialKeys:#-/@__" />
+    <add key="Regex" value="__Regex:  x * \\  __" />
   </appSettings>
 </configuration>
 `, 
@@ -38,7 +42,7 @@ fs.writeFile(tmpFile, `
   // set inputs
   tmr.setInput('sourcePath', "working");
   tmr.setInput('filePattern', '*.config');
-  tmr.setInput('tokenRegex', '__(\\w+)(:(?<defaultValue>\\w+))?__'); 
+  tmr.setInput('tokenRegex', '__(\\w+)(:(?<defaultValue>.*))?__'); 
 
   // set variables
   //process.env["COOLKEY"] = "MyCoolKey";
@@ -52,7 +56,7 @@ fs.writeFile(tmpFile, `
 <configuration>
   <appSettings>
     <add key="CoolKey" value="1" />
-    <add key="Secret1" value="2qAs4" />
+    <add key="Secret1" value="2fqAs4" />
   </appSettings>
 </configuration>
   `;

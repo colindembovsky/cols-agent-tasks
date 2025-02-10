@@ -30,8 +30,8 @@ async function run() {
         var tokenRegex = tl.getInput("tokenRegex", true);
         var secretTokenInput = tl.getInput("secretTokens", false);
 
-        const warning = warningsAsErrors ?
-            (message: string) => { tl.error(message); errCount++ } :
+        const warning = warningsAsErrors ? 
+            (message: string) => { tl.error(message); errCount++ } : 
             (message: string) => tl.warning(message);
 
         // store the tokens and values if there is any secret token input 
@@ -85,32 +85,51 @@ async function run() {
             var match: RegExpExecArray;
             // keep a separate var for the contents so that the regex index doesn't get messed up
             // by replacing items underneath it
-            var newContents = contents;
+            var newContents = contents; // initial value, updated with replacements
             while((match = reg.exec(contents)) !== null) {
                 var vName = match[1];
                 var vIsArray = vName.endsWith("[]");
+
                 if (vIsArray) {
                     vName = vName.substring(0, vName.length - 2);
                     console.info(`Detected that ${vName} is an array token`);
                 }
+
+                // Vérifier si le token a une valeur par défaut dans le format __token:defaultValue__
+                let defaultValue: string | undefined = undefined;
+                const defaultValueMatch = match[2]; // Pour __token:defaultValue__, match[2] capte la valeur par défaut
+                if (defaultValueMatch && defaultValueMatch.includes(":")) {
+                    const parts = defaultValueMatch.split(":");
+                    if (parts.length == 2) {
+                        defaultValue = parts[1];
+                        console.info(`Detected default value for token [${vName}]: ${defaultValue}`);
+                    }
+                }
+
                 if (typeof secretTokens[vName.toLowerCase()] !== 'undefined') {
-                    // try find the variable in secret tokens input first
+                    // Si un secret token est trouvé, on le remplace
                     newContents = newContents.replace(match[0], secretTokens[vName.toLowerCase()]);
                     console.info(`Replaced token [${vName}] with a secret value`);
                 } else {
-                    // find the variable value in the environment
+                    // Trouver la variable dans les variables d'environnement
                     var vValue = tl.getVariable(vName);
 
                     if (typeof vValue === 'undefined') {
-                        warning(`Token [${vName}] does not have an environment value`);
+                        if (defaultValue !== undefined) {
+                            // Si la variable n'est pas définie et qu'il existe une valeur par défaut, on remplace par la valeur par défaut
+                            newContents = newContents.replace(match[0], defaultValue);
+                            console.info(`Replaced token [${vName}] with default value [${defaultValue}]`);
+                        } else {
+                            warning(`Token [${vName}] does not have an environment value and no default value is provided`);
+                        }
                     } else {
                         if (vIsArray) {
                             newContents = newContents.replace(match[0], vValue.replace(/,/g, "\",\""));
                         } else {
                             newContents = newContents.replace(match[0], vValue);
                         }
-                        console.info(`Replaced token [${vName }]`);
-                    }           
+                        console.info(`Replaced token [${vName}] with value [${vValue}]`);
+                    }
                 }
             }
             tl.debug("Writing new values to file...");

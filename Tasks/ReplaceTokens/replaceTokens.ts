@@ -101,7 +101,7 @@ async function run() {
                     const parts = defaultValueMatch.split(":");
                     if (parts.length == 2) {
                         defaultValue = parts[1].trim();
-                        console.info(`Detected default value for token [${vName}]: ${defaultValue}`);
+                        console.info(`Detected default value for token [${vName}]`);
                     }
                 }
 
@@ -117,7 +117,7 @@ async function run() {
                         if (defaultValue !== undefined) {
                             // If the variable is not defined, and there is a default value is defined we replace the variable by the default value
                             newContents = newContents.replace(match[0], defaultValue);
-                            console.info(`Replaced token [${vName}] with default value [${defaultValue}]`);
+                            console.info(`Replaced token [${vName}]`);
                         } else {
                             warning(`Token [${vName}] does not have an environment value and no default value is provided`);
                         }

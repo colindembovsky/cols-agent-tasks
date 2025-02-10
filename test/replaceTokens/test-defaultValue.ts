@@ -58,8 +58,15 @@ fs.writeFile(tmpFile, `
   var expected = `
 <configuration>
   <appSettings>
+    <add key="NoDefault" value="__NoDefault__" />
     <add key="CoolKey" value="1" />
-    <add key="Secret1" value="2fqAs4" />
+    <add key="Secret1" value="2qAs4" />
+    <add key="Regex1" value="^.*$" />
+    <add key="SpecialKeys" value="#-/@" />
+    <add key="Regex" value="x * \\" />
+    <add key="Regex5" value="x * \\" />
+    __key__ : dd
+    MyCoolKey = supersecret1
   </appSettings>
 </configuration>
   `;

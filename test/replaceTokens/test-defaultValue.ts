@@ -29,6 +29,7 @@ fs.writeFile(tmpFile, `
 <configuration>
   <appSettings>
     <add key="NoDefault" value="__NoDefault__" />
+    <add key="WithDefault" value="__WithDefault__" />
     <add key="CoolKey" value="__CoolKey:1__" />
     <add key="Secret1" value="__Secret1:2qAs4__" />
     <add key="Regex1" value="__Regex1:^.*$__" />
@@ -50,6 +51,9 @@ fs.writeFile(tmpFile, `
   // set variables
   process.env["key1"] = "MyCoolKey";
   process.env["value1"] = "supersecret1";
+  
+  process.env["WithDefault"] = "WithDefault replaced";
+
 
   tmr.run();
 
@@ -59,6 +63,7 @@ fs.writeFile(tmpFile, `
 <configuration>
   <appSettings>
     <add key="NoDefault" value="__NoDefault__" />
+    <add key="WithDefault" value="WithDefault replaced" />
     <add key="CoolKey" value="1" />
     <add key="Secret1" value="2qAs4" />
     <add key="Regex1" value="^.*$" />

@@ -96,7 +96,7 @@ async function run() {
 
                 // check if the token has a default value in the format of  __token:defaultValue__
                 let defaultValue: string | undefined = undefined;
-                const defaultValueMatch = match[2]; // Pour __token:defaultValue__, match[2] capte la valeur par défaut
+                const defaultValueMatch = match[2]; 
                 if (defaultValueMatch && defaultValueMatch.includes(":")) {
                     const parts = defaultValueMatch.split(":");
                     if (parts.length == 2) {

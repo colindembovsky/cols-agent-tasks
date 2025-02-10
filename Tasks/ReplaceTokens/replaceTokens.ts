@@ -30,8 +30,8 @@ async function run() {
         var tokenRegex = tl.getInput("tokenRegex", true);
         var secretTokenInput = tl.getInput("secretTokens", false);
 
-        const warning = warningsAsErrors ? 
-            (message: string) => { tl.error(message); errCount++ } : 
+        const warning = warningsAsErrors ?
+            (message: string) => { tl.error(message); errCount++ } :
             (message: string) => tl.warning(message);
 
         // store the tokens and values if there is any secret token input 

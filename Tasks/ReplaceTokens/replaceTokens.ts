@@ -96,12 +96,14 @@ async function run() {
 
                 // check if the token has a default value in the format of  __token:defaultValue__
                 let defaultValue: string | undefined = undefined;
-                const defaultValueMatch = match[2]; 
-                if (defaultValueMatch && defaultValueMatch.includes(":")) {
-                    const parts = defaultValueMatch.split(":");
-                    if (parts.length == 2) {
-                        defaultValue = parts[1].trim();
-                        console.info(`Detected default value for token [${vName}]`);
+                if (match.length > 2) {
+                    const defaultValueMatch = match[2];
+                    if (defaultValueMatch && defaultValueMatch.includes(":")) {
+                        const parts = defaultValueMatch.split(":");
+                        if (parts.length == 2) {
+                            defaultValue = parts[1].trim();
+                            console.info(`Detected default value for token [${vName}]`);
+                        }
                     }
                 }
 

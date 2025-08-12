@@ -13,7 +13,7 @@
   "version": {
     "Major": "1",
     "Minor": "2",
-    "Patch": "28"
+    "Patch": "29"
   },
   "groups": [
     {
@@ -68,7 +68,7 @@
     }
   ],
   "execution": {
-    "Node16": {
+    "Node20": {
       "target": "replaceTokens.js",
       "argumentFormat": ""
     }

@@ -32,5 +32,5 @@ var MockWebApi;
         }
     }
     MockWebApi.WebApi = WebApi;
-})(MockWebApi = exports.MockWebApi || (exports.MockWebApi = {}));
+})(MockWebApi || (exports.MockWebApi = MockWebApi = {}));
 //# sourceMappingURL=mocks.js.map

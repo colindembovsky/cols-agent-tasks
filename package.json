@@ -9,8 +9,8 @@
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
     "junittest": "NODE_ENV=test NODE_NO_WARNINGS=1 nyc mocha",
-    "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.ts --require ts-node/register --bail --reporter spec",
-    "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.ts --require ts-node/register --bail",
+    "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.js --bail --reporter spec",
+    "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.js --bail",
     "cover": "yarn build && cross-env yarn junittest",
     "install-vswhere": "curl https://github.com/Microsoft/vswhere/releases/download/1.0.62/vswhere.exe -Lo Tasks/DacPacReport/vswhere.exe",
     "prepextension": "yarn install-vswhere && yarn install-libs && yarn cover"

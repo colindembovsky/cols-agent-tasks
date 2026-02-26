@@ -8,12 +8,6 @@ if (debug) {
 }
 
 describe('replaceTokens', function () {
-    before(() => {
-    });
-
-    after(() => {
-    });
-
     it('should succeed with default inputs', async () => {
         // this.timeout(10000);
     
@@ -179,12 +173,6 @@ describe('replaceTokens', function () {
 });
 
 describe('versionAssemblies', function () {
-    before(() => {
-    });
-
-    after(() => {
-    });
-
     it('should succeed with default 4 part inputs', async () => {
         // this.timeout(1000);
 
@@ -311,12 +299,6 @@ describe('versionAssemblies', function () {
 });
 
 describe('tokenizer JSON', function () {
-    before(() => {
-    });
-
-    after(() => {
-    });
-
     it('should succeed with default inputs', async () => {
         // this.timeout(1000);
 
@@ -503,12 +485,6 @@ describe('tokenizer JSON', function () {
 });
 
 describe('coverageGate', function () {
-    before(() => {
-    });
-
-    after(() => {
-    });
-
     it('should succeed with lt and 0 delta', async () => {
         // this.timeout(1000);
 
@@ -676,12 +652,6 @@ describe('coverageGate', function () {
 });
 
 describe('tagBuild', function () {
-    before(() => {
-    });
-
-    after(() => {
-    });
-
     it('should succeed with single tag', async () => {
         // this.timeout(1000);
 
@@ -870,12 +840,6 @@ describe('tagBuild', function () {
 });
 
 describe('routeTraffic', function () {
-    before(() => {
-    });
-
-    after(() => {
-    });
-
     it('should succeed with normal inputs', async () => {
         // this.timeout(1000);
 

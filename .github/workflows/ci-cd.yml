@@ -1,0 +1,77 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+    tags:
+      - "v*"
+
+jobs:
+  build-test-package:
+    name: Build, test, and package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: yarn
+
+      - name: Install DacPacReport dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: Tasks/DacPacReport
+
+      - name: Install root dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Transpile TypeScript
+        run: yarn build
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Install tfx-cli
+        run: npm install --global tfx-cli@0.17.0
+
+      - name: Package extension
+        run: |
+          mkdir -p dist
+          tfx extension create --manifest-globs vss-extension.json --output-path dist/colinsalmcorner-buildtasks.vsix
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vsix
+          path: dist/*.vsix
+          if-no-files-found: error
+
+  publish-marketplace:
+    name: Publish to Marketplace
+    needs: build-test-package
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/'))
+    runs-on: ubuntu-latest
+    environment: marketplace
+
+    steps:
+      - name: Download VSIX artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: vsix
+          path: dist
+
+      - name: Install tfx-cli
+        run: npm install --global tfx-cli@0.17.0
+
+      - name: Publish extension
+        env:
+          AZURE_DEVOPS_MARKETPLACE_TOKEN: ${{ secrets.AZURE_DEVOPS_MARKETPLACE_TOKEN }}
+        run: |
+          test -n "$AZURE_DEVOPS_MARKETPLACE_TOKEN" || (echo "AZURE_DEVOPS_MARKETPLACE_TOKEN is required." && exit 1)
+          VSIX_FILE="$(ls dist/*.vsix | head -n1)"
+          tfx extension publish --vsix "$VSIX_FILE" --token "$AZURE_DEVOPS_MARKETPLACE_TOKEN" --no-prompt

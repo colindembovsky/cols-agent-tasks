@@ -8,10 +8,9 @@
     "upgrade-libs": "glob-exec --foreach \"Tasks/!(DacPacReport)*/package.json\" -- \"cd {{file.dir}} && yarn upgrade --latest\"",
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
-    "junittest": "NODE_ENV=test NODE_NO_WARNINGS=1 nyc mocha",
-    "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.js --bail --reporter spec",
-    "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 mocha --no-opts test/_testsuite.js --bail",
-    "cover": "yarn build && cross-env yarn junittest",
+    "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 vitest run --bail=1 test/_testsuite.js",
+    "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 vitest run --bail=1 test/_testsuite.js",
+    "cover": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 nyc vitest run --bail=1 --reporter=junit --outputFile=test-results.xml test/_testsuite.js",
     "install-vswhere": "curl https://github.com/Microsoft/vswhere/releases/download/1.0.62/vswhere.exe -Lo Tasks/DacPacReport/vswhere.exe",
     "prepextension": "yarn install-vswhere && yarn install-libs && yarn cover"
   },
@@ -43,8 +42,7 @@
     "cross-env": "^7.0.3",
     "glob-exec": "^0.1.1",
     "minimatch": "^3.0.5",
-    "mocha": "^9.1.3",
-    "mocha-junit-reporter": "^2.0.2",
+    "vitest": "^0.34.6",
     "nyc": "^15.1.0",
     "path": "^0.12.7",
     "shelljs": "^0.8.5",
@@ -72,37 +70,20 @@
     "qs": "^6.14.2",
     "serialize-javascript": "^6.0.2"
   },
-  "mocha": {
-    "bail": true,
-    "full-trace": true,
-    "package": "./package.json",
-    "reporter": "mocha-junit-reporter",
-    "reporter-options": "mochaFile=./test-results.xml",
-    "timeout": "45000",
-    "require": [
-      "ts-node/register",
-      "source-map-support/register"
-    ]
-  },
   "nyc": {
     "include": [
-      "Tasks/**/*.{js,ts}",
-      "test/**/*.{js,ts}"
+      "Tasks/**/*.js"
     ],
     "exclude": [
-      "**/fileencoding.{js,ts}",
-      "test/**/*.{js,ts}"
-    ],
-    "extension": [
-      ".ts"
+      "**/fileencoding.js",
+      "test/**",
+      "**/*.d.ts",
+      "**/*.map"
     ],
     "reporter": [
       "text",
       "cobertura",
       "html"
-    ],
-    "require": [
-      "ts-node/register"
     ],
     "all": true,
     "sourceMap": true,

@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "colinsalmcorner-buildtasks",
     "name": "Colin's ALM Corner Build & Release Tools",
-    "version": "1.0.36",
+    "version": "1.4.163",
     "publisher": "colinsalmcorner",
     "public": true,
     "repository": {
@@ -13,20 +13,23 @@
         {
             "id": "Microsoft.VisualStudio.Services"
         }
-    ],    
+    ],
     "description": "Build extensions from Colin's ALM Corner to make life easier! Replace tokens, tag builds, version assemblies, compare dacpacs, coverage gate and more.",
     "categories": [
         "Build and release"
     ],
     "tags": [
-        "version", "versioning",
+        "version",
+        "versioning",
         "build",
         "replacement",
         "replace",
         "tokens",
         "tokenize",
-        "dacpac", "SSDT",
-        "coverage", "tag"
+        "dacpac",
+        "SSDT",
+        "coverage",
+        "tag"
     ],
     "screenshots": [
         {
@@ -43,7 +46,7 @@
         },
         {
             "path": "images/ss_coverageGate.png"
-        }  
+        }
     ],
     "content": {
         "details": {
@@ -69,7 +72,7 @@
         "theme": "dark"
     },
     "icons": {
-        "default": "images/extension-icon.png"        
+        "default": "images/extension-icon.png"
     },
     "files": [
         {

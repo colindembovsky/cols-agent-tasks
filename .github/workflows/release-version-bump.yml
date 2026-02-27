@@ -9,6 +9,7 @@ permissions:
 jobs:
   bump-and-release:
     runs-on: ubuntu-latest
+    environment: marketplace
 
     steps:
       - name: Checkout

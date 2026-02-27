@@ -3,8 +3,12 @@ name: CI
 on:
   pull_request:
     branches: [main]
+    paths-ignore:
+      - .github/workflows/**
   push:
     branches: [main]
+    paths-ignore:
+      - .github/workflows/**
 
 permissions:
   contents: read

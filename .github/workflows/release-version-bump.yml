@@ -60,6 +60,14 @@ jobs:
             echo "needs_manifest_bump=$([ \"$MANIFEST_VERSION\" != \"$NEXT_VERSION\" ] && echo true || echo false)"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Output version info
+        run: |
+          echo "Marketplace version: ${{ steps.version.outputs.marketplace_version }}"
+          echo "Manifest version: ${{ steps.version.outputs.manifest_version }}"
+          echo "Next version: ${{ steps.version.outputs.next_version }}"
+          echo "Git tag to create: ${{ steps.version.outputs.tag_name }}"
+          echo "Needs manifest bump: ${{ steps.version.outputs.needs_manifest_bump }}"
+
       - name: Bump manifest version
         if: steps.version.outputs.needs_manifest_bump == 'true'
         env:

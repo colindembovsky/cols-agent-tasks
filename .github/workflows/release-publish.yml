@@ -1,0 +1,36 @@
+name: Release Publish
+
+on:
+  workflow_run:
+    workflows: ["Agentic Release Build"]
+    types: [completed]
+
+jobs:
+  publish-marketplace:
+    name: Publish to Marketplace
+    if: github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: marketplace
+    permissions:
+      actions: read
+      contents: read
+
+    steps:
+      - name: Download VSIX artifact from release build
+        uses: actions/download-artifact@v4
+        with:
+          name: release-vsix
+          path: dist
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install tfx-cli
+        run: npm install --global tfx-cli@0.17.0
+
+      - name: Publish extension
+        env:
+          AZURE_DEVOPS_MARKETPLACE_TOKEN: ${{ secrets.AZURE_DEVOPS_MARKETPLACE_TOKEN }}
+        run: |
+          test -n "$AZURE_DEVOPS_MARKETPLACE_TOKEN" || (echo "AZURE_DEVOPS_MARKETPLACE_TOKEN is required." && exit 1)
+          VSIX_FILE="$(ls dist/*.vsix | head -n1)"
+          tfx extension publish --vsix "$VSIX_FILE" --token "$AZURE_DEVOPS_MARKETPLACE_TOKEN" --no-prompt

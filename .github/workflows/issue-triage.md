@@ -9,6 +9,12 @@ description: |
 on:
   issues:
     types: [opened, reopened]
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: "Issue number to triage"
+        required: true
+        type: number
   reaction: eyes
 
 permissions: read-all
@@ -37,7 +43,7 @@ source: githubnext/agentics/workflows/issue-triage.md@0718141d65ec967e48141f6f18
 
 <!-- Note - this file can be customized to your needs. Replace this section directly, or add further instructions here. After editing run 'gh aw compile' -->
 
-You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ github.event.issue.number }} and perform some initial triage tasks related to that issue.
+You're a triage assistant for GitHub issues. Your task is to analyze issue #${{ github.event.inputs.issue_number || github.event.issue.number }} and perform some initial triage tasks related to that issue.
 
 1. Select appropriate labels for the issue from the provided list.
 

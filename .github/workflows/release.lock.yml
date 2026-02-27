@@ -27,7 +27,7 @@
 #   Imports:
 #     - github/gh-aw/.github/workflows/shared/mood.md@852cb06ad52958b402ed982b69957ffc57ca0619
 #
-# frontmatter-hash: 75d19208386094a35662b7a37d6cf725109d7251fd8f6b7ff4ee6a3c7d214e17
+# frontmatter-hash: 913754be30884f709c1066f5a28e0bf821859f9314a434a1e3c620ed3acf1d72
 
 name: "Release"
 "on":
@@ -1156,7 +1156,7 @@ jobs:
         uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c # 4dc6199c7b1a012772edbd06daecab0f50c9053c
         with:
           cache: false
-          go-version-file: go.mod
+          go-version: "1.25"
       - name: Build binaries
         run: |
           echo "Building binaries for release: $RELEASE_TAG"

@@ -228,7 +228,7 @@ jobs:
       uses: actions/setup-go@4dc6199c7b1a012772edbd06daecab0f50c9053c
       with:
         cache: false
-        go-version-file: go.mod
+        go-version: '1.25'
     - env:
         RELEASE_TAG: ${{ needs.config.outputs.release_tag }}
       name: Build binaries

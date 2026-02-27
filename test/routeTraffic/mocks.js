@@ -1,9 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TestHttpClient = exports.HttpClientResponse = void 0;
-exports.getEndpointAuthorizationParameter = getEndpointAuthorizationParameter;
-exports.getEndpointDataParameter = getEndpointDataParameter;
-exports.getEndpointUrl = getEndpointUrl;
+exports.getEndpointUrl = exports.getEndpointDataParameter = exports.getEndpointAuthorizationParameter = exports.TestHttpClient = exports.HttpClientResponse = void 0;
 class HttpClientResponse {
     constructor(message) {
         this.message = message;
@@ -41,7 +38,7 @@ var TestHttpClient;
         };
     }
     TestHttpClient.HttpClient = HttpClient;
-})(TestHttpClient || (exports.TestHttpClient = TestHttpClient = {}));
+})(TestHttpClient = exports.TestHttpClient || (exports.TestHttpClient = {}));
 let endPointParameters = {
     serviceprincipalid: "spId",
     serviceprincipalkey: "spKey",
@@ -54,10 +51,13 @@ let endPointData = {
 function getEndpointAuthorizationParameter(name, key, required) {
     return endPointParameters[key];
 }
+exports.getEndpointAuthorizationParameter = getEndpointAuthorizationParameter;
 function getEndpointDataParameter(name, key, required) {
     return endPointData[key];
 }
+exports.getEndpointDataParameter = getEndpointDataParameter;
 function getEndpointUrl(name, required) {
     return "https://manage.me.fake/";
 }
+exports.getEndpointUrl = getEndpointUrl;
 //# sourceMappingURL=mocks.js.map

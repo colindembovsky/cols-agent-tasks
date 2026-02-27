@@ -11,7 +11,7 @@ permissions: read-all
 network: defaults
 
 safe-outputs:
-  update-release:
+  create-release:
 
 tools:
   github:

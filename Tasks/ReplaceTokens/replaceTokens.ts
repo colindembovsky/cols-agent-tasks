@@ -93,6 +93,20 @@ async function run() {
                     vName = vName.substring(0, vName.length - 2);
                     console.info(`Detected that ${vName} is an array token`);
                 }
+
+                // check if the token has a default value in the format of  __token:defaultValue__
+                let defaultValue: string | undefined = undefined;
+                if (match.length > 2) {
+                    const defaultValueMatch = match[2];
+                    if (defaultValueMatch && defaultValueMatch.includes(":")) {
+                        const parts = defaultValueMatch.split(":");
+                        if (parts.length == 2) {
+                            defaultValue = parts[1].trim();
+                            console.info(`Detected default value for token [${vName}]`);
+                        }
+                    }
+                }
+
                 if (typeof secretTokens[vName.toLowerCase()] !== 'undefined') {
                     // try find the variable in secret tokens input first
                     newContents = newContents.replace(match[0], secretTokens[vName.toLowerCase()]);
@@ -102,7 +116,13 @@ async function run() {
                     var vValue = tl.getVariable(vName);
 
                     if (typeof vValue === 'undefined') {
-                        warning(`Token [${vName}] does not have an environment value`);
+                        if (defaultValue !== undefined) {
+                            // If the variable is not defined, and there is a default value is defined we replace the variable by the default value
+                            newContents = newContents.replace(match[0], defaultValue);
+                            console.info(`Replaced token [${vName}]`);
+                        } else {
+                            warning(`Token [${vName}] does not have an environment value and no default value is provided`);
+                        }
                     } else {
                         if (vIsArray) {
                             newContents = newContents.replace(match[0], vValue.replace(/,/g, "\",\""));
@@ -110,7 +130,7 @@ async function run() {
                             newContents = newContents.replace(match[0], vValue);
                         }
                         console.info(`Replaced token [${vName }]`);
-                    }           
+                    }
                 }
             }
             tl.debug("Writing new values to file...");

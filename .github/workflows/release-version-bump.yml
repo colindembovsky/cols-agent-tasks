@@ -33,6 +33,9 @@ jobs:
             echo "manifest_version=$MANIFEST_VERSION"
           } >> "$GITHUB_OUTPUT"
 
+      - name: Install Azure DevOps Marketplace CLI
+        run: npm install --global tfx-cli@0.17.0
+
       - name: Determine next version
         id: version
         env:
@@ -40,12 +43,8 @@ jobs:
           EXTENSION_ID: ${{ steps.manifest.outputs.extension_id }}
           MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
         run: |
-          MARKETPLACE_JSON=$(curl -s -X POST \
-            "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery?api-version=7.1-preview.1" \
-            -H "Content-Type: application/json" \
-            -H "Accept: application/json" \
-            -d "{\"filters\":[{\"criteria\":[{\"filterType\":7,\"value\":\"${PUBLISHER}.${EXTENSION_ID}\"}],\"pageNumber\":1,\"pageSize\":1,\"sortBy\":0,\"sortOrder\":0}],\"assetTypes\":[],\"flags\":0}")
-          MARKETPLACE_VERSION=$(node -e "try { const data = JSON.parse(process.argv[1]); const version = data.results?.[0]?.extensions?.[0]?.versions?.[0]?.version; if (!version) { console.error('No version found in marketplace response.'); process.exit(1); } console.log(version); } catch (error) { console.error('Failed to parse marketplace response JSON:', error.message); process.exit(1); }" "$MARKETPLACE_JSON")
+          MARKETPLACE_JSON=$(tfx extension show --publisher "$PUBLISHER" --extension-id "$EXTENSION_ID" --json --no-prompt)
+          MARKETPLACE_VERSION=$(node -e "try { const data = JSON.parse(process.argv[1]); const version = data.versions?.[0]?.version || data.version; if (!version) { console.error('No version found in marketplace response.'); process.exit(1); } console.log(version); } catch (error) { console.error('Failed to parse marketplace response JSON:', error.message); process.exit(1); }" "$MARKETPLACE_JSON")
 
           if [ -z "$MARKETPLACE_VERSION" ]; then
             echo "Failed to resolve latest marketplace version for ${PUBLISHER}.${EXTENSION_ID}" >&2

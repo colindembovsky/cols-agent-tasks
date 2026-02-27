@@ -44,15 +44,15 @@ jobs:
           MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
         run: |
           MARKETPLACE_JSON=$(tfx extension show --publisher "$PUBLISHER" --extension-id "$EXTENSION_ID" --json)
-          MARKETPLACE_VERSION=$(node -e "const data = JSON.parse(process.argv[1]); console.log(data.versions?.[0]?.version || data.version);" "$MARKETPLACE_JSON")
+          MARKETPLACE_VERSION=$(node -e "try { const data = JSON.parse(process.argv[1]); const version = data.versions?.[0]?.version || data.version; if (!version) { console.error('No version found in marketplace response.'); process.exit(1); } console.log(version); } catch (error) { console.error('Failed to parse marketplace response JSON:', error.message); process.exit(1); }" "$MARKETPLACE_JSON")
 
           if [ -z "$MARKETPLACE_VERSION" ]; then
             echo "Failed to resolve latest marketplace version for ${PUBLISHER}.${EXTENSION_ID}" >&2
             exit 1
           fi
 
-          CALCULATED_NEXT_VERSION=$(node -e "const [major,minor,patch]=process.argv[1].split('.').map(Number); if ([major,minor,patch].some(Number.isNaN)) process.exit(1); console.log(`${major}.${minor}.${patch+1}`);" "$MARKETPLACE_VERSION")
-          NEXT_VERSION=$(node -e "const a=process.argv[1].split('.').map(Number); const b=process.argv[2].split('.').map(Number); if (a.some(Number.isNaN)||b.some(Number.isNaN)) process.exit(1); const cmp=(a[0]-b[0])||(a[1]-b[1])||(a[2]-b[2]); console.log(cmp>0?process.argv[1]:process.argv[2]);" "$MANIFEST_VERSION" "$CALCULATED_NEXT_VERSION")
+          CALCULATED_NEXT_VERSION=$(node -e "const sourceVersion=process.argv[1]; const [major,minor,patch]=sourceVersion.split('.').map(Number); if ([major,minor,patch].some(Number.isNaN)) { console.error('Invalid marketplace semver version:', sourceVersion); process.exit(1); } console.log(`${major}.${minor}.${patch+1}`);" "$MARKETPLACE_VERSION")
+          NEXT_VERSION=$(node -e "const repoVersion=process.argv[1]; const calculatedVersion=process.argv[2]; const a=repoVersion.split('.').map(Number); const b=calculatedVersion.split('.').map(Number); if (a.some(Number.isNaN)||b.some(Number.isNaN)) { console.error('Invalid semver comparison values:', repoVersion, calculatedVersion); process.exit(1); } const cmp=(a[0]-b[0])||(a[1]-b[1])||(a[2]-b[2]); console.log(cmp>0?repoVersion:calculatedVersion);" "$MANIFEST_VERSION" "$CALCULATED_NEXT_VERSION")
 
           {
             echo "marketplace_version=$MARKETPLACE_VERSION"
@@ -66,7 +66,7 @@ jobs:
         env:
           NEXT_VERSION: ${{ steps.version.outputs.next_version }}
         run: |
-          node -e "const fs=require('fs'); const file='vss-extension.json'; const data=JSON.parse(fs.readFileSync(file,'utf8')); data.version=process.argv[1]; fs.writeFileSync(file, JSON.stringify(data, null, 4) + '\n');" "$NEXT_VERSION"
+          node -e "const fs=require('fs'); const file='vss-extension.json'; try { const content = fs.readFileSync(file,'utf8'); const data=JSON.parse(content); data.version=process.argv[1]; fs.writeFileSync(file, JSON.stringify(data, null, 4) + '\n'); } catch (error) { console.error(`Failed to update ${file}:`, error.message); process.exit(1); }" "$NEXT_VERSION"
 
       - name: Commit manifest version bump
         if: steps.version.outputs.needs_manifest_bump == 'true'

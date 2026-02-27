@@ -203,6 +203,8 @@ tests/**/working
 
 coverage
 test-results.xml
+.tsbuildinfo
+*.tsbuildinfo
 .taskkey
 .\nyc_output
 Tasks/DacPacReport/vswhere.exe

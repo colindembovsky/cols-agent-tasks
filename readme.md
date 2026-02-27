@@ -15,6 +15,7 @@ Use `yarn` to build and test these extensions. All `yarn` scripts are specified 
 1. `install`: install dependencies in root folder.
 1. `install-libs` install dependencies in each Task folder (required since each task has to be self-contained).
 1. `test` to run tests.
+1. `test:quick` to run tests without rebuilding TypeScript first.
 1. `debugtest` to run tests with verbose logging.
 1. `cover` to run tests with code coverage.
 1. `prepextension` to run `install` and `coverage` (used to package the extension in the build).

@@ -9,6 +9,7 @@
     "build": "tsc",
     "build-prod": "yarn install-libs && tsc",
     "test": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 vitest run --bail=1 test/_testsuite.js",
+    "test:quick": "cross-env NODE_ENV=test NODE_NO_WARNINGS=1 vitest run --bail=1 test/_testsuite.js",
     "debugtest": "yarn build && cross-env NODE_ENV=debugtest NODE_NO_WARNINGS=1 vitest run --bail=1 test/_testsuite.js",
     "cover": "yarn build && cross-env NODE_ENV=test NODE_NO_WARNINGS=1 nyc vitest run --bail=1 --reporter=junit --outputFile=test-results.xml test/_testsuite.js",
     "install-vswhere": "curl https://github.com/Microsoft/vswhere/releases/download/1.0.62/vswhere.exe -Lo Tasks/DacPacReport/vswhere.exe",
@@ -88,7 +89,7 @@
     "all": true,
     "sourceMap": true,
     "instrument": true,
-    "cache": false,
+    "cache": true,
     "exclude-after-remap": false
   }
 }

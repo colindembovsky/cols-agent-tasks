@@ -10,9 +10,6 @@ permissions: read-all
 
 network: defaults
 
-safe-outputs:
-  update-release:
-
 tools:
   github:
     toolsets: [default]
@@ -37,13 +34,14 @@ Follow these steps in order:
    - Example: `1.0.36` -> `1.0.37`.
    - If the current repo version is already greater than this calculated value, keep the current repo version as `nextVersion`.
 
-4. Ensure there is no existing GitHub release or tag with `nextVersion`. If one exists, fail with a clear message.
+4. Ensure there is no existing GitHub release or tag with `nextVersion` by checking with the `gh` CLI. If one exists, fail with a clear message.
 
 5. Create a GitHub release with:
-   - `tag_name`: `nextVersion`
-   - `name`: `nextVersion`
-   - target commit: the latest commit on the current branch
-   - concise body noting this release was created to kick off the release build workflow chain.
+    - `tag_name`: `nextVersion`
+    - `name`: `nextVersion`
+    - target commit: the latest commit on the current branch
+    - concise body noting this release was created to kick off the release build workflow chain.
+   Use `gh release create` (bash), not safe outputs.
 
 6. Add a short run summary containing:
    - marketplace version found

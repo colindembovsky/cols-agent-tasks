@@ -6,16 +6,15 @@ description: |
 on:
   workflow_dispatch:
 
-permissions:
-  contents: write
+permissions: read-all
 
 network: defaults
 
 safe-outputs:
-  create-release:
+  update-release:
 
 tools:
-  azure-devops-marketplace:
+  azure-devops-marketplace: true
   github:
     toolsets: [default]
 
@@ -39,21 +38,16 @@ Follow these steps in order:
    - Example: `1.0.36` -> `1.0.37`.
    - If the current repo version is already greater than this calculated value, keep the current repo version as `nextVersion`.
 
-4. Update `vss-extension.json` so `version` equals `nextVersion`.
+4. Ensure there is no existing GitHub release or tag with `nextVersion`. If one exists, fail with a clear message.
 
-5. Commit and push the version change to the current branch with message:
-   - `chore: bump extension version to <nextVersion>`
-   - If no file change is needed, skip creating a commit.
-
-6. Ensure there is no existing GitHub release or tag with `nextVersion`. If one exists, fail with a clear message.
-
-7. Create a GitHub release with:
+5. Create a GitHub release with:
    - `tag_name`: `nextVersion`
    - `name`: `nextVersion`
-   - target commit: the latest commit on the current branch (including the version bump commit when one was created)
+   - target commit: the latest commit on the current branch
    - concise body noting this release was created to kick off the release build workflow chain.
 
-8. Add a short run summary containing:
+6. Add a short run summary containing:
    - marketplace version found
-   - repository version before/after
+   - repository manifest version
+   - next version selected
    - created release tag

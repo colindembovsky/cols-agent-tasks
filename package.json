@@ -43,7 +43,7 @@
     "cross-env": "^7.0.3",
     "glob-exec": "^0.1.1",
     "minimatch": "^10.2.4",
-    "nyc": "^18.0.0",
+    "nyc": "^17.0.0",
     "path": "^0.12.7",
     "shelljs": "^0.10.0",
     "source-map-support": "^0.5.21",

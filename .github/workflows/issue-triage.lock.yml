@@ -27,7 +27,7 @@
 #
 # Source: githubnext/agentics/workflows/issue-triage.md@0718141d65ec967e48141f6f1850ad7b1f682bb0
 #
-# frontmatter-hash: 568d5692b607bf79219155228802f2ba748adf5e4f7e163e3ea601a7b71188f7
+# frontmatter-hash: 6d2b20f5bfef0c9011308f3254b9a90b11eabaf5414048a796e011c0a9401575
 
 name: "Agentic Triage"
 "on":
@@ -38,14 +38,14 @@ name: "Agentic Triage"
   workflow_dispatch:
     inputs:
       issue_number:
-        description: "Issue number to triage"
+        description: Issue number to triage
         required: true
         type: number
 
 permissions: {}
 
 concurrency:
-  group: "gh-aw-${{ github.workflow }}-${{ github.event.inputs.issue_number || github.event.issue.number }}"
+  group: "gh-aw-${{ github.workflow }}-${{ github.event.issue.number }}"
 
 run-name: "Agentic Triage"
 
@@ -496,10 +496,11 @@ jobs:
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
           GH_AW_SAFE_OUTPUTS: ${{ env.GH_AW_SAFE_OUTPUTS }}
+          GH_AW_EXPR_F98F856D: ${{ github.event.inputs.issue_number || github.event.issue.number }}
           GH_AW_GITHUB_ACTOR: ${{ github.actor }}
           GH_AW_GITHUB_EVENT_COMMENT_ID: ${{ github.event.comment.id }}
           GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
-          GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.inputs.issue_number || github.event.issue.number }}
+          GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
           GH_AW_GITHUB_EVENT_PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
           GH_AW_GITHUB_REPOSITORY: ${{ github.repository }}
           GH_AW_GITHUB_RUN_ID: ${{ github.run_id }}
@@ -566,10 +567,11 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
+          GH_AW_EXPR_F98F856D: ${{ github.event.inputs.issue_number || github.event.issue.number }}
           GH_AW_GITHUB_ACTOR: ${{ github.actor }}
           GH_AW_GITHUB_EVENT_COMMENT_ID: ${{ github.event.comment.id }}
           GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
-          GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.inputs.issue_number || github.event.issue.number }}
+          GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
           GH_AW_GITHUB_EVENT_PULL_REQUEST_NUMBER: ${{ github.event.pull_request.number }}
           GH_AW_GITHUB_REPOSITORY: ${{ github.repository }}
           GH_AW_GITHUB_RUN_ID: ${{ github.run_id }}
@@ -582,6 +584,7 @@ jobs:
             return await substitutePlaceholders({
               file: process.env.GH_AW_PROMPT,
               substitutions: {
+                GH_AW_EXPR_F98F856D: process.env.GH_AW_EXPR_F98F856D,
                 GH_AW_GITHUB_ACTOR: process.env.GH_AW_GITHUB_ACTOR,
                 GH_AW_GITHUB_EVENT_COMMENT_ID: process.env.GH_AW_GITHUB_EVENT_COMMENT_ID,
                 GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: process.env.GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER,
@@ -596,7 +599,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
-          GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.inputs.issue_number || github.event.issue.number }}
+          GH_AW_EXPR_F98F856D: ${{ github.event.inputs.issue_number || github.event.issue.number }}
         with:
           script: |
             const { setupGlobals } = require('/opt/gh-aw/actions/setup_globals.cjs');
@@ -1040,6 +1043,7 @@ jobs:
       pull-requests: write
     timeout-minutes: 15
     env:
+      GH_AW_ENGINE_ID: "copilot"
       GH_AW_WORKFLOW_ID: "issue-triage"
       GH_AW_WORKFLOW_NAME: "Agentic Triage"
       GH_AW_WORKFLOW_SOURCE: "githubnext/agentics/workflows/issue-triage.md@0718141d65ec967e48141f6f1850ad7b1f682bb0"
@@ -1078,3 +1082,4 @@ jobs:
             setupGlobals(core, github, context, exec, io);
             const { main } = require('/opt/gh-aw/actions/safe_output_handler_manager.cjs');
             await main();
+

@@ -1,0 +1,97 @@
+name: Release Publish
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish-latest-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Resolve latest release
+        id: release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              const { data } = await github.rest.repos.getLatestRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+              core.setOutput('tag_name', data.tag_name);
+              core.setOutput('release_name', data.name || data.tag_name);
+            } catch (error) {
+              core.setFailed(`Unable to resolve latest GitHub release: ${error.message}`);
+            }
+
+      - name: Checkout latest release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag_name }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install Azure DevOps Marketplace CLI
+        run: npm install --global tfx-cli@0.17.0
+
+      - name: Read extension manifest
+        id: manifest
+        run: |
+          PUBLISHER=$(node -p "require('./vss-extension.json').publisher")
+          EXTENSION_ID=$(node -p "require('./vss-extension.json').id")
+          MANIFEST_VERSION=$(node -p "require('./vss-extension.json').version")
+          {
+            echo "publisher=$PUBLISHER"
+            echo "extension_id=$EXTENSION_ID"
+            echo "manifest_version=$MANIFEST_VERSION"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Validate release tag matches manifest version
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag_name }}
+          MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
+        run: |
+          EXPECTED_TAG="v$MANIFEST_VERSION"
+          if [ "$RELEASE_TAG" != "$EXPECTED_TAG" ]; then
+            echo "Latest release tag ($RELEASE_TAG) does not match manifest version ($MANIFEST_VERSION)." >&2
+            exit 1
+          fi
+
+      - name: Publish extension to marketplace
+        env:
+          AZURE_DEVOPS_MARKETPLACE_TOKEN: ${{ secrets.AZURE_DEVOPS_MARKETPLACE_TOKEN }}
+        run: |
+          if [ -z "$AZURE_DEVOPS_MARKETPLACE_TOKEN" ]; then
+            echo "Missing required secret: AZURE_DEVOPS_MARKETPLACE_TOKEN" >&2
+            exit 1
+          fi
+
+          tfx extension publish \
+            --manifest-globs vss-extension.json \
+            --no-prompt \
+            --token "$AZURE_DEVOPS_MARKETPLACE_TOKEN"
+
+      - name: Write run summary
+        env:
+          RELEASE_TAG: ${{ steps.release.outputs.tag_name }}
+          RELEASE_NAME: ${{ steps.release.outputs.release_name }}
+          PUBLISHER: ${{ steps.manifest.outputs.publisher }}
+          EXTENSION_ID: ${{ steps.manifest.outputs.extension_id }}
+          MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
+        run: |
+          {
+            echo "### Release publish summary"
+            echo ""
+            echo "- GitHub release: $RELEASE_NAME ($RELEASE_TAG)"
+            echo "- Publisher: $PUBLISHER"
+            echo "- Extension: $EXTENSION_ID"
+            echo "- Manifest version: $MANIFEST_VERSION"
+            echo "- Publish command: tfx extension publish --manifest-globs vss-extension.json"
+          } >> "$GITHUB_STEP_SUMMARY"

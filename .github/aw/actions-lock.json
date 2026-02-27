@@ -1,0 +1,54 @@
+{
+  "entries": {
+    "actions/checkout@v6": {
+      "repo": "actions/checkout",
+      "version": "v6",
+      "sha": "de0fac2e4500dabe0009e67214ff5f5447ce83dd"
+    },
+    "actions/github-script@v7": {
+      "repo": "actions/github-script",
+      "version": "v7",
+      "sha": "f28e40c7f34bde8b3046d885e986cb6290c5673b"
+    },
+    "actions/github-script@v8": {
+      "repo": "actions/github-script",
+      "version": "v8",
+      "sha": "ed597411d8f924073f98dfc5c65a23a2325f34cd"
+    },
+    "actions/upload-artifact@v6": {
+      "repo": "actions/upload-artifact",
+      "version": "v6",
+      "sha": "b7c566a772e6b6bfb58ed0dc250532a479d7789f"
+    },
+    "anchore/sbom-action@v0": {
+      "repo": "anchore/sbom-action",
+      "version": "v0",
+      "sha": "17ae1740179002c89186b61233e0f892c3118b11"
+    },
+    "docker/build-push-action@v6": {
+      "repo": "docker/build-push-action",
+      "version": "v6",
+      "sha": "10e90e3645eae34f1e60eeb005ba3a3d33f178e8"
+    },
+    "docker/login-action@v3": {
+      "repo": "docker/login-action",
+      "version": "v3",
+      "sha": "c94ce9fb468520275223c153574b00df6fe4bcc9"
+    },
+    "docker/metadata-action@v5": {
+      "repo": "docker/metadata-action",
+      "version": "v5",
+      "sha": "c299e40c65443455700f0fdfc63efafe5b349051"
+    },
+    "docker/setup-buildx-action@v3": {
+      "repo": "docker/setup-buildx-action",
+      "version": "v3",
+      "sha": "8d2750c68a42422c14e847fe6c8ac0403b4cbd6f"
+    },
+    "github/gh-aw/actions/setup@v0.43.7": {
+      "repo": "github/gh-aw/actions/setup",
+      "version": "v0.43.7",
+      "sha": "9513a842d1c5cc736f198db66155b26fc619af6a"
+    }
+  }
+}

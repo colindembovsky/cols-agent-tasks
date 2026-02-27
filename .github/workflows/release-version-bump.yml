@@ -43,7 +43,7 @@ jobs:
           EXTENSION_ID: ${{ steps.manifest.outputs.extension_id }}
           MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
         run: |
-          MARKETPLACE_JSON=$(tfx extension show --publisher "$PUBLISHER" --extension-id "$EXTENSION_ID" --json)
+          MARKETPLACE_JSON=$(tfx extension show --publisher "$PUBLISHER" --extension-id "$EXTENSION_ID" --json --no-prompt)
           MARKETPLACE_VERSION=$(node -e "try { const data = JSON.parse(process.argv[1]); const version = data.versions?.[0]?.version || data.version; if (!version) { console.error('No version found in marketplace response.'); process.exit(1); } console.log(version); } catch (error) { console.error('Failed to parse marketplace response JSON:', error.message); process.exit(1); }" "$MARKETPLACE_JSON")
 
           if [ -z "$MARKETPLACE_VERSION" ]; then

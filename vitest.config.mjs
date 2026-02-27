@@ -4,6 +4,7 @@ export default defineConfig({
     test: {
         globals: true,
         testTimeout: 45000,
+        threads: false,
         include: ['test/_testsuite.js']
     }
 });

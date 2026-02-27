@@ -25,7 +25,7 @@
 # extension version, computes the next version tag, and creates a matching GitHub
 # release to trigger the release build pipeline.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"95842f3a2f86a11298937f9bf47f06272a8c938664a22ff3aeaf8d64b979ef18","compiler_version":"v0.50.6"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"ef7964afedc23de4aaa8d3efea0f2e9cdabce5441938bda49c034f2ef19f257f","compiler_version":"v0.50.6"}
 
 name: "Agentic Release Version Bump"
 "on":

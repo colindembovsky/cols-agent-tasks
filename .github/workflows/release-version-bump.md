@@ -14,7 +14,6 @@ safe-outputs:
   update-release:
 
 tools:
-  azure-devops-marketplace: true
   github:
     toolsets: [default]
 
@@ -32,7 +31,7 @@ Follow these steps in order:
    - `id`
    - current `version`
 
-2. Use the Azure DevOps marketplace tool to fetch the latest published extension version for this extension using `{publisher}.{id}` from step 1.
+2. Use the Azure DevOps marketplace CLI tool available in the runtime (not an MCP tool) to fetch the latest published extension version for this extension using `{publisher}.{id}` from step 1.
 
 3. Determine `nextVersion` by incrementing the patch part of the latest marketplace version (semver `major.minor.patch`).
    - Example: `1.0.36` -> `1.0.37`.

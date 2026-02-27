@@ -1,8 +1,8 @@
 ---
 description: |
   Manually triggered workflow that reads the latest published Azure DevOps Marketplace
-  extension version, bumps the repository extension version, and creates a matching
-  GitHub release tag to trigger the release build pipeline.
+  extension version, computes the next version tag, and creates a matching GitHub
+  release to trigger the release build pipeline.
 on:
   workflow_dispatch:
 
@@ -32,7 +32,7 @@ Follow these steps in order:
    - `id`
    - current `version`
 
-2. Use the Azure DevOps marketplace tool to fetch the latest published extension version for this extension (`publisher.id`).
+2. Use the Azure DevOps marketplace tool to fetch the latest published extension version for this extension using `{publisher}.{id}` from step 1.
 
 3. Determine `nextVersion` by incrementing the patch part of the latest marketplace version (semver `major.minor.patch`).
    - Example: `1.0.36` -> `1.0.37`.

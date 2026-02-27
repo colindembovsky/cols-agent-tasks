@@ -22,10 +22,10 @@
 # For more information: https://github.github.com/gh-aw/introduction/overview/
 #
 # Manually triggered workflow that reads the latest published Azure DevOps Marketplace
-# extension version, bumps the repository extension version, and creates a matching
-# GitHub release tag to trigger the release build pipeline.
+# extension version, computes the next version tag, and creates a matching GitHub
+# release to trigger the release build pipeline.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"1e37b190dcb5f1196070c0ee3e49dd6cd156ce4113481eb8469a019e20b298ac","compiler_version":"v0.50.6"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"95842f3a2f86a11298937f9bf47f06272a8c938664a22ff3aeaf8d64b979ef18","compiler_version":"v0.50.6"}
 
 name: "Agentic Release Version Bump"
 "on":
@@ -828,7 +828,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           WORKFLOW_NAME: "Agentic Release Version Bump"
-          WORKFLOW_DESCRIPTION: "Manually triggered workflow that reads the latest published Azure DevOps Marketplace\nextension version, bumps the repository extension version, and creates a matching\nGitHub release tag to trigger the release build pipeline."
+          WORKFLOW_DESCRIPTION: "Manually triggered workflow that reads the latest published Azure DevOps Marketplace\nextension version, computes the next version tag, and creates a matching GitHub\nrelease to trigger the release build pipeline."
           HAS_PATCH: ${{ steps.collect_output.outputs.has_patch }}
         with:
           script: |

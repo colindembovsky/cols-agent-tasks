@@ -1,0 +1,157 @@
+name: Release Version Bump
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Install Azure DevOps Marketplace CLI
+        run: npm install --global tfx-cli@0.17.0
+
+      - name: Calculate next version from Marketplace and manifest
+        id: version
+        env:
+          AZURE_DEVOPS_MARKETPLACE_TOKEN: ${{ secrets.AZURE_DEVOPS_MARKETPLACE_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          PUBLISHER="$(jq -r '.publisher' vss-extension.json)"
+          EXTENSION_ID="$(jq -r '.id' vss-extension.json)"
+          REPO_VERSION="$(jq -r '.version' vss-extension.json)"
+
+          auth_args=()
+          if [ -n "${AZURE_DEVOPS_MARKETPLACE_TOKEN:-}" ]; then
+            auth_args=(--auth-type pat --token "$AZURE_DEVOPS_MARKETPLACE_TOKEN")
+          fi
+
+          tfx extension show \
+            --publisher "$PUBLISHER" \
+            --extension-id "$EXTENSION_ID" \
+            --json \
+            "${auth_args[@]}" > /tmp/marketplace-extension.json
+
+          MARKETPLACE_VERSION="$(node -e '
+            const fs = require("fs");
+            const semver = (v) => /^(\d+)\.(\d+)\.(\d+)$/.test(v);
+            const sort = (a, b) => {
+              const pa = a.split(".").map(Number);
+              const pb = b.split(".").map(Number);
+              for (let i = 0; i < 3; i++) if (pa[i] !== pb[i]) return pa[i] - pb[i];
+              return 0;
+            };
+            const data = JSON.parse(fs.readFileSync("/tmp/marketplace-extension.json", "utf8"));
+            const versions = Array.isArray(data.versions) ? data.versions.map(v => v.version).filter(semver) : [];
+            if (!versions.length) {
+              throw new Error("Could not determine marketplace version from tfx output.");
+            }
+            versions.sort(sort);
+            process.stdout.write(versions[versions.length - 1]);
+          ')"
+
+          CANDIDATE_NEXT_VERSION="$(node -e '
+            const v = process.argv[1].split(".").map(Number);
+            process.stdout.write([v[0], v[1], v[2] + 1].join("."));
+          ' "$MARKETPLACE_VERSION")"
+
+          NEXT_VERSION="$(node -e '
+            const sort = (a, b) => {
+              const pa = a.split(".").map(Number);
+              const pb = b.split(".").map(Number);
+              for (let i = 0; i < 3; i++) if (pa[i] !== pb[i]) return pa[i] - pb[i];
+              return 0;
+            };
+            const repo = process.argv[1];
+            const candidate = process.argv[2];
+            process.stdout.write(sort(repo, candidate) > 0 ? repo : candidate);
+          ' "$REPO_VERSION" "$CANDIDATE_NEXT_VERSION")"
+
+          echo "publisher=$PUBLISHER" >> "$GITHUB_OUTPUT"
+          echo "extension_id=$EXTENSION_ID" >> "$GITHUB_OUTPUT"
+          echo "repo_version=$REPO_VERSION" >> "$GITHUB_OUTPUT"
+          echo "marketplace_version=$MARKETPLACE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "next_version=$NEXT_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check for existing tag/release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          NEXT_VERSION="${{ steps.version.outputs.next_version }}"
+          git fetch --tags origin
+
+          if git rev-parse --verify --quiet "refs/tags/${NEXT_VERSION}" >/dev/null; then
+            echo "Tag ${NEXT_VERSION} already exists."
+            exit 1
+          fi
+
+          if gh release view "${NEXT_VERSION}" >/dev/null 2>&1; then
+            echo "Release ${NEXT_VERSION} already exists."
+            exit 1
+          fi
+
+      - name: Bump manifest version and push branch
+        id: bump
+        run: |
+          set -euo pipefail
+          CURRENT_VERSION="${{ steps.version.outputs.repo_version }}"
+          NEXT_VERSION="${{ steps.version.outputs.next_version }}"
+
+          if [ "$CURRENT_VERSION" = "$NEXT_VERSION" ]; then
+            echo "bumped=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          node -e '
+            const fs = require("fs");
+            const file = "vss-extension.json";
+            const data = JSON.parse(fs.readFileSync(file, "utf8"));
+            data.version = process.argv[1];
+            fs.writeFileSync(file, JSON.stringify(data, null, 4) + "\n");
+          ' "$NEXT_VERSION"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vss-extension.json
+          git commit -m "Bump extension version to ${NEXT_VERSION}"
+          git push origin "HEAD:${{ github.ref_name }}"
+
+          echo "bumped=true" >> "$GITHUB_OUTPUT"
+
+      - name: Create release tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          NEXT_VERSION="${{ steps.version.outputs.next_version }}"
+          TARGET_SHA="$(git rev-parse HEAD)"
+          gh release create "$NEXT_VERSION" \
+            --title "$NEXT_VERSION" \
+            --notes "Automated release created to kick off the release build workflow chain." \
+            --target "$TARGET_SHA"
+
+      - name: Add run summary
+        run: |
+          cat <<EOF >> "$GITHUB_STEP_SUMMARY"
+          ### Release Version Bump Summary
+          - Marketplace version found: `${{ steps.version.outputs.marketplace_version }}`
+          - Repository manifest version: `${{ steps.version.outputs.repo_version }}`
+          - Next version selected: `${{ steps.version.outputs.next_version }}`
+          - vss-extension.json bumped: `${{ steps.bump.outputs.bumped }}`
+          - Created release tag: `${{ steps.version.outputs.next_version }}`
+          EOF

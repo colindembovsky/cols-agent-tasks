@@ -45,7 +45,6 @@ For release `${{ github.event.release.tag_name }}` (release id `${{ github.event
 3. Build the VSIX release package:
    - Install `tfx-cli@0.17.0` globally.
    - Create the VSIX file under `dist/` using `tfx extension create --manifest-globs vss-extension.json --output-path dist/colinsalmcorner-buildtasks-${{ github.event.release.tag_name }}.vsix`.
-   - Name the package `colinsalmcorner-buildtasks-${{ github.event.release.tag_name }}.vsix`.
 
 4. Verify outputs:
    - Ensure exactly one VSIX file exists in `dist/`.

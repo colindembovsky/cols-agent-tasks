@@ -24,10 +24,6 @@ jobs:
           node-version: "20"
           cache: yarn
 
-      - name: Install DacPacReport dependencies
-        run: yarn install --frozen-lockfile
-        working-directory: Tasks/DacPacReport
-
       - name: Install root dependencies
         run: yarn install --frozen-lockfile
 

@@ -1,0 +1,121 @@
+name: Release Version Bump
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Read extension manifest
+        id: manifest
+        run: |
+          PUBLISHER=$(node -p "require('./vss-extension.json').publisher")
+          EXTENSION_ID=$(node -p "require('./vss-extension.json').id")
+          MANIFEST_VERSION=$(node -p "require('./vss-extension.json').version")
+          {
+            echo "publisher=$PUBLISHER"
+            echo "extension_id=$EXTENSION_ID"
+            echo "manifest_version=$MANIFEST_VERSION"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install Azure DevOps Marketplace CLI
+        run: npm install --global tfx-cli@0.17.0
+
+      - name: Determine next version
+        id: version
+        env:
+          PUBLISHER: ${{ steps.manifest.outputs.publisher }}
+          EXTENSION_ID: ${{ steps.manifest.outputs.extension_id }}
+          MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
+          AZURE_DEVOPS_MARKETPLACE_TOKEN: ${{ secrets.AZURE_DEVOPS_MARKETPLACE_TOKEN }}
+        run: |
+          if [ -z "$AZURE_DEVOPS_MARKETPLACE_TOKEN" ]; then
+            echo "Missing required secret: AZURE_DEVOPS_MARKETPLACE_TOKEN" >&2
+            exit 1
+          fi
+
+          MARKETPLACE_JSON=$(tfx extension show --publisher "$PUBLISHER" --extension-id "$EXTENSION_ID" --json --no-prompt --auth-type pat --token "$AZURE_DEVOPS_MARKETPLACE_TOKEN" --service-url https://marketplace.visualstudio.com)
+          MARKETPLACE_VERSION=$(node -e "try { const data = JSON.parse(process.argv[1]); const version = data.versions?.[0]?.version || data.version; if (!version) { console.error('No version found in marketplace response.'); process.exit(1); } console.log(version); } catch (error) { console.error('Failed to parse marketplace response JSON:', error.message); process.exit(1); }" "$MARKETPLACE_JSON")
+          NEXT_VERSION=$(node -e "const parse=(value)=>{const parts=value.split('.').map(Number); if(parts.length!==3||parts.some((p)=>!Number.isInteger(p)||p<0)){throw new Error('Invalid semver: '+value);} return parts;}; const compare=(a,b)=>(a[0]-b[0])||(a[1]-b[1])||(a[2]-b[2]); try { const marketplace=parse(process.argv[1]); const manifest=parse(process.argv[2]); const base=compare(manifest, marketplace)>=0 ? manifest : marketplace; base[2]+=1; console.log(base.join('.')); } catch (error) { console.error(error.message); process.exit(1); }" "$MARKETPLACE_VERSION" "$MANIFEST_VERSION")
+
+          {
+            echo "marketplace_version=$MARKETPLACE_VERSION"
+            echo "next_version=$NEXT_VERSION"
+            echo "tag_name=v$NEXT_VERSION"
+            echo "needs_manifest_bump=$([ \"$MANIFEST_VERSION\" != \"$NEXT_VERSION\" ] && echo true || echo false)"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Bump manifest version
+        if: steps.version.outputs.needs_manifest_bump == 'true'
+        env:
+          NEXT_VERSION: ${{ steps.version.outputs.next_version }}
+        run: |
+          node -e "const fs=require('fs'); const file='vss-extension.json'; try { const content = fs.readFileSync(file,'utf8'); const data=JSON.parse(content); data.version=process.argv[1]; fs.writeFileSync(file, JSON.stringify(data, null, 4) + '\n'); } catch (error) { console.error(`Failed to update ${file}:`, error.message); process.exit(1); }" "$NEXT_VERSION"
+
+      - name: Commit manifest version bump
+        if: steps.version.outputs.needs_manifest_bump == 'true'
+        env:
+          NEXT_VERSION: ${{ steps.version.outputs.next_version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vss-extension.json
+          git commit -m "Bump extension version to $NEXT_VERSION"
+          git push origin "${GITHUB_REF_NAME}"
+
+      - name: Ensure release/tag do not already exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ steps.version.outputs.tag_name }}
+        run: |
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            echo "A GitHub release already exists for tag $TAG_NAME" >&2
+            exit 1
+          fi
+
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG_NAME" >/dev/null 2>&1; then
+            echo "A Git tag already exists for $TAG_NAME" >&2
+            exit 1
+          fi
+
+      - name: Create release (and tag)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ steps.version.outputs.tag_name }}
+        run: |
+          TARGET_SHA=$(git rev-parse HEAD)
+          gh release create "$TAG_NAME" \
+            --title "$TAG_NAME" \
+            --target "$TARGET_SHA" \
+            --notes "Release $TAG_NAME created by the release version bump workflow."
+
+      - name: Write run summary
+        env:
+          MARKETPLACE_VERSION: ${{ steps.version.outputs.marketplace_version }}
+          MANIFEST_VERSION: ${{ steps.manifest.outputs.manifest_version }}
+          NEXT_VERSION: ${{ steps.version.outputs.next_version }}
+          TAG_NAME: ${{ steps.version.outputs.tag_name }}
+        run: |
+          {
+            echo "### Release version bump summary"
+            echo ""
+            echo "- Marketplace version found: $MARKETPLACE_VERSION"
+            echo "- Repository manifest version: $MANIFEST_VERSION"
+            echo "- Next version selected: $NEXT_VERSION"
+            echo "- Created release tag: $TAG_NAME"
+          } >> "$GITHUB_STEP_SUMMARY"

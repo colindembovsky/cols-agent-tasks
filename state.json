@@ -1,27 +1,42 @@
 {
-  "last_run": "2026-02-28T01:53:03Z",
-  "last_run_id": "22510795462",
+  "last_run": "2026-02-28T15:50:47Z",
+  "last_run_id": "22523870245",
   "backlog_cursor": "Y3Vyc29yOnYyOpK0MjAyNS0wOS0yNFQxMjozNDo0M1rOzZdlPg==",
-  "tasks_run_last": ["task1_issues", "task2_fix", "task7_labels", "task11_summary"],
+  "tasks_run_last": ["task1_issues", "task7_labels", "task11_summary"],
   "comments_made": {
     "216": "2026-02-28",
     "219": "2026-02-28",
     "140": "2026-02-28",
     "157": "2026-02-28",
-    "223": "2026-02-28"
+    "223": "2026-02-28",
+    "214": "2026-02-28",
+    "215": "2026-02-28",
+    "150": "2026-02-28"
   },
   "fix_attempts": {
     "223": {
       "status": "pr_created",
       "branch": "repo-assist/fix-issue-223-tagbuild-type-case-insensitive",
-      "pr_number": 224,
+      "pr_number": 242,
       "date": "2026-02-28"
     }
   },
   "monthly_summary_issue": {
-    "number": null,
-    "month": "2026-02",
-    "note": "Created in this run - number assigned by GitHub"
+    "number": 243,
+    "month": "2026-02"
   },
-  "notes": "No more uncommented issues except #43, #139, #150, #151 (older issues with existing comments). PR #222 by Copilot bot still open for #221. Issues #214, #215 need Node upgrade fix."
+  "labels_applied": {
+    "43": ["enhancement"],
+    "139": ["bug", "needs investigation"],
+    "150": ["bug"],
+    "151": ["enhancement", "help wanted"],
+    "214": ["enhancement"],
+    "215": ["enhancement"],
+    "216": ["enhancement", "help wanted"],
+    "219": ["duplicate"],
+    "140": ["enhancement"],
+    "157": ["enhancement"],
+    "223": ["bug"]
+  },
+  "notes": "Remaining uncommented older issues: #43, #139, #151 (have existing human comments, less urgent). PRs open: #242 (Repo Assist TagBuild fix), #222 (Copilot instructions). Future work: Node 20 upgrade for TagBuild (#215) and ReplaceTokens@1 (#214). Issue #219 should be closed (duplicate of #215). Issue #221 should be closed (addressed by PR #222)."
 }

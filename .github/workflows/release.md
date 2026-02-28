@@ -1,5 +1,6 @@
 ---
 on:
+  roles: [admin, maintainer]
   workflow_dispatch:
     inputs:
       release_type:
@@ -342,9 +343,6 @@ jobs:
         sbom: true
         tags: ${{ steps.meta.outputs.tags }}
 name: Release
-roles:
-- admin
-- maintainer
 sandbox:
   agent: awf
 source: github/gh-aw/.github/workflows/release.md@852cb06ad52958b402ed982b69957ffc57ca0619
@@ -355,6 +353,7 @@ tools:
   - "*"
   edit: null
 ---
+
 # Release Highlights Generator
 
 Generate an engaging release highlights summary for **${{ github.repository }}** release `${RELEASE_TAG}`.

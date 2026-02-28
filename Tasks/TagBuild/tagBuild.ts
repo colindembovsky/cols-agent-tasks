@@ -25,7 +25,8 @@ async function run() {
         // fall back on the release team project
         teamProject = tl.getVariable("System.TeamProject");
     }
-    let type = tl.getInput("type", true);
+    let typeRaw = tl.getInput("type", true);
+    let type = typeRaw ? typeRaw.charAt(0).toUpperCase() + typeRaw.slice(1).toLowerCase() : typeRaw;
     let tags = tl.getDelimitedInput("tags", '\n', true);
 
     let buildId = -1;

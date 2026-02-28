@@ -1,0 +1,27 @@
+{
+  "last_run": "2026-02-28T01:53:03Z",
+  "last_run_id": "22510795462",
+  "backlog_cursor": "Y3Vyc29yOnYyOpK0MjAyNS0wOS0yNFQxMjozNDo0M1rOzZdlPg==",
+  "tasks_run_last": ["task1_issues", "task2_fix", "task7_labels", "task11_summary"],
+  "comments_made": {
+    "216": "2026-02-28",
+    "219": "2026-02-28",
+    "140": "2026-02-28",
+    "157": "2026-02-28",
+    "223": "2026-02-28"
+  },
+  "fix_attempts": {
+    "223": {
+      "status": "pr_created",
+      "branch": "repo-assist/fix-issue-223-tagbuild-type-case-insensitive",
+      "pr_number": 224,
+      "date": "2026-02-28"
+    }
+  },
+  "monthly_summary_issue": {
+    "number": null,
+    "month": "2026-02",
+    "note": "Created in this run - number assigned by GitHub"
+  },
+  "notes": "No more uncommented issues except #43, #139, #150, #151 (older issues with existing comments). PR #222 by Copilot bot still open for #221. Issues #214, #215 need Node upgrade fix."
+}

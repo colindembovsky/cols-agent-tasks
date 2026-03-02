@@ -49,16 +49,9 @@ function replaceProps(nullBehavior: string, obj: any, parent: string, includeSet
             }
             else {
                 console.info(`${propPath} is a complex array`);
+                const basePropPath = propPath;
                 obj[prop].forEach((arrayObj, position) => {
-                    // if we're already in an array, we need to update the index
-                    var posOfBracket = propPath.indexOf("[");
-                    if (posOfBracket > -1) {
-                        propPath = propPath.substr(0, posOfBracket);
-                    }
-                    
-                    // now append the index
-                    propPath += `[${position}]`;
-                    success = success && replaceProps(nullBehavior, arrayObj, propPath, includeSet, excludeSet);
+                    success = success && replaceProps(nullBehavior, arrayObj, `${basePropPath}[${position}]`, includeSet, excludeSet);
                 });
             }
         } else if (typeof (obj[prop]) === 'object') {

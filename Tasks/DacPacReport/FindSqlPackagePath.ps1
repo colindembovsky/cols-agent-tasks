@@ -470,7 +470,7 @@ function Get-VisualStudio_15_0 {
         # the script root.  
         $vswhere_location = Find-File -fileName "vswhere.exe"
 
-        Invoke-VstsTool -FileName "$vswhere_location" -Arguments "-version [15.0,16.0) -latest -format json" -RequireExitCodeZero 2>&1 |
+        Invoke-VstsTool -FileName "$vswhere_location" -Arguments "-version [15.0,] -latest -format json" -RequireExitCodeZero 2>&1 |
             ForEach-Object {
                 if ($_ -is [System.Management.Automation.ErrorRecord]) {
                     Write-Verbose "STDERR: $($_.Exception.Message)"
@@ -490,7 +490,7 @@ function Get-VisualStudio_15_0 {
             Write-Verbose "Getting latest BuildTools 15 setup instance."
             $output = New-Object System.Text.StringBuilder
 
-            Invoke-VstsTool -FileName "$vswhere_location" -Arguments "-version [15.0,16.0) -products Microsoft.VisualStudio.Product.BuildTools -latest -format json" -RequireExitCodeZero 2>&1 |
+            Invoke-VstsTool -FileName "$vswhere_location" -Arguments "-version [15.0,] -products Microsoft.VisualStudio.Product.BuildTools -latest -format json" -RequireExitCodeZero 2>&1 |
                 ForEach-Object {
                     if ($_ -is [System.Management.Automation.ErrorRecord]) {
                         Write-Verbose "STDERR: $($_.Exception.Message)"

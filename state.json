@@ -1,8 +1,8 @@
 {
-  "last_run": "2026-03-04T16:09:33Z",
-  "last_run_id": "22677847923",
+  "last_run": "2026-03-05T17:43:12Z",
+  "last_run_id": "22728775063",
   "backlog_cursor": "Y3Vyc29yOnYyOpK0MjAyNi0wMy0wMVQxNTo1NjowMVrO7t6JuQ==",
-  "tasks_run_last": ["task1_issues", "task7_labels", "task11_summary"],
+  "tasks_run_last": ["task1_issues", "task11_summary"],
   "comments_made": {
     "43": "2026-03-01",
     "139": "2026-03-01",
@@ -24,7 +24,9 @@
     "204": "2026-03-03",
     "177": "2026-03-04",
     "213": "2026-03-04",
-    "173": "2026-03-04"
+    "173": "2026-03-04",
+    "174": "2026-03-05",
+    "208": "2026-03-05"
   },
   "fix_attempts": {
     "223": {
@@ -77,5 +79,5 @@
     "212": ["bug"],
     "213": ["bug"]
   },
-  "notes": "All open issues now have labels and comments except: #174 (DacPacReport YAML connection error, labelled but no comment), #205 (vulnerability security report, handled by owner), #208 (ReplaceTokens default value feature request), #212 (ReplaceTokens failing pipelines, owner already responded). Uncommented issues to address next run: #174, #208. Open PRs: #242 (TagBuild case fix), #245 (tokenizer nested arrays), #246 (DacPacReport vswhere VS2019/2022), #222 (Copilot instructions). Issue #221 should be closed (Copilot setup). Issue #219 should be closed (duplicate of #215). Dependabot PR #247 open (underscore bump for CoverageGate). Future work: Node 20 upgrade (#214, #215), WIF in RouteTraffic (#216), outputVariable for VersionAssemblies (#140), zip support in ReplaceTokens (#151), TagBuild join-null fix (#159), CoverageGate null-check (#158). Monthly summary #244 updated."
+  "notes": "All open issues now have labels and Repo Assist comments except: #205 (vulnerability handled by owner - no comment needed), #212 (owner already engaged, no Repo Assist comment needed). Open PRs: #242 (TagBuild case fix), #245 (tokenizer nested arrays), #246 (DacPacReport vswhere VS2019/2022), #222 (Copilot instructions), #247 (Dependabot underscore bump). Issue #221 should be closed (Copilot setup). Issue #219 should be closed (duplicate of #215). Future work: Node 20 upgrade (#214, #215), WIF in RouteTraffic (#216), outputVariable for VersionAssemblies (#140), zip support in ReplaceTokens (#151), TagBuild join-null fix (#159), CoverageGate null-check (#158), default values for ReplaceTokens (#208 - implementation outlined). Monthly summary #244 updated."
 }

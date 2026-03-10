@@ -65,7 +65,7 @@ jobs:
 
   - ${{ if ne(parameters.isBeta, true) }}:
     - task: PackageAzureDevOpsExtension@3
-      displayName: 'Package real Extension '
+      displayName: 'Package real Extension'
       inputs:
         rootFolder: '$(Build.SourcesDirectory)'
         outputPath: '$(Build.ArtifactStagingDirectory)/colinsalmcorner.colinsalmcorner-buildtasks-$(Build.BuildNumber).vsix'
@@ -76,6 +76,7 @@ jobs:
         updateTasksVersionType: patch
         cwd: '$(Build.SourcesDirectory)'
 
+  - ${{ if eq(parameters.isBeta, true) }}:
     - powershell: './Update-TaskIDs.ps1 -Beta'
       displayName: 'PowerShell Update beta ids'
       condition: eq(variables['Agent.OS'], 'Windows_NT')
@@ -86,7 +87,7 @@ jobs:
       displayName: 'Bash Update beta ids'
       condition: ne(variables['Agent.OS'], 'Windows_NT')
       failOnStderr: true
-
+  
     - task: PackageAzureDevOpsExtension@3
       displayName: 'Package beta Extension '
       inputs:
@@ -100,9 +101,8 @@ jobs:
         extensionVisibility: private
         extensionPricing: free
 
-  - ${{ if ne(parameters.isBeta, true) }}:
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: vsix'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: vsix
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: vsix'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+      ArtifactName: vsix

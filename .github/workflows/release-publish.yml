@@ -36,7 +36,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "20"
+          cache: yarn
+
+      - name: Install root dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build extension tasks
+        run: yarn build-prod
 
       - name: Install Azure DevOps Marketplace CLI
         run: npm install --global tfx-cli@0.17.0
